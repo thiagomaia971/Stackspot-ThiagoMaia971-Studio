@@ -4,7 +4,7 @@ metadata:
   name: dotnet-webapi
   display-name: dotnet-webapi
   description: Web API base
-  version: 0.0.2
+  version: 0.0.4
   picture: plugin.png
 spec:
   type: app
@@ -20,22 +20,30 @@ spec:
     - Api
   stk-projects-only: false
   inputs:
-    - label: Type name of your resource
-      name: resource
-      type: text
-      required: true
-      default: Client
-      pattern: '([A-Z][a-z]+)+'
-      help: 'Inform your resource name (e.g.: Client)'
-    - label: Choose http method of new endpoint
-      name: method
-      type: text
-      items:
-        - GET
-        - POST
-        - PUT
-        - DELETE
-        - PATCH
-      default: GET
-      required: true
-      help: 'Inform the method of the endpoint (e.g.: post or delete)'
+    # - label: Type name of your resource
+    #   name: resource
+    #   type: text
+    #   required: true
+    #   default: Client
+    #   pattern: '([A-Z][a-z]+)+'
+    #   help: 'Inform your resource name (e.g.: Client)'
+    # - label: Choose http method of new endpoint
+    #   name: method
+    #   type: text
+    #   items:
+    #     - GET
+    #     - POST
+    #     - PUT
+    #     - DELETE
+    #     - PATCH
+    #   default: GET
+    #   required: true
+    #   help: 'Inform the method of the endpoint (e.g.: post or delete)'
+  hooks:
+  - type: edit
+    trigger: after-render
+    path: src/{{solution_name}}.sln
+    changes:
+      - insert:
+          line: 1
+          snippet: snippets/SolutionApi.sln
