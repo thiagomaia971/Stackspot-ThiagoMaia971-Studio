@@ -1,0 +1,43 @@
+schema-version: v2
+kind: manifest
+spec:
+  type: app
+  plugins:
+    - name: local/dotnet-base@0.0.1
+      alias: dotnet-base-1699973038985
+      type: app
+      inputs:
+        dotnet_version: net8.0
+        solution_name: testee
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+    - name: local/dotnet-base@0.0.1
+      alias: dotnet-base-1699973113901
+      type: app
+      inputs:
+        dotnet_version: net8.0
+        solution_name: testee01
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+    - name: thiagomaia971/dotnet-base@0.0.3
+      alias: dotnet-base-1699974012961
+      type: app
+      inputs: {}
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+  global-inputs:
+    dotnet_version: net8.0
+    solution_name: asd.dd
+  global-computed-inputs: {}

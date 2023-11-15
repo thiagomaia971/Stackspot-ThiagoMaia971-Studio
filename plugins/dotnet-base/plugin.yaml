@@ -4,7 +4,7 @@ metadata:
   name: dotnet-base
   display-name: dotnet-base
   description: Dotnet base structure
-  version: 0.0.1
+  version: 0.0.4
   picture: plugin.png
 spec:
   type: app
@@ -20,22 +20,17 @@ spec:
     - Api
   stk-projects-only: false
   inputs:
-    - label: Type name of your resource
-      name: resource
+    - label: Which Dotnet version do you want to use?
       type: text
+      name: dotnet_version
       required: true
-      default: Client
-      pattern: '([A-Z][a-z]+)+'
-      help: 'Inform your resource name (e.g.: Client)'
-    - label: Choose http method of new endpoint
-      name: method
-      type: text
+      default: "net8.0"
+      global: true
       items:
-        - GET
-        - POST
-        - PUT
-        - DELETE
-        - PATCH
-      default: GET
+        - "net7.0"
+        - "net8.0"
+    - label: Solution Name?
+      type: text
+      name: solution_name
       required: true
-      help: 'Inform the method of the endpoint (e.g.: post or delete)'
+      global: true
