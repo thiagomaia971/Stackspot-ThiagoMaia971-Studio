@@ -1,0 +1,36 @@
+schema-version: v2
+kind: plugin
+metadata:
+  name: dotnet-base
+  display-name: dotnet-base
+  description: Dotnet base structure
+  version: 0.0.5
+  picture: plugin.png
+spec:
+  type: app
+  compatibility:
+    - python
+  about: docs/about.md
+  implementation: docs/implementation.md
+  release-notes: docs/release-notes-0.0.1.md
+  requirements: docs/requirements.md
+  single-use: False
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
+    - Api
+  stk-projects-only: false
+  inputs:
+    - label: Which Dotnet version do you want to use?
+      type: text
+      name: dotnet_version
+      required: true
+      default: "net8.0"
+      global: true
+      items:
+        - "net7.0"
+        - "net8.0"
+    - label: Solution Name?
+      type: text
+      name: solution_name
+      required: true
+      global: true
