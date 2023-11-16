@@ -1,5 +1,6 @@
 using MediatR;
 using System.Text;
+using DynamoDbMapper.Sdk.Configurations;
 using {{solution_name}}.Domain.Models;
 using {{solution_name}}.Domain.Models.AutoMappers;
 using {{solution_name}}.Infrastructure.Repositories.Base;
@@ -33,6 +34,7 @@ public static class Configurations
         IConfiguration configuration,
         IHostEnvironment environment)
     {
+        infraServices.AddDynamodbMapper(configuration, environment);
         return infraServices
             // .AddRepositories(typeof(Usuario))
             //.AddScoped<IUsuarioRepository, UsuarioRepository>()
@@ -48,19 +50,19 @@ public static class Configurations
             ;
     }
 
-    public static IServiceCollection AddRepositories(
-        this IServiceCollection services,
-        params Type[] entityScanMarkers)
-    {
-        foreach (Type entityScanMarker in entityScanMarkers)
-        {
-            foreach (Type type in entityScanMarker.Assembly.ExportedTypes.Where<Type>((Func<Type, bool>) (x => typeof (Entity).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)))
-            {
-                Type serviceType = typeof (IRepository<>).MakeGenericType(type);
-                Type implementationType = typeof (Repository<>).MakeGenericType(type);
-                services.AddScoped(serviceType, implementationType);
-            }
-        }
-        return services;
-    }
+    // public static IServiceCollection AddRepositories(
+    //     this IServiceCollection services,
+    //     params Type[] entityScanMarkers)
+    // {
+    //     foreach (Type entityScanMarker in entityScanMarkers)
+    //     {
+    //         foreach (Type type in entityScanMarker.Assembly.ExportedTypes.Where<Type>((Func<Type, bool>) (x => typeof (Entity).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)))
+    //         {
+    //             Type serviceType = typeof (IRepository<>).MakeGenericType(type);
+    //             Type implementationType = typeof (Repository<>).MakeGenericType(type);
+    //             services.AddScoped(serviceType, implementationType);
+    //         }
+    //     }
+    //     return services;
+    // }
 }

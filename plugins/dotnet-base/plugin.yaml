@@ -15,7 +15,7 @@ spec:
   release-notes: docs/release-notes-0.0.1.md
   requirements: docs/requirements.md
   single-use: False
-  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio/tree/main/plugins/dotnet-base
   technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
     - Api
   stk-projects-only: false

@@ -15,7 +15,7 @@ spec:
   release-notes: docs/release-notes-0.0.1.md
   requirements: docs/requirements.md
   single-use: False
-  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio/tree/main/plugins/dotnet-webapi
   technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
     - Api
   stk-projects-only: false
@@ -39,6 +39,8 @@ spec:
     #   default: GET
     #   required: true
     #   help: 'Inform the method of the endpoint (e.g.: post or delete)'
+  global-computed-inputs:
+    is_api: "true"
   hooks:
   - type: edit
     trigger: after-render
@@ -47,3 +49,37 @@ spec:
       - insert:
           line: 1
           snippet: snippets/SolutionApi.sln
+  - type: render-templates
+    trigger: after-render
+    path: templates-dynamodb
+    condition:
+      variable: is_dynamodb
+      operator: "=="
+      value: "true"
+  - type: render-templates
+    trigger: after-render
+    path: templates-default
+    condition:
+      variable: is_dynamodb
+      operator: "=="
+      value: "false"
+  #format
+  - type: run
+    trigger: after-render
+    working-dir: "src/{{solution_name}}.Api"
+    commands:
+      -  dotnet format --include-generated
+    condition:
+      variable: is_api
+      operator: "=="
+      value: "true"
+  - type: run
+    trigger: after-render
+    working-dir: "src/{{solution_name}}.Domain"
+    commands:
+      -  dotnet format --include-generated
+  - type: run
+    trigger: after-render
+    working-dir: "src/{{solution_name}}.Infrastructure"
+    commands:
+      -  dotnet format --include-generated

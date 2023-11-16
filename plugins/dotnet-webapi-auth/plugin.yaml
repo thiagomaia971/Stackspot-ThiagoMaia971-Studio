@@ -40,22 +40,15 @@ spec:
   #     required: true
   #     help: 'Inform the method of the endpoint (e.g.: post or delete)'
   hooks:
+  #package
+    - type: run
+      trigger: before-render
+      commands:
+        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
     - type: edit
       trigger: after-render
       path: src/{{solution_name}}.Api/Configurations.cs
       changes:
-        - search:
-            pattern: return services;
-            insert-before:
-              snippet: snippets/AddAuthentication.cs
-            when:
-              not-exists: AddAuthentication
-        - search:
-            pattern: return services;
-            insert-before:
-              snippet: snippets/AddAuthorization.cs
-            when:
-              not-exists: AddAuthorization
         - search:
             pattern: using 
             insert-before:
@@ -74,6 +67,36 @@ spec:
               value: "using {{solution_name}}.Infrastructure.IdentityServices;\n"
             when:
               not-exists: using {{solution_name}}.Infrastructure.IdentityServices
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using Microsoft.AspNetCore.Identity;"
+            when:
+              not-exists: using Microsoft.AspNetCore.Identity;
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Models.Identity;"
+            when:
+              not-exists: using {{solution_name}}.Models.Identity;
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddServices.cs
+            when:
+              not-exists: AddIdentity
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthentication.cs
+            when:
+              not-exists: AddAuthentication
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthorization.cs
+            when:
+              not-exists: AddAuthorization
     - type: edit
       trigger: after-render
       path: src/{{solution_name}}.Api/Endpoints/Base/EndpointBase.cs
@@ -104,5 +127,41 @@ spec:
             pattern: \.WithTags\(typeof\(TEntity\).Name\);
             replace-by:
               value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
-
-              
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Api/appsettings.Development.json
+      indent: "  "
+      encoding: utf-8
+      changes:
+        - insert:
+            line: 1
+            snippet: snippets/JwtSecrets.txt
+            when:
+              not-exists: "JWT"
+    - type: render-templates
+      trigger: after-render
+      path: templates-dynamodb
+      condition:
+        variable: is_dynamodb
+        operator: "=="
+        value: "true"
+    #format
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Api"
+      commands:
+        -  dotnet format --include-generated
+      condition:
+        variable: is_api
+        operator: "=="
+        value: "true"
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Domain"
+      commands:
+        -  dotnet format --include-generated
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Infrastructure"
+      commands:
+        -  dotnet format --include-generated

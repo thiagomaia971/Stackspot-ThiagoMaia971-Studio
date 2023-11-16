@@ -1,0 +1,36 @@
+schema-version: v2
+kind: manifest
+spec:
+  type: app
+  plugins:
+    - name: local/dotnet-base@0.0.5
+      alias: dotnet-base-1700161897595
+      type: app
+      inputs: {}
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+    - name: local/dotnet-repository@0.0.1
+      alias: dotnet-repository-1700161904124
+      type: app
+      inputs: {}
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+  global-inputs:
+    dotnet_version: net8.0
+    solution_name: Test
+    database_type: DynamoDb
+  global-computed-inputs:
+    dynamodb: DynamoDb
+    sqlserver: Sql Server
+    mysql: MySql
+    is_dynamodb: 'true'
+    is_slqserver: 'false'
+    is_mysql: 'false'
