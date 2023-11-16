@@ -8,10 +8,10 @@ using Test.Domain.Interfaces.Repositories.Base;
 namespace Test.Domain.Handlers;
 
 public class DeleteCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRepository>
-    : IRequestHandler<DeleteCommand<IOutputDto>, IOutputDto> 
+    : IRequestHandler<DeleteCommand<IOutputDto>, IOutputDto>
     where TEntity : Entity
-    where TInputDto : InputDto 
-    where IOutputDto : OutputDto 
+    where TInputDto : InputDto
+    where IOutputDto : OutputDto
     where IRepository : IRepository<TEntity>
 {
     private readonly IMapper _mapper;
@@ -24,11 +24,11 @@ public class DeleteCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, I
         _mapper = mapper;
         _repository = repository;
     }
-    
+
     public async Task<IOutputDto> Handle(DeleteCommand<IOutputDto> request, CancellationToken cancellationToken)
     {
         var entity = await _repository.FindById(request.Id);
-        
+
         if (entity is null)
             return null;
         await _repository.Remove(entity);

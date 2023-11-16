@@ -12,7 +12,8 @@ namespace Test.Domain.Models.AutoMappers;
 
 public class AutoMapperProfile : Profile
 {
-    public AutoMapperProfile() {
+    public AutoMapperProfile()
+    {
         /*
         CreateMapEntity<Paciente, PacienteInput, PacienteOutput>(
             (x => x.Hash , x => x.Nome),
@@ -31,20 +32,20 @@ public class AutoMapperProfile : Profile
         CreateMapEntity<Agenda, AgendaInput, AgendaOutput>(
             (x => x.Hash , x => x.ClinicaId),
             (x => x.Id, x => x.AgendaId));*/
-        
+
         // CreateMaps<Usuario, UserInput, UserOutput>()
         //     .AddInputToEntityMap(input => input.Email, entity => entity.Gsi1Id)
         //     .AddInputToEntityMap(input => input.Username, entity => entity.Gsi1Hash)
         //     .AddEntityToOutputMap(opt => opt.MapFrom(x => x.Gsi1Id), output => output.Email)
         //     .AddEntityToOutputMap(opt => opt.MapFrom(x => x.Gsi1Hash), output => output.Username)
         //     .Finish();
-        
-        
+
+
         // CreateMaps<Material, MaterialInput, MaterialOutput>()
         //     .AddInputToEntityMap(input => input.Nome, entity => entity.Gsi1Id)
         //     .AddEntityToOutputMap(opt => opt.MapFrom(x => x.Gsi1Id), output => output.Nome)
         //     .Finish();
-        
+
         // CreateMaps<Atendimento, AtendimentoInput, AtendimentoOutput>()
         //     .AddInputToEntityMap(input => input.PacienteId, entity => entity.Hash)
         //     .AddEntityToOutputMap(opt => opt
@@ -52,11 +53,11 @@ public class AutoMapperProfile : Profile
         //         output => output.PacienteId)
         //     .Finish();
     }
-    
+
     private AutoMapperBuilder<TEntity, TInput, TOutput> CreateMaps<TEntity, TInput, TOutput>()
         where TEntity : Entity
         where TInput : InputDto
-        where TOutput : OutputDto 
+        where TOutput : OutputDto
     {
         return AutoMapperBuilder<TEntity, TInput, TOutput>.Create(
             CreateMap<TInput, TEntity>(),

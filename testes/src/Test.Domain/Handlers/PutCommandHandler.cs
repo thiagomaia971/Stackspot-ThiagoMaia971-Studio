@@ -9,10 +9,10 @@ using Test.Domain.Interfaces.Repositories.Base;
 namespace Test.Domain.Handlers;
 
 public class PutCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRepository>
-    : IRequestHandler<PutCommand<TInputDto, IOutputDto>, IOutputDto> 
+    : IRequestHandler<PutCommand<TInputDto, IOutputDto>, IOutputDto>
     where TEntity : Entity
-    where TInputDto : InputDto 
-    where IOutputDto : OutputDto 
+    where TInputDto : InputDto
+    where IOutputDto : OutputDto
     where IRepository : IRepository<TEntity>
 {
     private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ public class PutCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRep
         _mapper = mapper;
         _repository = repository;
     }
-    
+
     public async Task<IOutputDto> Handle(PutCommand<TInputDto, IOutputDto> request, CancellationToken cancellationToken)
     {
         var entity = await _repository.FindById(request.Id);

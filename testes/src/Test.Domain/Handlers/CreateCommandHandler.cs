@@ -8,10 +8,10 @@ using Test.Domain.Interfaces.Repositories.Base;
 namespace Test.Domain.Handlers;
 
 public class CreateCommandHandler<TEntity, TInputDto, IOutputDto, IRepository>
-    : IRequestHandler<CreateCommand<TInputDto, IOutputDto>, IOutputDto> 
+    : IRequestHandler<CreateCommand<TInputDto, IOutputDto>, IOutputDto>
     where TEntity : Entity
-    where TInputDto : InputDto 
-    where IOutputDto : OutputDto 
+    where TInputDto : InputDto
+    where IOutputDto : OutputDto
     where IRepository : IRepository<TEntity>
 {
     protected readonly IMapper _mapper;
@@ -24,7 +24,7 @@ public class CreateCommandHandler<TEntity, TInputDto, IOutputDto, IRepository>
         _mapper = mapper;
         _repository = repository;
     }
-    
+
     public virtual async Task<IOutputDto> Handle(CreateCommand<TInputDto, IOutputDto> request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<TEntity>(request.Payload);
@@ -35,11 +35,11 @@ public class CreateCommandHandler<TEntity, TInputDto, IOutputDto, IRepository>
         //         .ByGsi(x => x.Gsi1Id, entity.Gsi1Id)
         //         .ByInheritedType()
         //         .FindAsync();
-        
+
         //     if (entityExist is not null)
         //         return _mapper.Map<IOutputDto>(entityExist);
         // }
-            
+
         var outputDto = _mapper.Map<IOutputDto>(await _repository.Save(entity));
         return outputDto;
     }

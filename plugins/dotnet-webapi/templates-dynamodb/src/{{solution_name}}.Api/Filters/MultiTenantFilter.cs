@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using {{solution_name}}.Domain.Models;
+using DynamoDbMapper.Sdk.Entities;
 
 namespace {{solution_name}}.Api.Filters
 {

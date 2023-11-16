@@ -40,7 +40,8 @@ spec:
     #   required: true
     #   help: 'Inform the method of the endpoint (e.g.: post or delete)'
   global-computed-inputs:
-    is_api: "true"
+    has_api: "true"
+
   hooks:
   - type: edit
     trigger: after-render
@@ -49,6 +50,7 @@ spec:
       - insert:
           line: 1
           snippet: snippets/SolutionApi.sln
+
   - type: render-templates
     trigger: after-render
     path: templates-dynamodb
@@ -56,6 +58,7 @@ spec:
       variable: is_dynamodb
       operator: "=="
       value: "true"
+
   - type: render-templates
     trigger: after-render
     path: templates-default
@@ -63,6 +66,21 @@ spec:
       variable: is_dynamodb
       operator: "=="
       value: "false"
+
+  - type: edit-json
+    trigger: after-render
+    path: src/{{solution_name}}.Api/appsettings.Development.json
+    indent: "  "
+    encoding: utf-8
+    condition:
+      variable: is_dynamodb
+      operator: "=="
+      value: "true"
+    changes:
+      - jsonpath: "$"
+        update:
+          snippet: snippets/AppsettingsAws.json
+
   #format
   - type: run
     trigger: after-render
@@ -70,7 +88,7 @@ spec:
     commands:
       -  dotnet format --include-generated
     condition:
-      variable: is_api
+      variable: has_api
       operator: "=="
       value: "true"
   - type: run

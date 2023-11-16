@@ -29,7 +29,7 @@
 //                 .ByGsi(x => x.Gsi1Id, atendimento.Gsi1Id)
 //                 .ByInheritedType()
 //                 .FindAsync();
-        
+
 //             if (entityExist is not null)
 //                 return _mapper.Map<AtendimentoOutput>(entityExist);
 //         }
@@ -37,7 +37,7 @@
 //         var paciente = await _pacienteRepository.FindById(request.Payload.PacienteId);
 //         if (paciente is null)
 //             return null;
-        
+
 //         var outputDto = _mapper.Map<AtendimentoOutput>(await _repository.Save(atendimento));
 //         return outputDto;
 

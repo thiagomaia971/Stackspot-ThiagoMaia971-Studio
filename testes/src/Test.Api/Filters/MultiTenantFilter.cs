@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using Test.Domain.Models;
+using DynamoDbMapper.Sdk.Entities;
 
 namespace Test.Api.Filters
 {

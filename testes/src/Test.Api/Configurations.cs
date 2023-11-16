@@ -6,7 +6,6 @@ using Test.Domain.Models.AutoMappers;
 using Test.Infrastructure.Repositories.Base;
 using Test.Domain.Interfaces.Repositories.Base;
 
-
 namespace Test.Api;
 
 public static class Configurations
@@ -21,14 +20,14 @@ public static class Configurations
             .AddAutoMapper(typeof(AutoMapperProfile))
             .AddMediatR(typeof(Configurations))
             .AddRepositories(typeof(Entity));
-            
+
         services.AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddInfrastructure(configuration, environment);
 
         return services;
     }
-    
+
     private static IServiceCollection AddInfrastructure(
         this IServiceCollection infraServices,
         IConfiguration configuration,
@@ -48,36 +47,5 @@ public static class Configurations
             // .AddScoped<IRepository<UserRole>, Repository<UserRole>>()
             //.AddScoped<IRepository<UserRole>, Repository<UserRole>>()
             ;
-    }
-
-    // public static IServiceCollection AddRepositories(
-    public static IServiceCollection AddRepositories(
-    //     this IServiceCollection services,
-        this IServiceCollection services,
-    //     params Type[] entityScanMarkers)
-        params Type[] entityScanMarkers)
-    // {
-    {
-    //     foreach (Type entityScanMarker in entityScanMarkers)
-        foreach (Type entityScanMarker in entityScanMarkers)
-    //     {
-        {
-    //         foreach (Type type in entityScanMarker.Assembly.ExportedTypes.Where<Type>((Func<Type, bool>) (x => typeof (Entity).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)))
-            foreach (Type type in entityScanMarker.Assembly.ExportedTypes.Where<Type>((Func<Type, bool>) (x => typeof (Entity).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract)))
-    //         {
-            {
-    //             Type serviceType = typeof (IRepository<>).MakeGenericType(type);
-                Type serviceType = typeof (IRepository<>).MakeGenericType(type);
-    //             Type implementationType = typeof (Repository<>).MakeGenericType(type);
-                Type implementationType = typeof (Repository<>).MakeGenericType(type);
-    //             services.AddScoped(serviceType, implementationType);
-                services.AddScoped(serviceType, implementationType);
-    //         }
-            }
-    //     }
-        }
-    //     return services;
-        return services;
-    // }
     }
 }

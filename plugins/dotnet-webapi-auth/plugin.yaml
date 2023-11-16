@@ -152,7 +152,7 @@ spec:
       commands:
         -  dotnet format --include-generated
       condition:
-        variable: is_api
+        variable: has_api
         operator: "=="
         value: "true"
     - type: run

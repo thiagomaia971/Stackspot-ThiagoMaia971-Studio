@@ -25,14 +25,14 @@
 //         var user = await _repository.Find(request.Payload.GetHash());
 //         if (user is not null)
 //             return null;
-        
+
 //         var clinica = await _clinicaRepository.Find(request.Payload.ClinicaId);
 
 //         var agenda = _mapper.Map<Agenda>(request.Payload);
 //         agenda.Id = clinica.Id;
 //         agenda.Nome = clinica.Nome;
 //         agenda.Cnpj = clinica.Cnpj;
-        
+
 //         var outputDto = _mapper.Map<AgendaOutput>(await _repository.Save(agenda));
 //         return outputDto;*/
 //         return null;

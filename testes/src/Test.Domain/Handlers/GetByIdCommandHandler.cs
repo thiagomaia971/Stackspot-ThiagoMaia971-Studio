@@ -8,9 +8,9 @@ using Test.Domain.Interfaces.Repositories.Base;
 namespace Test.Domain.Handlers;
 
 public class GetByIdCommandHandler<TEntity, IOutputDto, IRepository>
-    : IRequestHandler<GetByIdCommand<IOutputDto>, IOutputDto> 
+    : IRequestHandler<GetByIdCommand<IOutputDto>, IOutputDto>
     where TEntity : Entity
-    where IOutputDto : OutputDto 
+    where IOutputDto : OutputDto
     where IRepository : IRepository<TEntity>
 {
     private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ public class GetByIdCommandHandler<TEntity, IOutputDto, IRepository>
         _mapper = mapper;
         _repository = repository;
     }
-    
+
     public async Task<IOutputDto> Handle(GetByIdCommand<IOutputDto> request, CancellationToken cancellationToken)
     {
         var single = await _repository.FindById(request.Id);

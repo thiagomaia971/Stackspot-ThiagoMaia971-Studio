@@ -4,7 +4,7 @@ spec:
   type: app
   plugins:
     - name: local/dotnet-base@0.0.5
-      alias: dotnet-base-1700161897595
+      alias: dotnet-base-1700164536335
       type: app
       inputs: {}
       inputs-envs: {}
@@ -14,7 +14,17 @@ spec:
       links:
         generates: []
     - name: local/dotnet-repository@0.0.1
-      alias: dotnet-repository-1700161904124
+      alias: dotnet-repository-1700164542782
+      type: app
+      inputs: {}
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+    - name: local/dotnet-webapi@0.0.4
+      alias: dotnet-webapi-1700164565030
       type: app
       inputs: {}
       inputs-envs: {}
@@ -34,3 +44,4 @@ spec:
     is_dynamodb: 'true'
     is_slqserver: 'false'
     is_mysql: 'false'
+    has_api: 'true'

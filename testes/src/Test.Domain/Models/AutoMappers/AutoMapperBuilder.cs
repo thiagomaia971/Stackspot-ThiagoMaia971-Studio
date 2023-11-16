@@ -20,8 +20,8 @@ public class AutoMapperBuilder<TEntity, TInputDto, TOutputDto>
     private readonly IMappingExpression<Pagination<TEntity>, Pagination<TOutputDto>> _paginationMap;
 
     private AutoMapperBuilder(
-        IMappingExpression<TInputDto, TEntity> inputToEntityMap, 
-        IMappingExpression<TEntity, TOutputDto> entityToOutputMap, 
+        IMappingExpression<TInputDto, TEntity> inputToEntityMap,
+        IMappingExpression<TEntity, TOutputDto> entityToOutputMap,
         IMappingExpression<Pagination<TEntity>, Pagination<TOutputDto>> paginationMap)
     {
         _inputToEntityMap = inputToEntityMap;
@@ -39,11 +39,11 @@ public class AutoMapperBuilder<TEntity, TInputDto, TOutputDto>
         IMappingExpression<TEntity, TOutputDto> entityToOutputMap,
         IMappingExpression<Pagination<TEntity>, Pagination<TOutputDto>> paginationMap)
         => new(inputToEntityMap, entityToOutputMap, paginationMap);
-        
+
     public AutoMapperBuilder<TEntity, TInputDto, TOutputDto> AddInputToEntityMap(
         Expression<Func<TInputDto, string>> inputMap, Expression<Func<TEntity, string>> entityMap)
     {
-            
+
         mapsInputToEntity.Add((inputMap, entityMap));
         return this;
     }

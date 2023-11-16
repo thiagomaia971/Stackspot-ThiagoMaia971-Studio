@@ -8,9 +8,9 @@ using Test.Domain.Interfaces.Repositories.Base;
 namespace Test.Domain.Handlers;
 
 public class GetAllCommandHandler<TEntity, IOutputDto, IRepository>
-    : IRequestHandler<GetAllCommand<IOutputDto>, Pagination<IOutputDto>> 
+    : IRequestHandler<GetAllCommand<IOutputDto>, Pagination<IOutputDto>>
     where TEntity : Entity
-    where IOutputDto : OutputDto 
+    where IOutputDto : OutputDto
     where IRepository : IRepository<TEntity>
 {
     private readonly IMapper _mapper;
@@ -23,7 +23,7 @@ public class GetAllCommandHandler<TEntity, IOutputDto, IRepository>
         _mapper = mapper;
         _repository = repository;
     }
-    
+
     public async Task<Pagination<IOutputDto>> Handle(GetAllCommand<IOutputDto> request, CancellationToken cancellationToken)
     {
         var queryAsync = await _repository.GetAll();

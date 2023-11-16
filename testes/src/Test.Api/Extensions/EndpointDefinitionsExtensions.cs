@@ -20,14 +20,14 @@ public static class EndpointDefinitionsExtensions
 
         foreach (var endpointDefinition in endpointDefinitions)
             endpointDefinition.DefineHandlers(services);
-        
+
         return services.AddSingleton(endpointDefinitions as IReadOnlyCollection<IEndpointDefinition>);
     }
 
     public static void UseEndpointDefinitions(this WebApplication app)
     {
         var definitions = app.Services.GetRequiredService<IReadOnlyCollection<IEndpointDefinition>>();
-        foreach (var endpointDefinition in definitions) 
+        foreach (var endpointDefinition in definitions)
             endpointDefinition.DefineEndpoints(app);
     }
 }
