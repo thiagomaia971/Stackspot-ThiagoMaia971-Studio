@@ -1,0 +1,108 @@
+schema-version: v2
+kind: plugin
+metadata:
+  name: dotnet-webapi-auth
+  display-name: dotnet-webapi-auth
+  description: Descreva seu plugin explicando o propósito
+  version: 0.0.1
+  picture: plugin.png
+spec:
+  type: app
+  compatibility:
+    - python
+  about: docs/about.md
+  implementation: docs/implementation.md
+  release-notes: docs/release-notes-0.0.1.md
+  requirements: docs/requirements.md
+  single-use: False
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
+    - Api
+  stk-projects-only: false
+  inputs:
+  #   - label: Type name of your resource
+  #     name: resource
+  #     type: text
+  #     required: true
+  #     default: Client
+  #     pattern: '([A-Z][a-z]+)+'
+  #     help: 'Inform your resource name (e.g.: Client)'
+  #   - label: Choose http method of new endpoint
+  #     name: method
+  #     type: text
+  #     items:
+  #       - GET
+  #       - POST
+  #       - PUT
+  #       - DELETE
+  #       - PATCH
+  #     default: GET
+  #     required: true
+  #     help: 'Inform the method of the endpoint (e.g.: post or delete)'
+  hooks:
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Api/Configurations.cs
+      changes:
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthentication.cs
+            when:
+              not-exists: AddAuthentication
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthorization.cs
+            when:
+              not-exists: AddAuthorization
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using Microsoft.AspNetCore.Authentication.JwtBearer;\n"
+            when:
+              not-exists: using Microsoft.AspNetCore.Authentication.JwtBearer
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using Microsoft.IdentityModel.Tokens;\n"
+            when:
+              not-exists: using Microsoft.IdentityModel.Tokens
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Infrastructure.IdentityServices;\n"
+            when:
+              not-exists: using {{solution_name}}.Infrastructure.IdentityServices
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Api/Endpoints/Base/EndpointBase.cs
+      changes:
+        - search:
+            string: using 
+            insert-before:
+              value: "using {{solution_name}}.Api.Filters;\n"
+            when:
+              not-exists: using {{solution_name}}.Api.Filters
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+
+              

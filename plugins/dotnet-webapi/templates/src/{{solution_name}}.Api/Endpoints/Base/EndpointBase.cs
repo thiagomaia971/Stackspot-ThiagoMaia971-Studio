@@ -1,9 +1,6 @@
 using AutoMapper;
-// using DynamoDbMapper.Sdk.Entities;
-// using DynamoDbMapper.Sdk.Interfaces;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-// using {{solution_name}}.Api.Filters;
 using {{solution_name}}.Domain.Models;
 using {{solution_name}}.Domain.Commands;
 using {{solution_name}}.Domain.Handlers;
@@ -23,11 +20,11 @@ public abstract class EndpointBase<TEntity, TInputDto, IOutputDto, IRepository> 
     
     public virtual void DefineEndpoints(WebApplication app)
     {
-        app.MapGet(Path, GetAll).WithTags(typeof(TEntity).Name)/*.RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>()*/;
-        app.MapGet($"{Path}/{{'{{id}}'}}", GetById).WithTags(typeof(TEntity).Name)/*.RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>()*/;
-        app.MapPost(Path, Post).WithTags(typeof(TEntity).Name)/*.RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>()*/;
-        app.MapPut($"{Path}/{{'{{id}}'}}", Put).WithTags(typeof(TEntity).Name)/*.RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>()*/;
-        app.MapDelete($"{Path}/{{'{{id}}'}}", Delete).WithTags(typeof(TEntity).Name)/*.RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>()*/;
+        app.MapGet(Path, GetAll).WithTags(typeof(TEntity).Name);
+        app.MapGet($"{Path}/{{'{{id}}'}}", GetById).WithTags(typeof(TEntity).Name);
+        app.MapPost(Path, Post).WithTags(typeof(TEntity).Name);
+        app.MapPut($"{Path}/{{'{{id}}'}}", Put).WithTags(typeof(TEntity).Name);
+        app.MapDelete($"{Path}/{{'{{id}}'}}", Delete).WithTags(typeof(TEntity).Name);
     }
 
     public virtual void DefineHandlers(IServiceCollection services)
