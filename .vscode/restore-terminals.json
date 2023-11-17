@@ -1,0 +1,60 @@
+{
+  "artificialDelayMilliseconds": 700,
+  "keepExistingTerminalsOpen": false,
+  "runOnStartup": true,
+  "terminals": [
+    {
+      "splitTerminals": [
+        {
+          "name": "bash",
+          "commands": [""]
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "dotnet-base",
+          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-base"],
+          "shouldRunCommands": false
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "dotnet-repository",
+          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-repository"],
+          "shouldRunCommands": false
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "dotnet-webapi",
+          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi"],
+          "shouldRunCommands": false
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "dotnet-webapi-auth",
+          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi-auth"],
+          "shouldRunCommands": false
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "dotnet-webapi-endpoint",
+          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi-endpoint"],
+          "shouldRunCommands": false
+        }
+      ]
+    }
+  ]
+}

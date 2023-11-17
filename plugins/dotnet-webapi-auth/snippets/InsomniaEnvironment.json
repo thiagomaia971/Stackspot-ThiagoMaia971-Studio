@@ -1,0 +1,21 @@
+{
+    "_id": "env_57dc204c78874c87ace512277352f33e",
+    "parentId": "env_1f9096bf3d38bc8c2c8cfe4bfbf3f03570cf4aa2",
+    "modified": 1700237802924,
+    "created": 1700237733022,
+    "name": "Localhost - Admin",
+    "data": {
+        "Email": "admin@admin.com",
+        "Password": "asd@1234"
+    },
+    "dataPropertyOrder": {
+        "&": [
+            "Email",
+            "Password"
+        ]
+    },
+    "color": null,
+    "isPrivate": false,
+    "metaSortKey": 1700237733022,
+    "_type": "environment"
+}

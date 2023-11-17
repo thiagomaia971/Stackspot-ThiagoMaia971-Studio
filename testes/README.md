@@ -1,5 +1,3 @@
-# Stackspot-ThiagoMaia971-Studio
-My Stackspot Studio
 ## StackSpot Plugin
 
 ## Jinja

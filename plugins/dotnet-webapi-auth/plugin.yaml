@@ -1,0 +1,227 @@
+schema-version: v2
+kind: plugin
+metadata:
+  name: dotnet-webapi-auth
+  display-name: dotnet-webapi-auth
+  description: Descreva seu plugin explicando o propósito
+  version: 0.0.1
+  picture: plugin.png
+spec:
+  type: app
+  compatibility:
+    - python
+  about: docs/about.md
+  implementation: docs/implementation.md
+  release-notes: docs/release-notes-0.0.1.md
+  requirements: docs/requirements.md
+  single-use: False
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
+    - Api
+  stk-projects-only: false
+  inputs:
+  #   - label: Type name of your resource
+  #     name: resource
+  #     type: text
+  #     required: true
+  #     default: Client
+  #     pattern: '([A-Z][a-z]+)+'
+  #     help: 'Inform your resource name (e.g.: Client)'
+  #   - label: Choose http method of new endpoint
+  #     name: method
+  #     type: text
+  #     items:
+  #       - GET
+  #       - POST
+  #       - PUT
+  #       - DELETE
+  #       - PATCH
+  #     default: GET
+  #     required: true
+  #     help: 'Inform the method of the endpoint (e.g.: post or delete)'
+  hooks:
+  #package
+    - type: run
+      trigger: before-render
+      commands:
+        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Api/Configurations.cs
+      changes:
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using Microsoft.AspNetCore.Authentication.JwtBearer;\n"
+            when:
+              not-exists: using Microsoft.AspNetCore.Authentication.JwtBearer
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using Microsoft.IdentityModel.Tokens;\n"
+            when:
+              not-exists: using Microsoft.IdentityModel.Tokens
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Infrastructure.IdentityServices;\n"
+            when:
+              not-exists: using {{solution_name}}.Infrastructure.IdentityServices
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using Microsoft.AspNetCore.Identity;"
+            when:
+              not-exists: using Microsoft.AspNetCore.Identity;
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Domain.Models.Identity;"
+            when:
+              not-exists: using {{solution_name}}.Domain.Models.Identity;
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddServices.cs
+            when:
+              not-exists: AddIdentity
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthentication.cs
+            when:
+              not-exists: AddAuthentication
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthorization.cs
+            when:
+              not-exists: AddAuthorization
+        - search:
+            pattern: "return infraServices"
+            insert-before:
+              value: "infraServices.AddRepositories(typeof(User));\n"
+            when:
+              not-exists: AddRepositories(typeof(User))
+        - search:
+            pattern: "return infraServices"
+            insert-before:
+              value: "infraServices.AddScoped<IUserRepository, UserRepository>();\n"
+            when:
+              not-exists: infraServices.AddScoped<IUserRepository, UserRepository>()
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Api/Endpoints/Base/EndpointBase.cs
+      changes:
+        - search:
+            string: using 
+            insert-before:
+              value: "using {{solution_name}}.Api.Filters;\n"
+            when:
+              not-exists: using {{solution_name}}.Api.Filters
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        - search:
+            pattern: \.WithTags\(typeof\(TEntity\).Name\);
+            replace-by:
+              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Api/appsettings.Development.json
+      indent: "  "
+      encoding: utf-8
+      changes:
+        - insert:
+            line: 1
+            snippet: snippets/JwtSecrets.txt
+            when:
+              not-exists: "JWT"
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Domain/Models/AutoMappers/AutoMapperProfile.cs
+      changes:
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Domain.Models.Identity;\n"
+            when:
+              not-exists: using {{solution_name}}.Domain.Models.Identity;
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Domain.ViewModels.UserViewModels;\n"
+            when:
+              not-exists: using {{solution_name}}.Domain.ViewModels.UserViewModels;
+        - search:
+            pattern: "}"
+            insert-before:
+              snippet: snippets/AutoMapperProfileUser.cs
+            when:
+              not-exists: CreateMaps<User, UserInput, UserOutput>()
+
+    - type: edit-json
+      trigger: after-render
+      path: docs/Insomnia.json
+      indent: "  "
+      encoding: utf-8
+      changes:
+        - jsonpath: "$.resources"
+          update: 
+            snippet: snippets/InsomniaLogin.json
+
+    - type: edit-json
+      trigger: after-render
+      path: docs/Insomnia.json
+      indent: "  "
+      encoding: utf-8
+      changes:
+        - jsonpath: "$.resources"
+          update: 
+            snippet: snippets/InsomniaEnvironment.json
+                
+    #Renders
+    - type: render-templates
+      trigger: after-render
+      path: templates-dynamodb
+      condition:
+        variable: is_dynamodb
+        operator: "=="
+        value: "true"
+    #format
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Api"
+      commands:
+        -  dotnet format --include-generated
+      condition:
+        variable: has_api
+        operator: "=="
+        value: "true"
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Domain"
+      commands:
+        -  dotnet format --include-generated
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Infrastructure"
+      commands:
+        -  dotnet format --include-generated

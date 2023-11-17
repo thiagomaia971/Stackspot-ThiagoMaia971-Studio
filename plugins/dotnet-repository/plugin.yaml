@@ -1,0 +1,148 @@
+schema-version: v2
+kind: plugin
+metadata:
+  name: dotnet-repository
+  display-name: dotnet-repository
+  description: Descreva seu plugin explicando o propósito
+  version: 0.0.1
+  picture: plugin.png
+spec:
+  type: app
+  compatibility:
+    - python
+  about: docs/about.md
+  implementation: docs/implementation.md
+  release-notes: docs/release-notes-0.0.1.md
+  requirements: docs/requirements.md
+  single-use: False
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
+    - Api
+  stk-projects-only: false
+  inputs:
+    - label: Which Database do you want to use?
+      type: text
+      name: database_type
+      required: true
+      default: "DynamoDb"
+      global: true
+      items:
+        - "DynamoDb"
+        - "Sql Server"
+        - "MySql"
+  global-computed-inputs:
+    dynamodb: "DynamoDb"
+    sqlserver: "Sql Server"
+    mysql: "MySql"
+    is_dynamodb: "{% if database_type == dynamodb %}true{% else %}false{% endif %}"
+    is_slqserver: "{% if database_type == sqlserver %}true{% else %}false{% endif %}"
+    is_mysql: "{% if database_type == mysql %}true{% else %}false{% endif %}"
+  hooks:
+
+  #package DynamoDb
+    - type: run
+      trigger: before-render
+      commands:
+        - dotnet add src/{{solution_name}}.Domain package AWSSDK.DynamoDBV2 -v 3.7.300.3
+        - dotnet add src/{{solution_name}}.Domain package AWSSDK.Extensions.NETCore.Setup -v 3.7.300
+        - dotnet add src/{{solution_name}}.Domain package DynamoDbMapper.Sdk -v 1.0.6
+      condition:
+        variable: is_dynamodb
+        operator: "=="
+        value: "true"
+
+  #dependencyinjection
+    # - type: edit
+    #   trigger: before-render
+    #   path: "src/{{solution_name}}.Api/Configurations.cs"
+    #   condition:
+    #     variable: is_dynamodb
+    #     operator: "=="
+    #     value: "true"
+    #   changes:
+    #     - search:
+    #         string: "using"
+    #         insert-before:
+    #           value: "using DynamoDbMapper.Sdk.Configurations;\n"
+    #         when:
+    #           not-exists: "using DynamoDbMapper.Sdk.Configurations"
+    #     - search:
+    #         pattern: "return infraServices"
+    #         insert-before:
+    #           value: "infraServices.AddDynamodbMapper(configuration, environment);\n"
+    #         when:
+    #           not-exists: "infraServices.AddDynamodbMapper"
+    # - type: edit
+    #   trigger: after-render
+    #   path: src/{{solution_name}}.Domain/Models/Entity.cs
+    #   condition:
+    #     variable: is_dynamodb
+    #     operator: "=="
+    #     value: "true"
+    #   changes:
+    #     - search:
+    #         pattern: using
+    #         insert-before:
+    #           value: "using Amazon.DynamoDBv2.DataModel;"
+    #         when:
+    #           not-exists: "using Amazon.DynamoDBv2.DataModel;"
+    #     - search:
+    #         pattern: Entity {
+    #         replace-by:
+    #           value: "Entity : DynamoDbMapper.Sdk.Entities.Entity {"
+    #         when:
+    #           not-exists: DynamoDbMapper.Sdk.Entities.Entity
+    #     - search:
+    #         pattern: JsonProperty
+    #         insert-after:
+    #           value: "[DynamoDBProperty(\"Id\")]"
+    #         when:
+    #           not-exists: "[DynamoDBProperty(\"Id\")]"
+    # - type: edit
+    #   trigger: after-render
+    #   path: src/{{solution_name}}.Domain/Interfaces/Repositories/Base/IRepository.cs
+    #   condition:
+    #     variable: is_dynamodb
+    #     operator: "=="
+    #     value: "true"
+    #   changes:
+    #     - search:
+    #         pattern: "IRepository<T> where T : Entity"
+    #         replace-by:
+    #           value: "IRepository<T> : DynamoDbMapper.Sdk.Interfaces.IRepository<T> where T : Entity"
+    #         when:
+    #           not-exists: DynamoDbMapper.Sdk.Interfaces
+    - type: render-templates
+      trigger: after-render
+      path: templates-dynamodb
+      condition:
+        variable: is_dynamodb
+        operator: "=="
+        value: "true"
+    - type: render-templates
+      trigger: after-render
+      path: templates-default
+      condition:
+        variable: is_dynamodb
+        operator: "=="
+        value: "false"
+    #format
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Api"
+      commands:
+        -  dotnet format --include-generated
+      condition:
+        variable: has_api
+        operator: "=="
+        value: "true"
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Domain"
+      commands:
+        -  dotnet format --include-generated
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Infrastructure"
+      commands:
+        -  dotnet format --include-generated
