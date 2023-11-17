@@ -45,7 +45,7 @@ spec:
       commands:
         - dotnet add src/{{solution_name}}.Domain package AWSSDK.DynamoDBV2 -v 3.7.300.3
         - dotnet add src/{{solution_name}}.Domain package AWSSDK.Extensions.NETCore.Setup -v 3.7.300
-        - dotnet add src/{{solution_name}}.Domain package DynamoDbMapper.Sdk -v 1.0.5
+        - dotnet add src/{{solution_name}}.Domain package DynamoDbMapper.Sdk -v 1.0.6
       condition:
         variable: is_dynamodb
         operator: "=="

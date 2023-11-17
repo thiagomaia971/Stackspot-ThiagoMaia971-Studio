@@ -23,8 +23,8 @@
     {
       "splitTerminals": [
         {
-          "name": "dotnet-webapi",
-          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi"],
+          "name": "dotnet-repository",
+          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-repository"],
           "shouldRunCommands": false
         }
       ]
@@ -32,8 +32,8 @@
     {
       "splitTerminals": [
         {
-          "name": "dotnet-repository",
-          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-repository"],
+          "name": "dotnet-webapi",
+          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi"],
           "shouldRunCommands": false
         }
       ]

@@ -45,6 +45,7 @@ spec:
       trigger: before-render
       commands:
         - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
+
     - type: edit
       trigger: after-render
       path: src/{{solution_name}}.Api/Configurations.cs
@@ -76,9 +77,9 @@ spec:
         - search:
             pattern: using 
             insert-before:
-              value: "using {{solution_name}}.Models.Identity;"
+              value: "using {{solution_name}}.Domain.Models.Identity;"
             when:
-              not-exists: using {{solution_name}}.Models.Identity;
+              not-exists: using {{solution_name}}.Domain.Models.Identity;
         - search:
             pattern: return services;
             insert-before:
@@ -97,6 +98,19 @@ spec:
               snippet: snippets/AddAuthorization.cs
             when:
               not-exists: AddAuthorization
+        - search:
+            pattern: "return infraServices"
+            insert-before:
+              value: "infraServices.AddRepositories(typeof(User));\n"
+            when:
+              not-exists: AddRepositories(typeof(User))
+        - search:
+            pattern: "return infraServices"
+            insert-before:
+              value: "infraServices.AddScoped<IUserRepository, UserRepository>();\n"
+            when:
+              not-exists: infraServices.AddScoped<IUserRepository, UserRepository>()
+
     - type: edit
       trigger: after-render
       path: src/{{solution_name}}.Api/Endpoints/Base/EndpointBase.cs
@@ -127,6 +141,7 @@ spec:
             pattern: \.WithTags\(typeof\(TEntity\).Name\);
             replace-by:
               value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+
     - type: edit
       trigger: after-render
       path: src/{{solution_name}}.Api/appsettings.Development.json
@@ -138,6 +153,51 @@ spec:
             snippet: snippets/JwtSecrets.txt
             when:
               not-exists: "JWT"
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Domain/Models/AutoMappers/AutoMapperProfile.cs
+      changes:
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Domain.Models.Identity;\n"
+            when:
+              not-exists: using {{solution_name}}.Domain.Models.Identity;
+        - search:
+            pattern: using 
+            insert-before:
+              value: "using {{solution_name}}.Domain.ViewModels.UserViewModels;\n"
+            when:
+              not-exists: using {{solution_name}}.Domain.ViewModels.UserViewModels;
+        - search:
+            pattern: "}"
+            insert-before:
+              snippet: snippets/AutoMapperProfileUser.cs
+            when:
+              not-exists: CreateMaps<User, UserInput, UserOutput>()
+
+    - type: edit-json
+      trigger: after-render
+      path: docs/Insomnia.json
+      indent: "  "
+      encoding: utf-8
+      changes:
+        - jsonpath: "$.resources"
+          update: 
+            snippet: snippets/InsomniaLogin.json
+
+    - type: edit-json
+      trigger: after-render
+      path: docs/Insomnia.json
+      indent: "  "
+      encoding: utf-8
+      changes:
+        - jsonpath: "$.resources"
+          update: 
+            snippet: snippets/InsomniaEnvironment.json
+                
+    #Renders
     - type: render-templates
       trigger: after-render
       path: templates-dynamodb

@@ -3,8 +3,8 @@ using System.Text;
 using DynamoDbMapper.Sdk.Configurations;
 using {{solution_name}}.Domain.Models;
 using {{solution_name}}.Domain.Models.AutoMappers;
-using {{solution_name}}.Infrastructure.Repositories.Base;
-using {{solution_name}}.Domain.Interfaces.Repositories.Base;
+using {{solution_name}}.Domain.Interfaces.Repositories;
+using {{solution_name}}.Infrastructure.Repositories;
 
 namespace {{solution_name}}.Api;
 
@@ -35,7 +35,6 @@ public static class Configurations
     {
         infraServices.AddDynamodbMapper(configuration, environment);
         return infraServices
-            // .AddRepositories(typeof(Usuario))
             //.AddScoped<IUsuarioRepository, UsuarioRepository>()
             //.AddScoped<IClinicaRepository, ClinicaRepository>()
             // .AddScoped<IAgendaRepository, AgendaRepository>()

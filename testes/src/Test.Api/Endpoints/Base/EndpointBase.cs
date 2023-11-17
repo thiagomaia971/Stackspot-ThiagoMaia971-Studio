@@ -1,3 +1,4 @@
+using Test.Api.Filters;
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,11 +21,11 @@ public abstract class EndpointBase<TEntity, TInputDto, IOutputDto, IRepository> 
 
     public virtual void DefineEndpoints(WebApplication app)
     {
-        app.MapGet(Path, GetAll).WithTags(typeof(TEntity).Name);
-        app.MapGet($"{Path}/{{id}}", GetById).WithTags(typeof(TEntity).Name);
-        app.MapPost(Path, Post).WithTags(typeof(TEntity).Name);
-        app.MapPut($"{Path}/{{id}}", Put).WithTags(typeof(TEntity).Name);
-        app.MapDelete($"{Path}/{{id}}", Delete).WithTags(typeof(TEntity).Name);
+        app.MapGet(Path, GetAll).WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();
+        app.MapGet($"{Path}/{{id}}", GetById).WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();
+        app.MapPost(Path, Post).WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();
+        app.MapPut($"{Path}/{{id}}", Put).WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();
+        app.MapDelete($"{Path}/{{id}}", Delete).WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();
     }
 
     public virtual void DefineHandlers(IServiceCollection services)
@@ -123,7 +124,7 @@ public abstract class EndpointBase<TEntity, TInputDto, IOutputDto, IRepository> 
         }
         catch (Exception e)
         {
-            return Results.BadRequest(e);
+            return Results.BadRequest(new Exception(e.Message));
         }
     }
 }

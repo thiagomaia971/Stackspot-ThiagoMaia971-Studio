@@ -2,9 +2,9 @@ using Newtonsoft.Json;
 using Amazon.DynamoDBv2.DataModel;
 using DynamoDbMapper.Sdk.Attributes;
 
-namespace {{solution_name}}.Domain.Models.Identity;
+namespace Test.Domain.Models.Identity;
 
-[DynamoDBTable("{{solution_name}}")]
+[DynamoDBTable("Test")]
 public class User : Entity
 {
     [JsonProperty("Name")]

@@ -1,0 +1,35 @@
+{
+    "_id": "req_56581cd6a6044b528f735cbb05224353",
+    "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+    "modified": 1700237847727,
+    "created": 1700237667018,
+    "url": "{{ '{{ _.URL }}' }}/v1/login",
+    "name": "Login",
+    "description": "",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"{{ '{{ _.Email }}' }}\",\n  \"password\": \"{{ '{{ _.Password }}' }}\",\n  \"rememberMe\": true\n}"
+    },
+    "parameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        },
+        {
+            "name": "User-Agent",
+            "value": "insomnia/8.4.2"
+        }
+    ],
+    "authentication": {},
+    "metaSortKey": -1700237667018,
+    "isPrivate": false,
+    "settingStoreCookies": true,
+    "settingSendCookies": true,
+    "settingDisableRenderRequestBody": false,
+    "settingEncodeUrl": true,
+    "settingRebuildPath": true,
+    "settingFollowRedirects": "global",
+    "_type": "request"
+}

@@ -108,7 +108,7 @@ public abstract class EndpointBase<TEntity, TInputDto, IOutputDto, IRepository> 
         }
         catch (Exception e)
         {
-            return Results.BadRequest(e);
+            return Results.BadRequest(new Exception(e.Message));
         }
     }
 
@@ -123,7 +123,7 @@ public abstract class EndpointBase<TEntity, TInputDto, IOutputDto, IRepository> 
         }
         catch (Exception e)
         {
-            return Results.BadRequest(e);
+            return Results.BadRequest(new Exception(e.Message));
         }
     }
 }

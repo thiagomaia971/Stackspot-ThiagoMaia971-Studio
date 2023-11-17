@@ -4,7 +4,7 @@ spec:
   type: app
   plugins:
     - name: local/dotnet-base@0.0.5
-      alias: dotnet-base-1700164536335
+      alias: dotnet-base-1700245124410
       type: app
       inputs: {}
       inputs-envs: {}
@@ -14,7 +14,7 @@ spec:
       links:
         generates: []
     - name: local/dotnet-repository@0.0.1
-      alias: dotnet-repository-1700164542782
+      alias: dotnet-repository-1700245138163
       type: app
       inputs: {}
       inputs-envs: {}
@@ -24,9 +24,55 @@ spec:
       links:
         generates: []
     - name: local/dotnet-webapi@0.0.4
-      alias: dotnet-webapi-1700164565030
+      alias: dotnet-webapi-1700245167716
       type: app
       inputs: {}
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+    - name: local/dotnet-webapi-auth@0.0.1
+      alias: dotnet-webapi-auth-1700245196838
+      type: app
+      inputs: {}
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+    - name: local/dotnet-webapi-endpoint2@0.0.1
+      alias: dotnet-webapi-endpoint2-1700245213202
+      type: app
+      inputs:
+        entity_name: Patient
+        has_authentication: 'true'
+        method:
+          - GET_SINGLE
+          - GET_ALL
+          - POST
+          - PUT
+          - DELETE
+      inputs-envs: {}
+      connections:
+        generates: []
+        requires: []
+      links:
+        generates: []
+    - name: local/dotnet-webapi-endpoint2@0.0.1
+      alias: dotnet-webapi-endpoint2-1700245494765
+      type: app
+      inputs:
+        entity_name: Patient
+        has_authentication: 'false'
+        method:
+          - GET_SINGLE
+          - GET_ALL
+          - POST
+          - PUT
+          - DELETE
       inputs-envs: {}
       connections:
         generates: []

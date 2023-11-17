@@ -1,12 +1,5 @@
 using AutoMapper;
 using {{solution_name}}.Domain.ViewModels.Base;
-// using DynamoDbMapper.Sdk.Entities;
-// using {{solution_name}}.Domain.Models.Identity;
-// using {{solution_name}}.Domain.ViewModels.AtendimentoViewModels;
-// using {{solution_name}}.Domain.ViewModels.Base;
-// using {{solution_name}}.Domain.ViewModels.MaterialViewModels;
-// using {{solution_name}}.Domain.ViewModels.PacienteViewModels;
-// using {{solution_name}}.Domain.ViewModels.UserViewModels;
 
 namespace {{solution_name}}.Domain.Models.AutoMappers;
 
@@ -31,14 +24,6 @@ public class AutoMapperProfile : Profile
         CreateMapEntity<Agenda, AgendaInput, AgendaOutput>(
             (x => x.Hash , x => x.ClinicaId),
             (x => x.Id, x => x.AgendaId));*/
-        
-        // CreateMaps<Usuario, UserInput, UserOutput>()
-        //     .AddInputToEntityMap(input => input.Email, entity => entity.Gsi1Id)
-        //     .AddInputToEntityMap(input => input.Username, entity => entity.Gsi1Hash)
-        //     .AddEntityToOutputMap(opt => opt.MapFrom(x => x.Gsi1Id), output => output.Email)
-        //     .AddEntityToOutputMap(opt => opt.MapFrom(x => x.Gsi1Hash), output => output.Username)
-        //     .Finish();
-        
         
         // CreateMaps<Material, MaterialInput, MaterialOutput>()
         //     .AddInputToEntityMap(input => input.Nome, entity => entity.Gsi1Id)
