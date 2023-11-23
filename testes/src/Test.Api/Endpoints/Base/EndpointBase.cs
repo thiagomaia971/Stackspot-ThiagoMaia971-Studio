@@ -3,7 +3,7 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Test.Domain.Models;
-using Test.Domain.Commands;
+using Test.Domain.Endpoints.Base;
 using Test.Domain.Handlers;
 using Test.Domain.ViewModels.Base;
 using Test.Domain.Interfaces.Repositories.Base;
@@ -30,73 +30,73 @@ public abstract class EndpointBase<TEntity, TInputDto, IOutputDto, IRepository> 
 
     public virtual void DefineHandlers(IServiceCollection services)
     {
-        AddGetAllCommand(services);
-        AddGetByIdCommand(services);
-        AddCreateCommand(services);
-        AddPutCommand(services);
-        AddDeleteCommand(services);
+        AddGetAllRequest(services);
+        AddGetByIdRequest(services);
+        AddCreateRequest(services);
+        AddPutRequest(services);
+        AddDeleteRequest(services);
     }
 
-    protected virtual void AddGetAllCommand(IServiceCollection services)
+    protected virtual void AddGetAllRequest(IServiceCollection services)
     {
-        services.AddTransient<IRequestHandler<GetAllCommand<IOutputDto>, Pagination<IOutputDto>>,
-            GetAllCommandHandler<TEntity, IOutputDto, IRepository>>();
+        services.AddTransient<IRequestHandler<GetAllRequest<IOutputDto>, Pagination<IOutputDto>>,
+            GetAllRequestHandler<TEntity, IOutputDto, IRepository>>();
     }
 
-    protected virtual void AddGetByIdCommand(IServiceCollection services)
-    {
-        services
-            .AddTransient<IRequestHandler<GetByIdCommand<IOutputDto>, IOutputDto>,
-                GetByIdCommandHandler<TEntity, IOutputDto, IRepository>>();
-    }
-
-    protected virtual void AddCreateCommand(IServiceCollection services)
+    protected virtual void AddGetByIdRequest(IServiceCollection services)
     {
         services
-            .AddTransient<IRequestHandler<CreateCommand<TInputDto, IOutputDto>, IOutputDto>,
-                CreateCommandHandler<TEntity, TInputDto, IOutputDto, IRepository>>();
+            .AddTransient<IRequestHandler<GetByIdRequest<IOutputDto>, IOutputDto>,
+                GetByIdRequestHandler<TEntity, IOutputDto, IRepository>>();
     }
 
-    protected virtual void AddPutCommand(IServiceCollection services)
+    protected virtual void AddCreateRequest(IServiceCollection services)
     {
         services
-            .AddTransient<IRequestHandler<PutCommand<TInputDto, IOutputDto>, IOutputDto>,
-                PutCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRepository>>();
+            .AddTransient<IRequestHandler<CreateRequest<TInputDto, IOutputDto>, IOutputDto>,
+                CreateRequestHandler<TEntity, TInputDto, IOutputDto, IRepository>>();
     }
 
-    protected virtual void AddDeleteCommand(IServiceCollection services)
+    protected virtual void AddPutRequest(IServiceCollection services)
     {
         services
-            .AddTransient<IRequestHandler<DeleteCommand<IOutputDto>, IOutputDto>,
-                DeleteCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRepository>>();
+            .AddTransient<IRequestHandler<PutRequest<TInputDto, IOutputDto>, IOutputDto>,
+                PutRequestHandlerCreateRequest<TEntity, TInputDto, IOutputDto, IRepository>>();
+    }
+
+    protected virtual void AddDeleteRequest(IServiceCollection services)
+    {
+        services
+            .AddTransient<IRequestHandler<DeleteRequest<IOutputDto>, IOutputDto>,
+                DeleteRequestHandlerCreateRequest<TEntity, TInputDto, IOutputDto, IRepository>>();
     }
 
     protected virtual async Task<IResult> GetAll(
         [FromServices] IMapper mapper,
         [FromServices] IMediator mediator)
-        => await Handle(mediator, new GetAllCommand<IOutputDto>());
+        => await Handle(mediator, new GetAllRequest<IOutputDto>());
 
     protected virtual async Task<IResult> GetById(
         [FromRoute] string id,
         [FromServices] IMediator mediator)
-        => await Handle(mediator, new GetByIdCommand<IOutputDto>(id));
+        => await Handle(mediator, new GetByIdRequest<IOutputDto>(id));
 
     protected virtual async Task<IResult> Post(
         [FromBody] TInputDto input,
         [FromServices] IMediator mediator)
-        => await Handle(mediator, new CreateCommand<TInputDto, IOutputDto>(input));
+        => await Handle(mediator, new CreateRequest<TInputDto, IOutputDto>(input));
 
     protected virtual async Task<IResult> Put(
         [FromRoute] string id,
         [FromBody] TInputDto input,
         [FromServices] IMediator mediator)
-        => await Handle(mediator, new PutCommand<TInputDto, IOutputDto>(id, input));
+        => await Handle(mediator, new PutRequest<TInputDto, IOutputDto>(id, input));
 
     protected virtual async Task<IResult> Delete(
         [FromRoute] string id,
         [FromBody] TInputDto input,
         [FromServices] IMediator mediator)
-        => await Handle(mediator, new DeleteCommand<IOutputDto>(id));
+        => await Handle(mediator, new DeleteRequest<IOutputDto>(id));
 
     private async Task<IResult> Handle(IMediator mediator, IRequest<IOutputDto> request)
     {

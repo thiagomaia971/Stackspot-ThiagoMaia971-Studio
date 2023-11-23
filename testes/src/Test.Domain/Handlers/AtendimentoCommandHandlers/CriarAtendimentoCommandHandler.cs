@@ -1,12 +1,12 @@
 ﻿// using AutoMapper;
 // using DynamoDbMapper.Sdk.Interfaces;
-// using Test.Domain.Commands;
+// using Test.Domain.Endpoints.Base;
 // using Test.Domain.Models;
 // using Test.Domain.ViewModels.AtendimentoViewModels;
 
 // namespace Test.Domain.Handlers.AtendimentoCommandHandlers;
 
-// public class CriarAtendimentoCommandHandler : CreateCommandHandler<Atendimento, AtendimentoInput, AtendimentoOutput,
+// public class CriarAtendimentoCommandHandler : CreateRequestHandler<Atendimento, AtendimentoInput, AtendimentoOutput,
 //     IRepository<Atendimento>>
 // {
 //     private readonly IRepository<Paciente> _pacienteRepository;
@@ -19,7 +19,7 @@
 //         _pacienteRepository = pacienteRepository;
 //     }
 
-//     public override async Task<AtendimentoOutput> Handle(CreateCommand<AtendimentoInput, AtendimentoOutput> request, CancellationToken cancellationToken)
+//     public override async Task<AtendimentoOutput> Handle(CreateRequest<AtendimentoInput, AtendimentoOutput> request, CancellationToken cancellationToken)
 //     {
 //         var atendimento = _mapper.Map<Atendimento>(request.Payload);
 //         if (!string.IsNullOrEmpty(atendimento.Gsi1Id))

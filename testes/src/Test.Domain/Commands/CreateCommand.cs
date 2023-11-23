@@ -1,14 +1,14 @@
 ﻿using MediatR;
 using Test.Domain.ViewModels.Base;
 
-namespace Test.Domain.Commands;
+namespace Test.Domain.Endpoints.Base;
 
-public class CreateCommand<TInputDto, IOutputDto> : IRequest<IOutputDto>
+public class CreateRequest<TInputDto, IOutputDto> : IRequest<IOutputDto>
     where TInputDto : InputDto
     where IOutputDto : OutputDto
 {
     public TInputDto Payload { get; set; }
 
-    public CreateCommand(TInputDto payload)
+    public CreateRequest(TInputDto payload)
         => Payload = payload;
 }

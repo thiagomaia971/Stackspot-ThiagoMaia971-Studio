@@ -1,13 +1,13 @@
 ﻿using MediatR;
 using Test.Domain.ViewModels.Base;
 
-namespace Test.Domain.Commands;
+namespace Test.Domain.Endpoints.Base;
 
-public class GetByIdCommand<IOutputDto> : IRequest<IOutputDto>
+public class GetByIdRequest<IOutputDto> : IRequest<IOutputDto>
     where IOutputDto : OutputDto
 {
     public string Id { get; set; }
 
-    public GetByIdCommand(string id)
+    public GetByIdRequest(string id)
         => Id = id;
 }

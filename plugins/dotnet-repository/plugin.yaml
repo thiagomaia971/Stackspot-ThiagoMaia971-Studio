@@ -51,6 +51,32 @@ spec:
         operator: "=="
         value: "true"
 
+  #package Sql Server
+    - type: run
+      trigger: before-render
+      commands:
+        - dotnet add src/{{solution_name}}.Domain package AWSSDK.DynamoDBV2 -v 3.7.300.3
+        - dotnet add src/{{solution_name}}.Domain package AWSSDK.Extensions.NETCore.Setup -v 3.7.300
+        - dotnet add src/{{solution_name}}.Domain package DynamoDbMapper.Sdk -v 1.0.6
+      condition:
+        variable: is_sqlserver
+        operator: "=="
+        value: "true"
+
+  #package MySql
+    - type: run
+      trigger: before-render
+      commands:
+        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity.EntityFrameworkCore -v 8.0.0
+        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.EntityFrameworkCore -v 8.0.0
+        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.EntityFrameworkCore.Relational -v 8.0.0
+        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.EntityFrameworkCore.Tools -v 8.0.0
+        - dotnet add src/{{solution_name}}.Infrastructure package Pomelo.EntityFrameworkCore.MySql -v 8.0.0-beta.2
+      condition:
+        variable: is_mysql
+        operator: "=="
+        value: "true"
+
   #dependencyinjection
     # - type: edit
     #   trigger: before-render
@@ -114,18 +140,8 @@ spec:
     #           not-exists: DynamoDbMapper.Sdk.Interfaces
     - type: render-templates
       trigger: after-render
-      path: templates-dynamodb
-      condition:
-        variable: is_dynamodb
-        operator: "=="
-        value: "true"
-    - type: render-templates
-      trigger: after-render
-      path: templates-default
-      condition:
-        variable: is_dynamodb
-        operator: "=="
-        value: "false"
+      path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
+
     #format
     - type: run
       trigger: after-render

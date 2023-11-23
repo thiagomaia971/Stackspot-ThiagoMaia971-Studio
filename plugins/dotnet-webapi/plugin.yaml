@@ -20,25 +20,7 @@ spec:
     - Api
   stk-projects-only: false
   inputs:
-    # - label: Type name of your resource
-    #   name: resource
-    #   type: text
-    #   required: true
-    #   default: Client
-    #   pattern: '([A-Z][a-z]+)+'
-    #   help: 'Inform your resource name (e.g.: Client)'
-    # - label: Choose http method of new endpoint
-    #   name: method
-    #   type: text
-    #   items:
-    #     - GET
-    #     - POST
-    #     - PUT
-    #     - DELETE
-    #     - PATCH
-    #   default: GET
-    #   required: true
-    #   help: 'Inform the method of the endpoint (e.g.: post or delete)'
+
   global-computed-inputs:
     has_api: "true"
 
@@ -51,35 +33,27 @@ spec:
           line: 1
           snippet: snippets/SolutionApi.sln
 
-  - type: render-templates
-    trigger: after-render
-    path: templates-dynamodb
-    condition:
-      variable: is_dynamodb
-      operator: "=="
-      value: "true"
-
-  - type: render-templates
-    trigger: after-render
-    path: templates-default
-    condition:
-      variable: is_dynamodb
-      operator: "=="
-      value: "false"
-
-  - type: edit-json
-    trigger: after-render
-    path: src/{{solution_name}}.Api/appsettings.Development.json
-    indent: "  "
-    encoding: utf-8
-    condition:
-      variable: is_dynamodb
-      operator: "=="
-      value: "true"
+  - type: edit
+    trigger: before-render
+    path: src/{{solution_name}}.Domain/{{solution_name}}.Domain.csproj
     changes:
-      - jsonpath: "$"
-        update:
-          snippet: snippets/AppsettingsAws.json
+      - search:
+          string: "</ItemGroup>"
+          insert-before: 
+            value: "\t\t<FrameworkReference Include="Microsoft.AspNetCore.App" />"
+          when:
+            not-exists: "<FrameworkReference Include="Microsoft.AspNetCore.App" />"
+
+  # - type: render-templates
+  #   trigger: after-render
+  #   path: templates-dynamodb
+  #   condition:
+  #     variable: is_dynamodb
+  #     operator: "=="
+  #     value: "true"
+  - type: render-templates
+    trigger: after-render
+    path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
 
   #format
   - type: run
