@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Test.Domain.ViewModels.Base;
 
-namespace Test.Domain.Commands;
+namespace Test.Domain.Endpoints.Base;
 
-public class GetAllCommand<IOutputDto> : IRequest<Pagination<IOutputDto>>
+public class GetAllRequest<IOutputDto> : IRequest<Pagination<IOutputDto>>
     where IOutputDto : OutputDto
 {
 }

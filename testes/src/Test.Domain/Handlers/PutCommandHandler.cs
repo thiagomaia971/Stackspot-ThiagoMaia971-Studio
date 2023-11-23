@@ -2,14 +2,14 @@
 using MediatR;
 using Newtonsoft.Json;
 using Test.Domain.Models;
-using Test.Domain.Commands;
+using Test.Domain.Endpoints.Base;
 using Test.Domain.ViewModels.Base;
 using Test.Domain.Interfaces.Repositories.Base;
 
 namespace Test.Domain.Handlers;
 
-public class PutCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRepository>
-    : IRequestHandler<PutCommand<TInputDto, IOutputDto>, IOutputDto>
+public class PutRequestHandlerCreateRequest<TEntity, TInputDto, IOutputDto, IRepository>
+    : IRequestHandler<PutRequest<TInputDto, IOutputDto>, IOutputDto>
     where TEntity : Entity
     where TInputDto : InputDto
     where IOutputDto : OutputDto
@@ -18,7 +18,7 @@ public class PutCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRep
     private readonly IMapper _mapper;
     private readonly IRepository _repository;
 
-    public PutCommandHandlerCreateCommand(
+    public PutRequestHandlerCreateRequest(
         IMapper mapper,
         IRepository repository)
     {
@@ -26,7 +26,7 @@ public class PutCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRep
         _repository = repository;
     }
 
-    public async Task<IOutputDto> Handle(PutCommand<TInputDto, IOutputDto> request, CancellationToken cancellationToken)
+    public async Task<IOutputDto> Handle(PutRequest<TInputDto, IOutputDto> request, CancellationToken cancellationToken)
     {
         var entity = await _repository.FindById(request.Id);
         if (entity is null)

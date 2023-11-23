@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using Test.Domain.Models;
-using Test.Domain.Commands;
+using Test.Domain.Endpoints.Base;
 using Test.Domain.ViewModels.Base;
 using Test.Domain.Interfaces.Repositories.Base;
 
 namespace Test.Domain.Handlers;
 
-public class CreateCommandHandler<TEntity, TInputDto, IOutputDto, IRepository>
-    : IRequestHandler<CreateCommand<TInputDto, IOutputDto>, IOutputDto>
+public class CreateRequestHandler<TEntity, TInputDto, IOutputDto, IRepository>
+    : IRequestHandler<CreateRequest<TInputDto, IOutputDto>, IOutputDto>
     where TEntity : Entity
     where TInputDto : InputDto
     where IOutputDto : OutputDto
@@ -17,7 +17,7 @@ public class CreateCommandHandler<TEntity, TInputDto, IOutputDto, IRepository>
     protected readonly IMapper _mapper;
     protected readonly IRepository _repository;
 
-    public CreateCommandHandler(
+    public CreateRequestHandler(
         IMapper mapper,
         IRepository repository)
     {
@@ -25,7 +25,7 @@ public class CreateCommandHandler<TEntity, TInputDto, IOutputDto, IRepository>
         _repository = repository;
     }
 
-    public virtual async Task<IOutputDto> Handle(CreateCommand<TInputDto, IOutputDto> request, CancellationToken cancellationToken)
+    public virtual async Task<IOutputDto> Handle(CreateRequest<TInputDto, IOutputDto> request, CancellationToken cancellationToken)
     {
         var entity = _mapper.Map<TEntity>(request.Payload);
         // if (!string.IsNullOrEmpty(entity.Gsi1Id))

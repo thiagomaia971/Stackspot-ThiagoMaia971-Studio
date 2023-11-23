@@ -1,5 +1,5 @@
 ﻿// using AutoMapper;
-// using Test.Domain.Commands;
+// using Test.Domain.Endpoints.Base;
 // using Test.Domain.Interfaces.Repositories;
 // using Test.Domain.Models;
 // using Test.Domain.ViewModels.AgendaViewModels;
@@ -7,7 +7,7 @@
 
 // namespace Test.Domain.Handlers.AgendaCommandHandlers;
 
-// public class CriarAgendaCommandHandler : CreateCommandHandler<Agenda, AgendaInput, AgendaOutput, IAgendaRepository>
+// public class CriarAgendaCommandHandler : CreateRequestHandler<Agenda, AgendaInput, AgendaOutput, IAgendaRepository>
 // {
 //     private readonly IClinicaRepository _clinicaRepository;
 
@@ -19,7 +19,7 @@
 //         _clinicaRepository = clinicaRepository;
 //     }
 
-//     public override async Task<AgendaOutput> Handle(CreateCommand<AgendaInput, AgendaOutput> request, CancellationToken cancellationToken)
+//     public override async Task<AgendaOutput> Handle(CreateRequest<AgendaInput, AgendaOutput> request, CancellationToken cancellationToken)
 //     {
 //         /*
 //         var user = await _repository.Find(request.Payload.GetHash());

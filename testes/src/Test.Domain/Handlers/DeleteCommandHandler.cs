@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using MediatR;
 using Test.Domain.Models;
-using Test.Domain.Commands;
+using Test.Domain.Endpoints.Base;
 using Test.Domain.ViewModels.Base;
 using Test.Domain.Interfaces.Repositories.Base;
 
 namespace Test.Domain.Handlers;
 
-public class DeleteCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, IRepository>
-    : IRequestHandler<DeleteCommand<IOutputDto>, IOutputDto>
+public class DeleteRequestHandlerCreateRequest<TEntity, TInputDto, IOutputDto, IRepository>
+    : IRequestHandler<DeleteRequest<IOutputDto>, IOutputDto>
     where TEntity : Entity
     where TInputDto : InputDto
     where IOutputDto : OutputDto
@@ -17,7 +17,7 @@ public class DeleteCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, I
     private readonly IMapper _mapper;
     private readonly IRepository _repository;
 
-    public DeleteCommandHandlerCreateCommand(
+    public DeleteRequestHandlerCreateRequest(
         IMapper mapper,
         IRepository repository)
     {
@@ -25,7 +25,7 @@ public class DeleteCommandHandlerCreateCommand<TEntity, TInputDto, IOutputDto, I
         _repository = repository;
     }
 
-    public async Task<IOutputDto> Handle(DeleteCommand<IOutputDto> request, CancellationToken cancellationToken)
+    public async Task<IOutputDto> Handle(DeleteRequest<IOutputDto> request, CancellationToken cancellationToken)
     {
         var entity = await _repository.FindById(request.Id);
 
