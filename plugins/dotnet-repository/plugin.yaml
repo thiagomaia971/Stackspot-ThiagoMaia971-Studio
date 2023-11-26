@@ -38,28 +38,24 @@ spec:
     is_slqserver: "{% if database_type == sqlserver %}true{% else %}false{% endif %}"
     is_mysql: "{% if database_type == mysql %}true{% else %}false{% endif %}"
   hooks:
-
-  #package DynamoDb
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.1
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.3
       condition:
         variable: is_dynamodb
         operator: "=="
         value: "true"
 
-  #package Sql Server
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.1
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.3
       condition:
         variable: is_sqlserver
         operator: "=="
         value: "true"
 
-  #package MySql
     - type: run
       trigger: before-render
       commands:
@@ -72,89 +68,7 @@ spec:
         variable: is_mysql
         operator: "=="
         value: "true"
-
-  #dependencyinjection
-    # - type: edit
-    #   trigger: before-render
-    #   path: "src/{{solution_name}}.Api/Configurations.cs"
-    #   condition:
-    #     variable: is_dynamodb
-    #     operator: "=="
-    #     value: "true"
-    #   changes:
-    #     - search:
-    #         string: "using"
-    #         insert-before:
-    #           value: "using CruderSimple.DynamoDb.Configurations;\n"
-    #         when:
-    #           not-exists: "using CruderSimple.DynamoDb.Configurations"
-    #     - search:
-    #         pattern: "return infraServices"
-    #         insert-before:
-    #           value: "infraServices.AddDynamodbMapper(configuration, environment);\n"
-    #         when:
-    #           not-exists: "infraServices.AddDynamodbMapper"
-    # - type: edit
-    #   trigger: after-render
-    #   path: src/{{solution_name}}.Domain/Models/Entity.cs
-    #   condition:
-    #     variable: is_dynamodb
-    #     operator: "=="
-    #     value: "true"
-    #   changes:
-    #     - search:
-    #         pattern: using
-    #         insert-before:
-    #           value: "using Amazon.DynamoDBv2.DataModel;"
-    #         when:
-    #           not-exists: "using Amazon.DynamoDBv2.DataModel;"
-    #     - search:
-    #         pattern: Entity {
-    #         replace-by:
-    #           value: "Entity : CruderSimple.DynamoDb.Entities.Entity {"
-    #         when:
-    #           not-exists: CruderSimple.DynamoDb.Entities.Entity
-    #     - search:
-    #         pattern: JsonProperty
-    #         insert-after:
-    #           value: "[DynamoDBProperty(\"Id\")]"
-    #         when:
-    #           not-exists: "[DynamoDBProperty(\"Id\")]"
-    # - type: edit
-    #   trigger: after-render
-    #   path: src/{{solution_name}}.Domain/Interfaces/Repositories/Base/IRepository.cs
-    #   condition:
-    #     variable: is_dynamodb
-    #     operator: "=="
-    #     value: "true"
-    #   changes:
-    #     - search:
-    #         pattern: "IRepository<T> where T : Entity"
-    #         replace-by:
-    #           value: "IRepository<T> : CruderSimple.DynamoDb.Interfaces.IRepository<T> where T : Entity"
-    #         when:
-    #           not-exists: CruderSimple.DynamoDb.Interfaces
+        
     - type: render-templates
       trigger: after-render
       path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
-
-    #format
-    # - type: run
-    #   trigger: after-render
-    #   working-dir: "src/{{solution_name}}.Api"
-    #   commands:
-    #     -  dotnet format --include-generated
-    #   condition:
-    #     variable: has_api
-    #     operator: "=="
-    #     value: "true"
-    # - type: run
-    #   trigger: after-render
-    #   working-dir: "src/{{solution_name}}.Domain"
-    #   commands:
-    #     -  dotnet format --include-generated
-    # - type: run
-    #   trigger: after-render
-    #   working-dir: "src/{{solution_name}}.Infrastructure"
-    #   commands:
-    #     -  dotnet format --include-generated
