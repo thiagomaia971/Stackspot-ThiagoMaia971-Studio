@@ -1,8 +1,0 @@
-{{database_type | lower | pascalcase}}
-{{database_type | lower | camelcase}}
-{{database_type | lower | kebabcase}}
-{{database_type | lower | cobolcase}}
-{{database_type | lower | snakecase}}
-{{database_type | lower | macrocase}}
-{{database_type | lower | group_id_folder}}
-{{database_type | lower | regex_replace}}
