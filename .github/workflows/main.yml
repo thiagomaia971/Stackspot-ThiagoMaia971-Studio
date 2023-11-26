@@ -30,7 +30,7 @@ jobs:
 
       - name: Modifiy the specific files using scripts
         run: |
-          --- shell scripts or command lines to execute ---
+          ./search.sh
 
       - name: Commit and push changes
         run: |
