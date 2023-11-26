@@ -6,9 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using {{solution_name}}.Domain.Models.Identity;
         
         services
-{{"            .AddScoped<IUserStore<User>, UserStore>()
+            .AddScoped<IUserStore<User>, UserStore>()
             .AddScoped<IRoleStore<Role>, RoleStore>()
             .AddIdentity<User, Role>()
             .AddDefaultTokenProviders();
-        services"}}
 

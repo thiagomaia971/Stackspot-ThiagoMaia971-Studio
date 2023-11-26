@@ -4,7 +4,7 @@ metadata:
   name: dotnet-base
   display-name: dotnet-base
   description: Dotnet base structure
-  version: 0.0.6
+  version: 0.0.7
   picture: plugin.png
 spec:
   type: app
