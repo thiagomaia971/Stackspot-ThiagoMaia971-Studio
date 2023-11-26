@@ -4,7 +4,7 @@ metadata:
   name: dotnet-webapi
   display-name: dotnet-webapi
   description: Web API base
-  version: 0.0.4
+  version: 0.0.5
   picture: plugin.png
 spec:
   type: app
@@ -15,11 +15,11 @@ spec:
   release-notes: docs/release-notes-0.0.1.md
   requirements: docs/requirements.md
   single-use: False
-  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio/tree/main/plugins/dotnet-webapi
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
   technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
     - Api
   stk-projects-only: false
-  inputs:
+  #inputs:
 
   global-computed-inputs:
     has_api: "true"
