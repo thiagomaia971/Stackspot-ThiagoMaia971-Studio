@@ -19,24 +19,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2.3.2
 
-  - name: Get Version
-      id: get_version
-      uses: battila7/get-version-action@v2.2.1
-      
-    - name: Print
-      run: |
-          echo ${{ steps.get_version.outputs.version }}
-          echo ${{ steps.get_version.outputs.version-without-v }}
+      - name: Get Version
+          id: get_version
+          uses: battila7/get-version-action@v2.2.1
+          
+        - name: Print
+          run: |
+              echo ${{ steps.get_version.outputs.version }}
+              echo ${{ steps.get_version.outputs.version-without-v }}
 
-  - name: Modifiy the specific files using scripts
-    run: |
-      --- shell scripts or command lines to execute ---
+      - name: Modifiy the specific files using scripts
+        run: |
+          --- shell scripts or command lines to execute ---
 
-  - name: Commit and push changes
-    run: |
-      git config --global user.name "your username"
-      git config --global user.email "your email"
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "your username"
+          git config --global user.email "your email"
 
-      git add -A
-      git commit -m "commit message"
-      git push
+          git add -A
+          git commit -m "commit message"
+          git push
