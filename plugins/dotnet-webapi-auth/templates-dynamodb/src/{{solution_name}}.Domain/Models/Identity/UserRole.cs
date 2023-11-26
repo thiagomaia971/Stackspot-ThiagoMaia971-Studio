@@ -1,5 +1,7 @@
 using Newtonsoft.Json;
 using Amazon.DynamoDBv2.DataModel;
+using CruderSimple.Core.ViewModels;
+using CruderSimple.DynamoDb.Entities;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
@@ -13,5 +15,15 @@ public class UserRole : Entity
     public UserRole()
     {
         
+    }
+
+    public override Entity FromInput(InputDto input)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override OutputDto ToOutput()
+    {
+        throw new NotImplementedException();
     }
 }

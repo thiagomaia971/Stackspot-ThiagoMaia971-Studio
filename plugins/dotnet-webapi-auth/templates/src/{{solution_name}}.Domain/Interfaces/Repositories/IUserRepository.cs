@@ -1,4 +1,4 @@
-using DynamoDbMapper.Sdk.Interfaces;
+using CruderSimple.DynamoDb.Interfaces;
 using {{solution_name}}.Domain.Models.Identity;
 
 namespace {{solution_name}}.Domain.Interfaces.Repositories;

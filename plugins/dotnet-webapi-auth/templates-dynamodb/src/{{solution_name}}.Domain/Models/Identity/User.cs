@@ -1,6 +1,8 @@
 using Newtonsoft.Json;
 using Amazon.DynamoDBv2.DataModel;
-using DynamoDbMapper.Sdk.Attributes;
+using CruderSimple.Core.ViewModels;
+using CruderSimple.DynamoDb.Attributes;
+using CruderSimple.DynamoDb.Entities;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
@@ -8,8 +10,8 @@ namespace {{solution_name}}.Domain.Models.Identity;
 public class User : Entity
 {
     [JsonProperty("Name")]
-    [DynamoDBProperty("Nome")]
-    public string Nome { get; set; }
+    [DynamoDBProperty("Name")]
+    public string Name { get; set; }
 
     [JsonProperty("EmailConfirmed")]
     [DynamoDBProperty("EmailConfirmed")]
@@ -34,4 +36,14 @@ public class User : Entity
     [DynamoDBIgnore]
     [DynamoDbInner(typeof(UserRole))]
     public List<UserRole> Roles { get; set; }
+
+    public override Entity FromInput(InputDto input)
+    {
+        throw new NotImplementedException();
+    }
+
+    public override OutputDto ToOutput()
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,4 +1,4 @@
-using DynamoDbMapper.Sdk.Interfaces;
+using CruderSimple.DynamoDb.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using {{solution_name}}.Domain.Models.Identity;
 

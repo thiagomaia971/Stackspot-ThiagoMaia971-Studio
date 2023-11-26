@@ -1,6 +1,5 @@
+using CruderSimple.DynamoDb.Configurations;
 using {{solution_name}}.Api;
-using {{solution_name}}.Api.Endpoints.Base;
-using {{solution_name}}.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services
-    .AddRequestDefinitions(typeof(IHttpRequest))
     .AddServices(builder.Configuration, builder.Environment);
 var app = builder.Build();
 
@@ -16,7 +14,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+        c.RoutePrefix = "";
+    });
 }
 
 // app.UseHttpsRedirection();
@@ -24,7 +26,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseRequestDefinitions(typeof(IHttpRequest));
+app.UseCruderSimpleServices();
 //app.MapControllers();
 
 app.Run();

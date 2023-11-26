@@ -1,4 +1,4 @@
-## StackSpot Plugin
+## StackSpot Plugin2
 
 ## Jinja
 
@@ -9,3 +9,5 @@ complete documentation of jinja: https://jinja.palletsprojects.com/en/3.0.x/temp
 ### Example Inputs:
 - Resource: {{ resource }}
 - Method: {{ method }}
+
+{{database_type | lower | replace(" ", "") | camelcase}}

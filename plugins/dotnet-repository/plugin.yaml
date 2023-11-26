@@ -43,9 +43,7 @@ spec:
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package AWSSDK.DynamoDBV2 -v 3.7.300.3
-        - dotnet add src/{{solution_name}}.Domain package AWSSDK.Extensions.NETCore.Setup -v 3.7.300
-        - dotnet add src/{{solution_name}}.Domain package DynamoDbMapper.Sdk -v 1.0.6
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.1-alpha-1.0.3
       condition:
         variable: is_dynamodb
         operator: "=="
@@ -55,9 +53,7 @@ spec:
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package AWSSDK.DynamoDBV2 -v 3.7.300.3
-        - dotnet add src/{{solution_name}}.Domain package AWSSDK.Extensions.NETCore.Setup -v 3.7.300
-        - dotnet add src/{{solution_name}}.Domain package DynamoDbMapper.Sdk -v 1.0.6
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.1-alpha-1.0.3
       condition:
         variable: is_sqlserver
         operator: "=="
@@ -89,9 +85,9 @@ spec:
     #     - search:
     #         string: "using"
     #         insert-before:
-    #           value: "using DynamoDbMapper.Sdk.Configurations;\n"
+    #           value: "using CruderSimple.DynamoDb.Configurations;\n"
     #         when:
-    #           not-exists: "using DynamoDbMapper.Sdk.Configurations"
+    #           not-exists: "using CruderSimple.DynamoDb.Configurations"
     #     - search:
     #         pattern: "return infraServices"
     #         insert-before:
@@ -115,9 +111,9 @@ spec:
     #     - search:
     #         pattern: Entity {
     #         replace-by:
-    #           value: "Entity : DynamoDbMapper.Sdk.Entities.Entity {"
+    #           value: "Entity : CruderSimple.DynamoDb.Entities.Entity {"
     #         when:
-    #           not-exists: DynamoDbMapper.Sdk.Entities.Entity
+    #           not-exists: CruderSimple.DynamoDb.Entities.Entity
     #     - search:
     #         pattern: JsonProperty
     #         insert-after:
@@ -135,30 +131,30 @@ spec:
     #     - search:
     #         pattern: "IRepository<T> where T : Entity"
     #         replace-by:
-    #           value: "IRepository<T> : DynamoDbMapper.Sdk.Interfaces.IRepository<T> where T : Entity"
+    #           value: "IRepository<T> : CruderSimple.DynamoDb.Interfaces.IRepository<T> where T : Entity"
     #         when:
-    #           not-exists: DynamoDbMapper.Sdk.Interfaces
+    #           not-exists: CruderSimple.DynamoDb.Interfaces
     - type: render-templates
       trigger: after-render
       path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
 
     #format
-    - type: run
-      trigger: after-render
-      working-dir: "src/{{solution_name}}.Api"
-      commands:
-        -  dotnet format --include-generated
-      condition:
-        variable: has_api
-        operator: "=="
-        value: "true"
-    - type: run
-      trigger: after-render
-      working-dir: "src/{{solution_name}}.Domain"
-      commands:
-        -  dotnet format --include-generated
-    - type: run
-      trigger: after-render
-      working-dir: "src/{{solution_name}}.Infrastructure"
-      commands:
-        -  dotnet format --include-generated
+    # - type: run
+    #   trigger: after-render
+    #   working-dir: "src/{{solution_name}}.Api"
+    #   commands:
+    #     -  dotnet format --include-generated
+    #   condition:
+    #     variable: has_api
+    #     operator: "=="
+    #     value: "true"
+    # - type: run
+    #   trigger: after-render
+    #   working-dir: "src/{{solution_name}}.Domain"
+    #   commands:
+    #     -  dotnet format --include-generated
+    # - type: run
+    #   trigger: after-render
+    #   working-dir: "src/{{solution_name}}.Infrastructure"
+    #   commands:
+    #     -  dotnet format --include-generated
