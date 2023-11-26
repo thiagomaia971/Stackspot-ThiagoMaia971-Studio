@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using CruderSimple.Core.ViewModels;
 using {{solution_name}}.Domain.Models.Identity;
-using {{solution_name}}.Domain.ViewModels.Base;
 
 namespace {{solution_name}}.Domain.ViewModels.UserViewModels;
 

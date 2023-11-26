@@ -4,7 +4,7 @@ resource "aws_dynamodb_table" "{{solution_name}}DynamoDb" {
     read_capacity = 5
     write_capacity = 5
     hash_key = "Id"
-    range_key = "Hash"
+    range_key = "CreatedAt"
 
     attribute {
         name = "Id"
@@ -12,7 +12,12 @@ resource "aws_dynamodb_table" "{{solution_name}}DynamoDb" {
     }
 
     attribute {
-        name = "Hash"
+        name = "CreatedAt"
+        type = "S"
+    }
+
+    attribute {
+        name = "InheritedKey"
         type = "S"
     }
 
@@ -32,18 +37,26 @@ resource "aws_dynamodb_table" "{{solution_name}}DynamoDb" {
     }
 
     attribute {
-        name = "GSI1-Id"
+        name = "GSI-PrimaryKey"
         type = "S"
     }
 
     attribute {
-        name = "GSI1-Hash"
+        name = "GSI-PrimaryInheritedKey"
         type = "S"
     }
 
     global_secondary_index {
-        hash_key = "Hash"
-        name = "GSI-Hash"
+        hash_key = "CreatedAt"
+        name = "GSI-CreatedAt"
+        projection_type = "ALL"
+        read_capacity = 100
+        write_capacity = 100
+    }
+
+    global_secondary_index {
+        hash_key = "InheritedKey"
+        name = "GSI-InheritedKey"
         projection_type = "ALL"
         read_capacity = 100
         write_capacity = 100
@@ -74,16 +87,16 @@ resource "aws_dynamodb_table" "{{solution_name}}DynamoDb" {
     }
 
     global_secondary_index {
-        hash_key = "GSI1-Id"
-        name = "GSI1-Id"
+        hash_key = "GSI-PrimaryKey"
+        name = "GSI-PrimaryKey"
         projection_type = "ALL"
         read_capacity = 100
         write_capacity = 100
     }
 
     global_secondary_index {
-        hash_key = "GSI1-Hash"
-        name = "GSI1-Hash"
+        hash_key = "GSI-PrimaryInheritedKey"
+        name = "GSI-PrimaryInheritedKey"
         projection_type = "ALL"
         read_capacity = 100
         write_capacity = 100

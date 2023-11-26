@@ -46,101 +46,59 @@ spec:
       commands:
         - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
 
-    - type: edit
-      trigger: after-render
-      path: src/{{solution_name}}.Api/Configurations.cs
-      changes:
-        - search:
-            pattern: using 
-            insert-before:
-              value: "using Microsoft.AspNetCore.Authentication.JwtBearer;\n"
-            when:
-              not-exists: using Microsoft.AspNetCore.Authentication.JwtBearer
-        - search:
-            pattern: using 
-            insert-before:
-              value: "using Microsoft.IdentityModel.Tokens;\n"
-            when:
-              not-exists: using Microsoft.IdentityModel.Tokens
-        - search:
-            pattern: using 
-            insert-before:
-              value: "using {{solution_name}}.Infrastructure.IdentityServices;\n"
-            when:
-              not-exists: using {{solution_name}}.Infrastructure.IdentityServices
-        - search:
-            pattern: using 
-            insert-before:
-              value: "using Microsoft.AspNetCore.Identity;"
-            when:
-              not-exists: using Microsoft.AspNetCore.Identity;
-        - search:
-            pattern: using 
-            insert-before:
-              value: "using {{solution_name}}.Domain.Models.Identity;"
-            when:
-              not-exists: using {{solution_name}}.Domain.Models.Identity;
-        - search:
-            pattern: return services;
-            insert-before:
-              snippet: snippets/AddServices.cs
-            when:
-              not-exists: AddIdentity
-        - search:
-            pattern: return services;
-            insert-before:
-              snippet: snippets/AddAuthentication.cs
-            when:
-              not-exists: AddAuthentication
-        - search:
-            pattern: return services;
-            insert-before:
-              snippet: snippets/AddAuthorization.cs
-            when:
-              not-exists: AddAuthorization
-        - search:
-            pattern: "return infraServices"
-            insert-before:
-              value: "infraServices.AddRepositories(typeof(User));\n"
-            when:
-              not-exists: AddRepositories(typeof(User))
-        - search:
-            pattern: "return infraServices"
-            insert-before:
-              value: "infraServices.AddScoped<IUserRepository, UserRepository>();\n"
-            when:
-              not-exists: infraServices.AddScoped<IUserRepository, UserRepository>()
+    # - type: edit
+    #   trigger: after-render
+    #   path: src/{{solution_name}}.Api/Configurations.cs
+    #   changes:
+        # - search:
+        #     pattern: using 
+        #     insert-before:
+        #       value: "using Microsoft.AspNetCore.Authentication.JwtBearer;\n"
+        #     when:
+        #       not-exists: using Microsoft.AspNetCore.Authentication.JwtBearer
+        # - search:
+        #     pattern: using 
+        #     insert-before:
+        #       value: "using Microsoft.IdentityModel.Tokens;\n"
+        #     when:
+        #       not-exists: using Microsoft.IdentityModel.Tokens
+        # - search:
+        #     pattern: using 
+        #     insert-before:
+        #       value: "using {{solution_name}}.Infrastructure.IdentityServices;\n"
+        #     when:
+        #       not-exists: using {{solution_name}}.Infrastructure.IdentityServices
+        # - search:
+        #     pattern: using 
+        #     insert-before:
+        #       value: "using Microsoft.AspNetCore.Identity;"
+        #     when:
+        #       not-exists: using Microsoft.AspNetCore.Identity;
+        # - search:
+        #     pattern: using 
+        #     insert-before:
+        #       value: "using {{solution_name}}.Domain.Models.Identity;"
+        #     when:
+        #       not-exists: using {{solution_name}}.Domain.Models.Identity;
 
-    - type: edit
-      trigger: after-render
-      path: src/{{solution_name}}.Api/Endpoints/Base/EndpointBase.cs
-      changes:
-        - search:
-            string: using 
-            insert-before:
-              value: "using {{solution_name}}.Api.Filters;\n"
-            when:
-              not-exists: using {{solution_name}}.Api.Filters
-        - search:
-            pattern: \.WithTags\(typeof\(TEntity\).Name\);
-            replace-by:
-              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
-        - search:
-            pattern: \.WithTags\(typeof\(TEntity\).Name\);
-            replace-by:
-              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
-        - search:
-            pattern: \.WithTags\(typeof\(TEntity\).Name\);
-            replace-by:
-              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
-        - search:
-            pattern: \.WithTags\(typeof\(TEntity\).Name\);
-            replace-by:
-              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
-        - search:
-            pattern: \.WithTags\(typeof\(TEntity\).Name\);
-            replace-by:
-              value: ".WithTags(typeof(TEntity).Name).RequireAuthorization(AuthorizeRole).AddEndpointFilter<MultiTenantActionFilter>();"
+        # - search:
+        #     pattern: return services;
+        #     insert-before:
+        #       snippet: snippets/AddServices.cs
+        #     when:
+        #       not-exists: AddIdentity
+        # - search:
+        #     pattern: return services;
+        #     insert-before:
+        #       snippet: snippets/AddAuthentication.cs
+        #     when:
+        #       not-exists: AddAuthentication
+        # - search:
+        #     pattern: return services;
+        #     insert-before:
+        #       snippet: snippets/AddAuthorization.cs
+        #     when:
+        #       not-exists: AddAuthorization
 
     - type: edit
       trigger: after-render
@@ -153,29 +111,6 @@ spec:
             snippet: snippets/JwtSecrets.txt
             when:
               not-exists: "JWT"
-
-    - type: edit
-      trigger: after-render
-      path: src/{{solution_name}}.Domain/Models/AutoMappers/AutoMapperProfile.cs
-      changes:
-        - search:
-            pattern: using 
-            insert-before:
-              value: "using {{solution_name}}.Domain.Models.Identity;\n"
-            when:
-              not-exists: using {{solution_name}}.Domain.Models.Identity;
-        - search:
-            pattern: using 
-            insert-before:
-              value: "using {{solution_name}}.Domain.ViewModels.UserViewModels;\n"
-            when:
-              not-exists: using {{solution_name}}.Domain.ViewModels.UserViewModels;
-        - search:
-            pattern: "}"
-            insert-before:
-              snippet: snippets/AutoMapperProfileUser.cs
-            when:
-              not-exists: CreateMaps<User, UserInput, UserOutput>()
 
     - type: edit-json
       trigger: after-render
@@ -196,32 +131,8 @@ spec:
         - jsonpath: "$.resources"
           update: 
             snippet: snippets/InsomniaEnvironment.json
-                
-    #Renders
+
     - type: render-templates
       trigger: after-render
-      path: templates-dynamodb
-      condition:
-        variable: is_dynamodb
-        operator: "=="
-        value: "true"
-    #format
-    - type: run
-      trigger: after-render
-      working-dir: "src/{{solution_name}}.Api"
-      commands:
-        -  dotnet format --include-generated
-      condition:
-        variable: has_api
-        operator: "=="
-        value: "true"
-    - type: run
-      trigger: after-render
-      working-dir: "src/{{solution_name}}.Domain"
-      commands:
-        -  dotnet format --include-generated
-    - type: run
-      trigger: after-render
-      working-dir: "src/{{solution_name}}.Infrastructure"
-      commands:
-        -  dotnet format --include-generated
+      path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
+      

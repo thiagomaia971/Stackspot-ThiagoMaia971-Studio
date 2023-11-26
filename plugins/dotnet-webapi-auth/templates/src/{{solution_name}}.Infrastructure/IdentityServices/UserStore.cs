@@ -26,23 +26,23 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     }
 
     public Task<string> GetUserIdAsync(User User, CancellationToken cancellationToken) 
-        => Task.FromResult(User.Hash);
+        => Task.FromResult(User.InheritedKey);
 
     public Task<string> GetUserNameAsync(User User, CancellationToken cancellationToken)
-        => Task.FromResult(User.Gsi1Hash.ToLower());
+        => Task.FromResult(User.PrimaryInheritedKey.ToLower());
 
     public Task SetUserNameAsync(User User, string userName, CancellationToken cancellationToken)
     {
-        User.Gsi1Hash = userName.ToLower();
+        User.PrimaryInheritedKey = userName.ToLower();
         return Task.CompletedTask;
     }
 
     public Task<string> GetNormalizedUserNameAsync(User User, CancellationToken cancellationToken)
-        => Task.FromResult(User.Gsi1Hash.ToLower());
+        => Task.FromResult(User.PrimaryInheritedKey.ToLower());
 
     public Task SetNormalizedUserNameAsync(User User, string normalizedName, CancellationToken cancellationToken)
     {
-        User.Gsi1Hash = normalizedName.ToLower();
+        User.PrimaryInheritedKey = normalizedName.ToLower();
         return Task.CompletedTask;
     }
 
@@ -77,7 +77,7 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     {
         var single = await _userRepository
             .CreateQuery()
-            .ByGsi(x => x.Gsi1Hash, normalizedUserName.ToLower())
+            .ByGsi(x => x.PrimaryInheritedKey, normalizedUserName.ToLower())
             .ByInheritedType()
             .FindAsync();
         return single;
@@ -97,12 +97,12 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
 
     public Task SetEmailAsync(User User, string email, CancellationToken cancellationToken)
     {
-        User.Gsi1Id = email;
+        User.PrimaryKey = email;
         return Task.CompletedTask;
     }
 
     public Task<string> GetEmailAsync(User User, CancellationToken cancellationToken) 
-        => Task.FromResult(User.Gsi1Id);
+        => Task.FromResult(User.PrimaryKey);
 
     public Task<bool> GetEmailConfirmedAsync(User User, CancellationToken cancellationToken)
         => Task.FromResult(User.EmailConfirmed);
@@ -118,18 +118,18 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     {
         var findByHash = await _userRepository
             .CreateQuery()
-            .ByGsi(x => x.Gsi1Id, normalizedEmail.ToLower())
+            .ByGsi(x => x.PrimaryKey, normalizedEmail.ToLower())
             .ByInheritedType()
             .FindAsync();
         return findByHash;
     }
 
     public Task<string> GetNormalizedEmailAsync(User User, CancellationToken cancellationToken) 
-        => Task.FromResult(User.Hash.ToLower());
+        => Task.FromResult(User.InheritedKey.ToLower());
 
     public Task SetNormalizedEmailAsync(User User, string normalizedEmail, CancellationToken cancellationToken)
     {
-        User.Gsi1Id = normalizedEmail.ToLower();
+        User.PrimaryKey = normalizedEmail.ToLower();
         return Task.CompletedTask;
     }
 

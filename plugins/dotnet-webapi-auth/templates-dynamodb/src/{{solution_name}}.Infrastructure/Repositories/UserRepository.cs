@@ -1,8 +1,8 @@
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using DynamoDbMapper.Sdk.Entities;
-using DynamoDbMapper.Sdk.Interfaces;
-using DynamoDbMapper.Sdk.Repositories;
+using CruderSimple.Core.Entities;
+using CruderSimple.DynamoDb.Interfaces;
+using CruderSimple.DynamoDb.Repositories;
 using {{solution_name}}.Domain.Interfaces.Repositories;
 using {{solution_name}}.Domain.Models.Identity;
 
@@ -14,9 +14,10 @@ public class UserRepository : Repository<User>, IUserRepository
 
     public UserRepository(
         IDynamoDBContext dynamoDbContext,
+        IAmazonDynamoDB amazonDynamoDb,
         MultiTenantScoped multiTenant,
         IRepository<UserRole> UserRoleRepository) 
-        : base(dynamoDbContext, multiTenant)
+        : base(dynamoDbContext, amazonDynamoDb, multiTenant)
     {
         _UserRoleRepository = UserRoleRepository;
     }

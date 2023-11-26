@@ -33,45 +33,27 @@ spec:
           line: 1
           snippet: snippets/SolutionApi.sln
 
-  - type: edit
-    trigger: before-render
-    path: src/{{solution_name}}.Domain/{{solution_name}}.Domain.csproj
-    changes:
-      - search:
-          string: "</ItemGroup>"
-          insert-before: 
-            value: "\t\t<FrameworkReference Include="Microsoft.AspNetCore.App" />"
-          when:
-            not-exists: "<FrameworkReference Include="Microsoft.AspNetCore.App" />"
-
-  # - type: render-templates
-  #   trigger: after-render
-  #   path: templates-dynamodb
-  #   condition:
-  #     variable: is_dynamodb
-  #     operator: "=="
-  #     value: "true"
   - type: render-templates
     trigger: after-render
     path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
 
   #format
-  - type: run
-    trigger: after-render
-    working-dir: "src/{{solution_name}}.Api"
-    commands:
-      -  dotnet format --include-generated
-    condition:
-      variable: has_api
-      operator: "=="
-      value: "true"
-  - type: run
-    trigger: after-render
-    working-dir: "src/{{solution_name}}.Domain"
-    commands:
-      -  dotnet format --include-generated
-  - type: run
-    trigger: after-render
-    working-dir: "src/{{solution_name}}.Infrastructure"
-    commands:
-      -  dotnet format --include-generated
+  # - type: run
+  #   trigger: after-render
+  #   working-dir: "src/{{solution_name}}.Api"
+  #   commands:
+  #     -  dotnet format --include-generated
+  #   condition:
+  #     variable: has_api
+  #     operator: "=="
+  #     value: "true"
+  # - type: run
+  #   trigger: after-render
+  #   working-dir: "src/{{solution_name}}.Domain"
+  #   commands:
+  #     -  dotnet format --include-generated
+  # - type: run
+  #   trigger: after-render
+  #   working-dir: "src/{{solution_name}}.Infrastructure"
+  #   commands:
+  #     -  dotnet format --include-generated
