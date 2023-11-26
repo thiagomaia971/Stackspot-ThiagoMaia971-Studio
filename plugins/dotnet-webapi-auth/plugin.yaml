@@ -46,59 +46,28 @@ spec:
       commands:
         - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
 
-    # - type: edit
-    #   trigger: after-render
-    #   path: src/{{solution_name}}.Api/Configurations.cs
-    #   changes:
-        # - search:
-        #     pattern: using 
-        #     insert-before:
-        #       value: "using Microsoft.AspNetCore.Authentication.JwtBearer;\n"
-        #     when:
-        #       not-exists: using Microsoft.AspNetCore.Authentication.JwtBearer
-        # - search:
-        #     pattern: using 
-        #     insert-before:
-        #       value: "using Microsoft.IdentityModel.Tokens;\n"
-        #     when:
-        #       not-exists: using Microsoft.IdentityModel.Tokens
-        # - search:
-        #     pattern: using 
-        #     insert-before:
-        #       value: "using {{solution_name}}.Infrastructure.IdentityServices;\n"
-        #     when:
-        #       not-exists: using {{solution_name}}.Infrastructure.IdentityServices
-        # - search:
-        #     pattern: using 
-        #     insert-before:
-        #       value: "using Microsoft.AspNetCore.Identity;"
-        #     when:
-        #       not-exists: using Microsoft.AspNetCore.Identity;
-        # - search:
-        #     pattern: using 
-        #     insert-before:
-        #       value: "using {{solution_name}}.Domain.Models.Identity;"
-        #     when:
-        #       not-exists: using {{solution_name}}.Domain.Models.Identity;
-
-        # - search:
-        #     pattern: return services;
-        #     insert-before:
-        #       snippet: snippets/AddServices.cs
-        #     when:
-        #       not-exists: AddIdentity
-        # - search:
-        #     pattern: return services;
-        #     insert-before:
-        #       snippet: snippets/AddAuthentication.cs
-        #     when:
-        #       not-exists: AddAuthentication
-        # - search:
-        #     pattern: return services;
-        #     insert-before:
-        #       snippet: snippets/AddAuthorization.cs
-        #     when:
-        #       not-exists: AddAuthorization
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Api/Configurations.cs
+      changes:
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddServices.cs
+            when:
+              not-exists: AddIdentity
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthentication.cs
+            when:
+              not-exists: AddAuthentication
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/AddAuthorization.cs
+            when:
+              not-exists: AddAuthorization
 
     - type: edit
       trigger: after-render
