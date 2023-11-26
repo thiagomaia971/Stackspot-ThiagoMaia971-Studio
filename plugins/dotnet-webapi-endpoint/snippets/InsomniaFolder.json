@@ -1,0 +1,12 @@
+{
+    "_id": "fld_c8da2bce28c14513929ac04a0db54141",
+    "parentId": "wrk_c4b03ca44f564d82866392e543a047b9",
+    "modified": 1701026527613,
+    "created": 1701026493285,
+    "name": "{{entity_name}}",
+    "description": "",
+    "environment": {},
+    "environmentPropertyOrder": null,
+    "metaSortKey": -1700237666918,
+    "_type": "request_group"
+}

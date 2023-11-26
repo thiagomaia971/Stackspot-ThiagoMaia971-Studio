@@ -1,0 +1,82 @@
+schema-version: v2
+kind: plugin
+metadata:
+  name: dotnet-webapi-endpoint
+  display-name: dotnet-webapi-endpoint
+  description: Descreva seu plugin explicando o propósito
+  version: 0.0.8
+  picture: plugin.png
+spec:
+  type: app
+  compatibility:
+    - python
+  about: docs/about.md
+  implementation: docs/implementation.md
+  release-notes: docs/release-notes-0.0.1.md
+  requirements: docs/requirements.md
+  single-use: False
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
+    - Api
+  stk-projects-only: false
+  inputs:
+    - label: What's the name of the entity?
+      type: text
+      name: entity_name
+      required: true
+    - label: Witch Http Method?
+      type: multiselect
+      name: http_methods
+      required: true
+      default: ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"]
+      items:
+        - GET_ALL
+        - GET_BY_ID
+        - CREATE
+        - UPDATE
+        - DELETE
+    - label: Has Authentication?
+      type: text
+      name: has_authentication
+      required: true
+      default: true
+
+  hooks:
+    - type: render-templates
+      trigger: after-render
+      path: templates-getall
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "GET_ALL"
+    - type: render-templates
+      trigger: after-render
+      path: templates-getsingle
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "GET_BY_ID"
+    - type: render-templates
+      trigger: after-render
+      path: templates-post
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "CREATE"
+    - type: render-templates
+      trigger: after-render
+      path: templates-put
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "UPDATE"
+    - type: render-templates
+      trigger: after-render
+      path: templates-delete
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "DELETE"
+    - type: render-templates
+      trigger: after-render
+      path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
