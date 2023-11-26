@@ -1,0 +1,28 @@
+{
+    "_id": "req_3e39693e708a46529f50724501172107",
+    "parentId": "fld_c8da2bce28c14513929ac04a0db54141",
+    "modified": 1701026694330,
+    "created": 1701026506881,
+    "url": "{{ _.URL }}/v1/{{\"{{entity_name}}\"}}",
+    "name": "GetAll",
+    "description": "",
+    "method": "GET",
+    "body": {},
+    "parameters": [],
+    "headers": [
+        {
+            "name": "User-Agent",
+            "value": "insomnia/8.4.5"
+        }
+    ],
+    "authentication": {},
+    "metaSortKey": -1701026517473,
+    "isPrivate": false,
+    "settingStoreCookies": true,
+    "settingSendCookies": true,
+    "settingDisableRenderRequestBody": false,
+    "settingEncodeUrl": true,
+    "settingRebuildPath": true,
+    "settingFollowRedirects": "global",
+    "_type": "request"
+}

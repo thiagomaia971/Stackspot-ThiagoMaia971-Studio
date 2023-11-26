@@ -1,0 +1,35 @@
+{
+    "_id": "req_7f922fa563014feb8ac7ef432349a9c2",
+    "parentId": "fld_c8da2bce28c14513929ac04a0db54141",
+    "modified": 1701026737070,
+    "created": 1701026591559,
+    "url": "{{ _.URL }}/v1/{{\"{{entity_name}}\"}}",
+    "name": "Create",
+    "description": "",
+    "method": "POST",
+    "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\n}"
+    },
+    "parameters": [],
+    "headers": [
+        {
+            "name": "Content-Type",
+            "value": "application/json"
+        },
+        {
+            "name": "User-Agent",
+            "value": "insomnia/8.4.5"
+        }
+    ],
+    "authentication": {},
+    "metaSortKey": -1701026517273,
+    "isPrivate": false,
+    "settingStoreCookies": true,
+    "settingSendCookies": true,
+    "settingDisableRenderRequestBody": false,
+    "settingEncodeUrl": true,
+    "settingRebuildPath": true,
+    "settingFollowRedirects": "global",
+    "_type": "request"
+}

@@ -4,7 +4,7 @@ metadata:
   name: dotnet-webapi-auth
   display-name: dotnet-webapi-auth
   description: Descreva seu plugin explicando o propósito
-  version: 0.0.1
+  version: 0.0.8
   picture: plugin.png
 spec:
   type: app
