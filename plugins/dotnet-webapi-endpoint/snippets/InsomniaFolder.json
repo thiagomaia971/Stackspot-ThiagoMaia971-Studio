@@ -1,12 +1,225 @@
-{
-    "_id": "fld_c8da2bce28c14513929ac04a0db54141",
-    "parentId": "wrk_c4b03ca44f564d82866392e543a047b9",
-    "modified": 1701026527613,
-    "created": 1701026493285,
-    "name": "{{entity_name}}",
-    "description": "",
-    "environment": {},
-    "environmentPropertyOrder": null,
-    "metaSortKey": -1700237666918,
-    "_type": "request_group"
-}
+{% macro uuid() -%}
+{%- set ns = namespace(uuid = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx') %}
+{%- set ns.new_uuid = '' %}
+{%- for x in ns.uuid %}
+{%- set ns.new_uuid = [ns.new_uuid,(x | replace('x', [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'] | random ))] | join %}
+{%- endfor %}
+{{ns.new_uuid}}
+{%- endmacro %}
+{%set insomnia_folder_id = uuid()%}
+{%set getAllId = uuid()%}
+{%set getSingleId = uuid()%}
+{%set createId = uuid()%}
+{%set updateId = uuid()%}
+{%set deleteId = uuid()%}
+        {
+            "_id": "fld_{{insomnia_folder_id}}",
+            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+            "modified": 1701026527613,
+            "created": 1701026493285,
+            "name": "{{entity_name}}",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1700237666918,
+            "_type": "request_group"
+        },
+{%if "GET_ALL" in http_methods%}
+        {
+            "_id": "req_{{getAllId}}",
+            "parentId": "fld_{{insomnia_folder_id}}",
+            "modified": 1701026694330,
+            "created": 1701026506881,
+            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}",
+            "name": "GetAll",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+    {%if has_authentication == "True"%}
+            "authentication": {
+                "type": "bearer",
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+            },
+    {%else%}
+            "authentication": {},
+    {%endif%}
+            "metaSortKey": -1701026517473,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+{%endif%}
+{%if "GET_BY_ID" in http_methods%}
+        {
+            "_id": "req_{{getSingleId}}",
+            "parentId": "fld_{{insomnia_folder_id}}",
+            "modified": 1701026718299,
+            "created": 1701026548119,
+            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}/<GUID>",
+            "name": "GetById",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            {%if has_authentication == "True"%}
+                    "authentication": {
+                        "type": "bearer",
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                    },
+            {%else%}
+                    "authentication": {},
+            {%endif%}
+            "metaSortKey": -1701026517373,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+{%endif%}
+{%if "CREATE" in http_methods%}
+        {
+            "_id": "req_{{createId}}",
+            "parentId": "fld_{{insomnia_folder_id}}",
+            "modified": 1701026737070,
+            "created": 1701026591559,
+            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}",
+            "name": "Create",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"id\": null\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            {%if has_authentication == "True"%}
+                    "authentication": {
+                        "type": "bearer",
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                    },
+            {%else%}
+                    "authentication": {},
+            {%endif%}
+            "metaSortKey": -1701026517273,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+{%endif%}
+{%if "UPDATE" in http_methods%}
+        {
+            "_id": "req_{{updateId}}",
+            "parentId": "fld_{{insomnia_folder_id}}",
+            "modified": 1701026750930,
+            "created": 1701026626112,
+            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}/<GUID>",
+            "name": "Update",
+            "description": "",
+            "method": "PUT",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"id\": <GUID>\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            {%if has_authentication == "True"%}
+                    "authentication": {
+                        "type": "bearer",
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                    },
+            {%else%}
+                    "authentication": {},
+            {%endif%}
+            "metaSortKey": -1701026517173,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+{%endif%}
+{%if "DELETE" in http_methods%}
+        {
+            "_id": "req_{{deleteId}}",
+            "parentId": "fld_{{insomnia_folder_id}}",
+            "modified": 1701026731055,
+            "created": 1701026641747,
+            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}/<GUID>",
+            "name": "Delete",
+            "description": "",
+            "method": "DELETE",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            {%if has_authentication == "True"%}
+                    "authentication": {
+                        "type": "bearer",
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                    },
+            {%else%}
+                    "authentication": {},
+            {%endif%}
+            "metaSortKey": -1701026517073,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+{%endif%}

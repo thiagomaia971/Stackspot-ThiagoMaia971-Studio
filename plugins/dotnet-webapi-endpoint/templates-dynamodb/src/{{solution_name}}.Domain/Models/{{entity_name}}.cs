@@ -6,7 +6,7 @@ using {{solution_name}}.Domain.ViewModels.{{entity_name}}ViewModels;
 namespace {{solution_name}}.Domain.Models;
 
 [DynamoDBTable("{{solution_name}}")]
-public class {{entity_name}} : Entity
+public class {{entity_name}} : {%if is_multitenant == "True"%}TenantEntity{%else%}Entity{%endif%}
 {
     public override Entity FromInput(InputDto input)
     {
