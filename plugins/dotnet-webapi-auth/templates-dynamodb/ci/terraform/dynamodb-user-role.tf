@@ -16,7 +16,7 @@ resource "aws_dynamodb_table_item" "user_role_data" {
             InheritedKey = "c27b1bdc-9a32-4f77-a23f-62ba371c8741",
             EntityType = "Test.Domain.Models.Identity.UserRole",
             InheritedType = "{{solution_name}}.Domain.Models.Identity.User",
-            GSI-PrimaryKey = "nayara.do@meu.coração.com",
+            GSI-PrimaryKey = "another.user@email.com",
             RoleId = "0439ac1d-c8aa-4d9b-b7b7-68d5c562eac7"
         }
     }

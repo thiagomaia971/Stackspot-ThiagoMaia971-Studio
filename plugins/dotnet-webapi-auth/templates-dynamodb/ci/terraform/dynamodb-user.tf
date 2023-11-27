@@ -18,9 +18,9 @@ resource "aws_dynamodb_table_item" "user_data_1" {
             InheritedKey = "c27b1bdc-9a32-4f77-a23f-62ba371c8741",
             EntityType = "Test.Domain.Models.Identity.User",
             InheritedType = "{{solution_name}}.Domain.Models.Identity.User",
-            GSI-PrimaryKey = "nayara.do@meu.coração.com",
+            GSI-PrimaryKey = "another.user@email.com",
             GSI-PrimaryInheritedKey = "nayara",
-            Name = "Nayara Amanda <3",
+            Name = "Another User",
             PasswordHash = "AQAAAAEAACcQAAAAEEHP6dksHxraYptLNNadEse/60t177wcgZs6ST66LR9xBzx883uvUVu1DeDyaOExkA=="
         }
     }

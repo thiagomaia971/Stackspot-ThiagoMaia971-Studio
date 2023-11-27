@@ -81,25 +81,17 @@ spec:
             when:
               not-exists: "JWT"
 
-    - type: edit-json
+    - type: edit
       trigger: after-render
       path: docs/Insomnia.json
-      indent: "  "
-      encoding: utf-8
       changes:
-        - jsonpath: "$.resources"
-          update: 
-            snippet: snippets/InsomniaLogin.json
+        - search:
+            pattern: resources
+            insert-after:
+              snippet: snippets/InsomniaLogin.json
+            when:
+              not-exists: v1/login
 
-    - type: edit-json
-      trigger: after-render
-      path: docs/Insomnia.json
-      indent: "  "
-      encoding: utf-8
-      changes:
-        - jsonpath: "$.resources"
-          update: 
-            snippet: snippets/InsomniaEnvironment.json
 
     - type: render-templates
       trigger: after-render
