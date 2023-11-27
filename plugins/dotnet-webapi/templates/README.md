@@ -1,13 +1,3 @@
-## StackSpot Plugin2
+# Api
 
-## Jinja
-
-You can use jinja to make a template-data folder more dynamic.
-
-complete documentation of jinja: https://jinja.palletsprojects.com/en/3.0.x/templates/
-
-### Example Inputs:
-- Resource: {{ resource }}
-- Method: {{ method }}
-
-{{database_type | lower | replace(" ", "") | camelcase}}
+All of Api request is using by this NuGet [CruderSimple.Core](https://github.com/thiagomaia971/CruderSimple)

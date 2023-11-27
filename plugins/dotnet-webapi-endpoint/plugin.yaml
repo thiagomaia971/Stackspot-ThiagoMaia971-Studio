@@ -36,10 +36,11 @@ spec:
         - UPDATE
         - DELETE
     - label: Has Authentication?
-      type: text
+      type: select
       name: has_authentication
-      required: true
-      default: true
+      items:
+        - true
+        - false
 
   hooks:
     - type: render-templates

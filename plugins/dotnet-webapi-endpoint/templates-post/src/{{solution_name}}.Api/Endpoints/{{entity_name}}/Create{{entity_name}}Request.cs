@@ -10,7 +10,16 @@ public static class Create{{entity_name}}Request
 {
     public record Query([FromBody] {{entity_name}}Input payload) : CreateRequest.Query<{{entity_name}}Input>(payload);
 
-    [EndpointRequest(EndpointMethod.POST, "v1", "{{entity_name}}", true{% if has_authentication == "true" %}, new string[] { }{%endif%})]
+    [EndpointRequest(
+        method: EndpointMethod.POST, 
+        version: "v1", 
+        endpoint: "{{entity_name}}", 
+        {% if has_authentication == "True" %}
+        requireAuthorization: true, 
+        new string[] { /* YOUR ROLES HERE */ })]
+        {%else%}
+        requireAuthorization: false)]
+        {%endif%}
     public class Handler
         (I{{entity_name}}Repository repository)
         : CreateRequest.Handler<Query, Domain.Models.{{entity_name}}, {{entity_name}}Input, {{entity_name}}Output, I{{entity_name}}Repository>(repository)

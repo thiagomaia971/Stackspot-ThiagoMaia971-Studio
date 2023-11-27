@@ -9,8 +9,17 @@ namespace {{solution_name}}.Api.Endpoints.{{entity_name}};
 public static class Update{{entity_name}}Request
 {
     public record Query([FromRoute] string id, [FromBody] {{entity_name}}Input payload ) : UpdateRequest.Query<{{entity_name}}Input>(id, payload);
-
-    [EndpointRequest(EndpointMethod.PUT, "v1", "{{entity_name}}/{id}", true{% if has_authentication == "true" %}, new string[] { }{%endif%})]
+    
+    [EndpointRequest(
+        method: EndpointMethod.PUT, 
+        version: "v1", 
+        endpoint: "{{entity_name}}/{id}", 
+        {% if has_authentication == "True" %}
+        requireAuthorization: true, 
+        new string[] { /* YOUR ROLES HERE */ })]
+        {%else%}
+        requireAuthorization: false)]
+        {%endif%}
     public class Handler
         (I{{entity_name}}Repository repository)
         : UpdateRequest.Handler<Query, Domain.Models.{{entity_name}}, {{entity_name}}Input, {{entity_name}}Output, I{{entity_name}}Repository>(repository)

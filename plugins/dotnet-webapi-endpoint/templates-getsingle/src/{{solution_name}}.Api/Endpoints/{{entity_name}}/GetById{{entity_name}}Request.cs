@@ -10,7 +10,16 @@ public static class GetById{{entity_name}}Request
 {
     public record Query([FromRoute] string id) : GetByIdRequest.Query(id);
 
-    [EndpointRequest(EndpointMethod.GET, "v1", "{{entity_name}}/{id}", true{% if has_authentication == "true" %}, new string[] { }{%endif%})]
+    [EndpointRequest(
+        method: EndpointMethod.GET, 
+        version: "v1", 
+        endpoint: "{{entity_name}}/{id}", 
+        {% if has_authentication == "True" %}
+        requireAuthorization: true, 
+        new string[] { /* YOUR ROLES HERE */ })]
+        {%else%}
+        requireAuthorization: false)]
+        {%endif%}
     public class Handler
         (I{{entity_name}}Repository repository)
         : GetByIdRequest.Handler<Query, Domain.Models.{{entity_name}}, {{entity_name}}Output, I{{entity_name}}Repository>(repository)

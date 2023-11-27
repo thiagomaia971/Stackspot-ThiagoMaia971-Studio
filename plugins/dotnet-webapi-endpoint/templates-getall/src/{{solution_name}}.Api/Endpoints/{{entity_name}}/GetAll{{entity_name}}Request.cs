@@ -9,7 +9,16 @@ public static class GetAll{{entity_name}}Request
 {
     public record Query : GetAllRequest.Query;
 
-    [EndpointRequest(EndpointMethod.GET, "v1", "{{entity_name}}", true{% if has_authentication == "true" %}, new string[] { }{%endif%})]
+    [EndpointRequest(
+        method: EndpointMethod.GET, 
+        version: "v1", 
+        endpoint: "{{entity_name}}", 
+        {% if has_authentication == "True" %}
+        requireAuthorization: true, 
+        new string[] { /* YOUR ROLES HERE */ })]
+        {%else%}
+        requireAuthorization: false)]
+        {%endif%}
     public class Handler
         (I{{entity_name}}Repository repository)
         : GetAllRequest.Handler<Query, Domain.Models.{{entity_name}}, {{entity_name}}Output, I{{entity_name}}Repository>(repository)
