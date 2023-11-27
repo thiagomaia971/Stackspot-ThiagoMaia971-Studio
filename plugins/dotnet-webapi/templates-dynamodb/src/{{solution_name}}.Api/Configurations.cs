@@ -10,8 +10,7 @@ public static class Configurations
         IHostEnvironment environment)
     {
         services
-            .AddCruderSimpleServices(configuration, 
-                environment)
+            .AddCruderSimpleServices(configuration, environment)
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddInfrastructure(configuration, environment);

@@ -15,7 +15,11 @@ public static class LoginEndpoint
 {
     public record Query([FromBody] LoginViewModel payload) : IEndpointQuery;
     
-    [EndpointRequest(EndpointMethod.POST, "v1", "login", true)]
+    [EndpointRequest(
+        method: EndpointMethod.POST, 
+        version: "v1", 
+        endpoint: "login", 
+        requireAuthorization: false)]
     public class Handler
         (IConfiguration configuration,
          UserManager<User> userManager)
