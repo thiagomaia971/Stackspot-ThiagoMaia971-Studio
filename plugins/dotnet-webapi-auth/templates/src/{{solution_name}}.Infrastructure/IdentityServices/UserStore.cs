@@ -29,20 +29,20 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
         => Task.FromResult(User.InheritedKey);
 
     public Task<string> GetUserNameAsync(User User, CancellationToken cancellationToken)
-        => Task.FromResult(User.PrimaryInheritedKey.ToLower());
+        => Task.FromResult(User.PrimaryKey.ToLower());
 
     public Task SetUserNameAsync(User User, string userName, CancellationToken cancellationToken)
     {
-        User.PrimaryInheritedKey = userName.ToLower();
+        User.PrimaryKey = userName.ToLower();
         return Task.CompletedTask;
     }
 
     public Task<string> GetNormalizedUserNameAsync(User User, CancellationToken cancellationToken)
-        => Task.FromResult(User.PrimaryInheritedKey.ToLower());
+        => Task.FromResult(User.PrimaryKey.ToLower());
 
     public Task SetNormalizedUserNameAsync(User User, string normalizedName, CancellationToken cancellationToken)
     {
-        User.PrimaryInheritedKey = normalizedName.ToLower();
+        User.PrimaryKey = normalizedName.ToLower();
         return Task.CompletedTask;
     }
 
@@ -77,7 +77,7 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     {
         var single = await _userRepository
             .CreateQuery()
-            .ByGsi(x => x.PrimaryInheritedKey, normalizedUserName.ToLower())
+            .ByGsi(x => x.PrimaryKey, normalizedUserName.ToLower())
             .ByInheritedType()
             .FindAsync();
         return single;

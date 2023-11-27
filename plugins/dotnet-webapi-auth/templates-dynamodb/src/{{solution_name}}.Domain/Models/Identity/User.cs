@@ -1,8 +1,10 @@
 using Newtonsoft.Json;
 using Amazon.DynamoDBv2.DataModel;
 using CruderSimple.Core.ViewModels;
+using CruderSimple.Core.Extensions;
 using CruderSimple.DynamoDb.Attributes;
 using CruderSimple.DynamoDb.Entities;
+using {{solution_name}}.Domain.ViewModels.UserViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
@@ -35,15 +37,33 @@ public class User : Entity
 
     [DynamoDBIgnore]
     [DynamoDbInner(typeof(UserRole))]
-    public List<UserRole> Roles { get; set; }
+    public ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
 
     public override Entity FromInput(InputDto input)
     {
-        throw new NotImplementedException();
+        var userInput = (UserInput)input;
+        Id = userInput.Id;
+        PrimaryKey = userInput.Email;
+        Name = userInput.Name;
+        PhoneNumber = userInput.PhoneNumber;
+        Roles = Roles?.FromInput(userInput.Roles);
+        
+        return this;
     }
 
     public override OutputDto ToOutput()
     {
-        throw new NotImplementedException();
+        return new UserOutput(
+            Id,
+            CreatedAt,
+            UpdatedAt,
+            PrimaryKey,
+            Name,
+            EmailConfirmed,
+            PhoneNumber,
+            PhoneNumberConfirmed,
+            TwoFactorEnabled,
+            Roles.ToOutput<UserRole, UserRoleOutput>()
+        );
     }
 }

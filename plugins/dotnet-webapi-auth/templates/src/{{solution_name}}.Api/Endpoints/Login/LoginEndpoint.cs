@@ -22,8 +22,8 @@ public static class LoginEndpoint
         requireAuthorization: false)]
     public class Handler
         (IConfiguration configuration,
-         UserManager<User> userManager)
-        : HttpHandlerBase<Query, User>, IRequestHandler<Query, IResult>
+         UserManager<Domain.Models.Identity.User> userManager)
+        : HttpHandlerBase<Query, Domain.Models.Identity.User>, IRequestHandler<Query, IResult>
     {
         public override async Task<IResult> Handle(Query request, CancellationToken cancellationToken)
         {

@@ -41,7 +41,7 @@ spec:
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.4
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.5
       condition:
         variable: is_dynamodb
         operator: "=="
@@ -50,7 +50,7 @@ spec:
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.4
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.5
       condition:
         variable: is_sqlserver
         operator: "=="
