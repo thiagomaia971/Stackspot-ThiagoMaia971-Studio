@@ -6,7 +6,7 @@
     "name": "Localhost - Admin",
     "data": {
         "Email": "admin@admin.com",
-        "Password": "asd@1234"
+        "Password": "Senha@1234"
     },
     "dataPropertyOrder": {
         "&": [

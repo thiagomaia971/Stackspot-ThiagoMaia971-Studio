@@ -41,6 +41,12 @@ spec:
       items:
         - true
         - false
+    - label: Is MultiTenant?
+      type: select
+      name: is_multitenant
+      items:
+        - true
+        - false
 
   hooks:
     - type: render-templates
@@ -78,6 +84,16 @@ spec:
         variable: http_methods
         operator: "containsAny"
         value: "DELETE"
+
+    - type: edit
+      trigger: after-render
+      path: docs/Insomnia.json
+      changes:
+        - search:
+            pattern: resources
+            insert-after:
+              snippet: snippets/InsomniaFolder.json
+
     - type: render-templates
       trigger: after-render
       path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
