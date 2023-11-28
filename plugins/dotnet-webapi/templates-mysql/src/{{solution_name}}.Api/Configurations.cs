@@ -10,7 +10,7 @@ using {{solution_name}}.Domain.Models.AutoMappers;
 using {{solution_name}}.Domain.Interfaces.Repositories;
 using {{solution_name}}.Infrastructure.Repositories;
 
-namespace {{solution_name}}.Api;
+namespace {{solution_name}}.{{api_name}};
 
 public static class Configurations
 {

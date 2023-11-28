@@ -19,12 +19,34 @@ spec:
   technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
     - Api
   stk-projects-only: false
-  #inputs:
+  inputs:
+    - label: Project name?
+      type: text
+      name: api_name
+      required: true
+      default: "Api"
+      global: true
+    - label: Which port?
+      type: text
+      name: host_port
+      required: true
+      default: "5228"
+      global: false
+    - label: Has Authentication?
+      type: select
+      name: has_authentication
+      items:
+        - true
+        - false
 
   global-computed-inputs:
     has_api: "true"
 
   hooks:
+  - type: run-script
+    trigger: before-render
+    script: scripts/projects.py
+
   - type: edit
     trigger: after-render
     path: src/{{solution_name}}.sln
@@ -33,14 +55,92 @@ spec:
           line: 1
           snippet: snippets/SolutionApi.sln
 
+  - type: edit
+    trigger: after-render
+    path: src/{{solution_name}}.sln
+    changes:
+      - search:
+          pattern: postSolution
+          insert-after:
+            snippet: snippets/SolutionBuild.sln
+
+  - type: edit
+    trigger: after-render
+    path: src/{{solution_name}}.AppHost/{{solution_name}}.AppHost.csproj
+    changes:
+      - search:
+          pattern: </Project>
+          insert-before:
+            snippet: snippets/AppHost.csproj
+
+  - type: run
+    trigger: before-render
+    commands:
+      - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
+    condition:
+      variable: has_authentication
+      operator: "=="
+      value: "True"
+
+  - type: edit
+    trigger: after-render
+    path: src/{{solution_name}}.{{api_name}}/Configurations.cs
+    changes:
+      - search:
+          pattern: return services;
+          insert-before:
+            snippet: snippets/auth/AddServices.cs
+          when:
+            not-exists: AddIdentity
+      - search:
+          pattern: return services;
+          insert-before:
+            snippet: snippets/auth/AddAuthentication.cs
+          when:
+            not-exists: AddAuthentication
+      - search:
+          pattern: return services;
+          insert-before:
+            snippet: snippets/auth/AddAuthorization.cs
+          when:
+            not-exists: AddAuthorization
+    condition:
+      variable: has_authentication
+      operator: "=="
+      value: "True"
+
+  - type: render-templates
+    trigger: after-render
+    path: templates-authentication
+    condition:
+      variable: has_authentication
+      operator: "=="
+      value: "True"
+
   - type: render-templates
     trigger: after-render
     path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
 
+  - type: edit
+    trigger: after-render
+    path: src/{{solution_name}}.{{api_name}}/appsettings.Development.json
+    indent: "  "
+    encoding: utf-8
+    changes:
+      - insert:
+          line: 1
+          snippet: snippets/auth/JwtSecrets.txt
+          when:
+            not-exists: "JWT"
+    condition:
+      variable: has_authentication
+      operator: "=="
+      value: "True"
+
   #format
   # - type: run
   #   trigger: after-render
-  #   working-dir: "src/{{solution_name}}.Api"
+  #   working-dir: "src/{{solution_name}}.{{api_name}}"
   #   commands:
   #     -  dotnet format --include-generated
   #   condition:

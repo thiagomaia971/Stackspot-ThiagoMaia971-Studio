@@ -32,6 +32,246 @@
             "settingFollowRedirects": "global",
             "_type": "request"
         },
+{%if has_authentication == "True"%}
+        {
+            "_id": "env_57dc204c78874c87ace512277352f33e",
+            "parentId": "env_1f9096bf3d38bc8c2c8cfe4bfbf3f03570cf4aa2",
+            "modified": 1700237802924,
+            "created": 1700237733022,
+            "name": "Localhost - Admin",
+            "data": {
+                "Email": "admin@admin.com",
+                "Password": "Senha@1234"
+            },
+            "dataPropertyOrder": {
+                "&": [
+                    "Email",
+                    "Password"
+                ]
+            },
+            "color": null,
+            "isPrivate": false,
+            "metaSortKey": 1700237733022,
+            "_type": "environment"
+        },
+        {
+            "_id": "req_56581cd6a6044b528f735cbb05224353",
+            "id": "req_56581cd6a6044b528f735cbb05224353",
+            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+            "modified": 1700237847727,
+            "created": 1700237667018,
+            "url": "{{ '{{ _.URL }}' }}/v1/login",
+            "name": "Login",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n  \"email\": \"{{ '{{ _.Email }}' }}\",\n  \"password\": \"{{ '{{ _.Password }}' }}\",\n  \"rememberMe\": true\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.2"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1700237667018,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+            "modified": 1701026527613,
+            "created": 1701026493285,
+            "name": "User",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1700237666918,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_e200660a-70a1-3b56-cce3-a4243d0354b8",
+            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "modified": 1701026694330,
+            "created": 1701026506881,
+            "url": "{{ '{{ _.URL }}' }}/v1/User",
+            "name": "GetAll",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+            },
+            "metaSortKey": -1701026517473,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_69a2f6f9-91e3-f8c0-db04-b4cfbc24e067",
+            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "modified": 1701026718299,
+            "created": 1701026548119,
+            "url": "{{ '{{ _.URL }}' }}/v1/User/<GUID>",
+            "name": "GetById",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+            },
+            "metaSortKey": -1701026517373,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_0250e0a7-468a-6b10-be81-0bf41361ea51",
+            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "modified": 1701026737070,
+            "created": 1701026591559,
+            "url": "{{ '{{ _.URL }}' }}/v1/User",
+            "name": "Create",
+            "description": "",
+            "method": "POST",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"id\": null,\n\t\"email\": \"new.user@email.com\",\n\t\"password\": \"Senha@12345\",\n\t\"name\": \"New User\",\n\t\"phoneNumber\": \"\",\n\t\"roles\": [\n\t\t{\n\t\t\t\"roleId\": \"ac337365-e690-4c75-9f05-e5ea75caa1e5\"\n\t\t}\n\t]\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+            },
+            "metaSortKey": -1701026517273,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_93a21184-8e98-757c-f3d2-dd8f71fbc169",
+            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "modified": 1701026750930,
+            "created": 1701026626112,
+            "url": "{{ '{{ _.URL }}' }}/v1/User/<GUID>",
+            "name": "Update",
+            "description": "",
+            "method": "PUT",
+            "body": {
+                "mimeType": "application/json",
+                "text": "{\n\t\"email\": \"new.user@email.com\",\n\t\"name\": \"New User\",\n\t\"emailConfirmed\": false,\n\t\"phoneNumber\": \"\",\n\t\"phoneNumberConfirmed\": false,\n\t\"twoFactorEnabled\": false,\n\t\"roles\": [\n\t\t{\n\t\t\t\"roleId\": \"ac337365-e690-4c75-9f05-e5ea75caa1e5\"\n\t\t},\n\t\t{\n\t\t\t\"roleId\": \"0439ac1d-c8aa-4d9b-b7b7-68d5c562eac7\"\n\t\t}\n\t],\n\t\"id\": <GUID>,\n\t\"createdAt\": \"2023-11-27T15:37:43.1450137-03:00\",\n\t\"updatedAt\": \"2023-11-27T15:37:43.1442639-03:00\"\n}"
+            },
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                },
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+            },
+            "metaSortKey": -1701026517173,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+        {
+            "_id": "req_c9e46289-6fb1-63ba-2027-7b0581177211",
+            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "modified": 1701026731055,
+            "created": 1701026641747,
+            "url": "{{ '{{ _.URL }}' }}/v1/User/<GUID>",
+            "name": "Delete",
+            "description": "",
+            "method": "DELETE",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.5"
+                }
+            ],
+            "authentication": {
+                "type": "bearer",
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+            },
+            "metaSortKey": -1701026517073,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
+{%endif%}    
         {
             "_id": "wrk_45d95fd76c17483c82861f0ded7a247c",
             "parentId": null,
@@ -49,7 +289,7 @@
             "created": 1700237192848,
             "name": "Base Environment",
             "data": {
-                "URL": "http://localhost:5228"
+                "URL": "http://localhost:{{host_port}}"
             },
             "dataPropertyOrder": {
                 "&": [

@@ -1,0 +1,1 @@
+using CruderSimple.DynamoDb.Configurations;
