@@ -45,7 +45,7 @@
     {%if has_authentication == "True"%}
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
     {%else%}
             "authentication": {},
@@ -82,7 +82,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},
@@ -126,7 +126,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},
@@ -170,7 +170,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},
@@ -207,7 +207,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},

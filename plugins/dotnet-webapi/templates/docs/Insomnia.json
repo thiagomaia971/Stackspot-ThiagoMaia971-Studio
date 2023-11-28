@@ -121,7 +121,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517473,
             "isPrivate": false,
@@ -152,7 +152,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517373,
             "isPrivate": false,
@@ -190,7 +190,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517273,
             "isPrivate": false,
@@ -228,7 +228,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517173,
             "isPrivate": false,
@@ -259,7 +259,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'always', 60 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517073,
             "isPrivate": false,

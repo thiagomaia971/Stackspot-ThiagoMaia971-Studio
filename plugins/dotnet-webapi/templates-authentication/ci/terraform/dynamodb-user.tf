@@ -6,7 +6,7 @@ resource "aws_dynamodb_table_item" "user_data_1" {
         "02a01310-d8a0-48c0-a655-9755a91b4aff" = {
             CreatedAt = "2023-11-24T16:03:29.4171772-03:00",
             InheritedKey = "02a01310-d8a0-48c0-a655-9755a91b4aff",
-            EntityType = "Test.Domain.Models.Identity.User",
+            EntityType = "{{solution_name}}.Domain.Models.Identity.User",
             InheritedType = "{{solution_name}}.Domain.Models.Identity.User",
             GSI-PrimaryKey = "admin@admin.com",
             GSI-PrimaryInheritedKey = "admin",
@@ -16,7 +16,7 @@ resource "aws_dynamodb_table_item" "user_data_1" {
         "c27b1bdc-9a32-4f77-a23f-62ba371c8741" = {
             CreatedAt = "2023-11-24T16:03:29.4171772-03:00",
             InheritedKey = "c27b1bdc-9a32-4f77-a23f-62ba371c8741",
-            EntityType = "Test.Domain.Models.Identity.User",
+            EntityType = "{{solution_name}}.Domain.Models.Identity.User",
             InheritedType = "{{solution_name}}.Domain.Models.Identity.User",
             GSI-PrimaryKey = "another.user@email.com",
             GSI-PrimaryInheritedKey = "nayara",

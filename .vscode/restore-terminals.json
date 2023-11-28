@@ -19,7 +19,8 @@
             "cd testes", 
             "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-base", 
             "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-repository",
-            "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi",
+            "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi"
+          ],
           "shouldRunCommands": false
         }
       ]
