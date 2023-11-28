@@ -20,7 +20,6 @@
             "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-base", 
             "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-repository",
             "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi",
-            "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi-auth"],
           "shouldRunCommands": false
         }
       ]
@@ -48,15 +47,6 @@
         {
           "name": "dotnet-webapi",
           "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi"],
-          "shouldRunCommands": false
-        }
-      ]
-    },
-    {
-      "splitTerminals": [
-        {
-          "name": "dotnet-webapi-auth",
-          "commands": ["cd testes", "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-webapi-auth"],
           "shouldRunCommands": false
         }
       ]

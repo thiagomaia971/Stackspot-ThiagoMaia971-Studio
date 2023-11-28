@@ -1,0 +1,4 @@
+
+    <ItemGroup>
+      <ProjectReference Include="..\{{solution_name}}.{{api_name}}\{{solution_name}}.{{api_name}}.csproj" />
+    </ItemGroup>

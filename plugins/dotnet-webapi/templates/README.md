@@ -1,6 +1,6 @@
-# Api
+# {{api_name}}
 
-All of Api request is using by this NuGet [CruderSimple.Core](https://github.com/thiagomaia971/CruderSimple)
+All of {{api_name}} request is using by this NuGet [CruderSimple.Core](https://github.com/thiagomaia971/CruderSimple)
 
 ## Insomnia
 

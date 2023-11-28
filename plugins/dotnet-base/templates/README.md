@@ -2,6 +2,10 @@
 
 Application created by StackSpot ```dotnet-base``` plugin from [Stackspot-ThiagoMaia971-Studio](https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio)
 
+## Dotnet Aspire
+
+Using [Dotnet Aspire](https://learn.microsoft.com/en-us/dotnet/aspire/setup-tooling?tabs=dotnet-cli)
+
 ## Folder Structure
 
 - src
@@ -17,3 +21,4 @@ Application created by StackSpot ```dotnet-base``` plugin from [Stackspot-Thiago
         - {{solution_name}}.Infrastructure.csproj
 
 [//]: (asd)
+
