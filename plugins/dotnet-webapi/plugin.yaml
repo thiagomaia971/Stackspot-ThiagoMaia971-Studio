@@ -20,7 +20,7 @@ spec:
     - Api
   stk-projects-only: false
   inputs:
-    - label: Project name?
+    - label: Api name?
       type: text
       name: api_name
       required: true

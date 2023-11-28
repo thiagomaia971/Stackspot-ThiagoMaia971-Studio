@@ -6,6 +6,10 @@ Application created by StackSpot ```dotnet-base``` plugin from [Stackspot-Thiago
 
 Using [Dotnet Aspire](https://learn.microsoft.com/en-us/dotnet/aspire/setup-tooling?tabs=dotnet-cli)
 
+Install Dotnet Aspire
+
+> dotnet workload install aspire
+
 ## Folder Structure
 
 - src
