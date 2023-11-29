@@ -1,7 +1,8 @@
 using {{solution_name}}.{{api_name}};
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.AddServiceDefaults();
 // Add services to the container.
 
 builder.Services.AddControllers();

@@ -15,6 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\{{solution_name}}.Domain\{{solution_name}}.Domain.csproj" />
       <ProjectReference Include="..\{{solution_name}}.Infrastructure\{{solution_name}}.Infrastructure.csproj" />
+      <ProjectReference Include="..\{{solution_name}}.ServiceDefaults\{{solution_name}}.ServiceDefaults.csproj" />
     </ItemGroup>
 
 </Project>
