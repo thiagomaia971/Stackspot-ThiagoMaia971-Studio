@@ -14,7 +14,7 @@
 {%set deleteId = uuid()%}
         {
             "_id": "fld_{{insomnia_folder_id}}",
-            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+            "parentId": "fld_{{api_id}}",
             "modified": 1701026527613,
             "created": 1701026493285,
             "name": "{{entity_name}}",
@@ -30,7 +30,7 @@
             "parentId": "fld_{{insomnia_folder_id}}",
             "modified": 1701026694330,
             "created": 1701026506881,
-            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/{{entity_name}}",
             "name": "GetAll",
             "description": "",
             "method": "GET",
@@ -45,7 +45,7 @@
     {%if has_authentication == "True"%}
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
     {%else%}
             "authentication": {},
@@ -67,7 +67,7 @@
             "parentId": "fld_{{insomnia_folder_id}}",
             "modified": 1701026718299,
             "created": 1701026548119,
-            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}/<GUID>",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/{{entity_name}}/<GUID>",
             "name": "GetById",
             "description": "",
             "method": "GET",
@@ -82,7 +82,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},
@@ -104,7 +104,7 @@
             "parentId": "fld_{{insomnia_folder_id}}",
             "modified": 1701026737070,
             "created": 1701026591559,
-            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/{{entity_name}}",
             "name": "Create",
             "description": "",
             "method": "POST",
@@ -126,7 +126,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},
@@ -148,7 +148,7 @@
             "parentId": "fld_{{insomnia_folder_id}}",
             "modified": 1701026750930,
             "created": 1701026626112,
-            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}/<GUID>",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/{{entity_name}}/<GUID>",
             "name": "Update",
             "description": "",
             "method": "PUT",
@@ -170,7 +170,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},
@@ -192,7 +192,7 @@
             "parentId": "fld_{{insomnia_folder_id}}",
             "modified": 1701026731055,
             "created": 1701026641747,
-            "url": "{{ '{{ _.URL }}' }}/v1/{{entity_name}}/<GUID>",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/{{entity_name}}/<GUID>",
             "name": "Delete",
             "description": "",
             "method": "DELETE",
@@ -207,7 +207,7 @@
             {%if has_authentication == "True"%}
                     "authentication": {
                         "type": "bearer",
-                        "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                        "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
                     },
             {%else%}
                     "authentication": {},

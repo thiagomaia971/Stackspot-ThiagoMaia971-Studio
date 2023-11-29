@@ -1,37 +1,17 @@
-{
-    "_type": "export",
-    "__export_format": 4,
-    "__export_date": "2023-11-17T16:09:11.161Z",
-    "__export_source": "insomnia.desktop.app:v8.4.2",
-    "resources": [
-        {
-            "_id": "req_271892cf61bb43578d2576d1102e1197",
-            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
-            "modified": 1700237311787,
-            "created": 1700237217495,
-            "url": "{{ '{{ _.URL }}' }}/swagger",
-            "name": "Swagger",
-            "description": "",
-            "method": "GET",
-            "body": {},
-            "parameters": [],
-            "headers": [
-                {
-                    "name": "User-Agent",
-                    "value": "insomnia/8.4.2"
-                }
-            ],
-            "authentication": {},
-            "metaSortKey": -1700237667118,
-            "isPrivate": false,
-            "settingStoreCookies": true,
-            "settingSendCookies": true,
-            "settingDisableRenderRequestBody": false,
-            "settingEncodeUrl": true,
-            "settingRebuildPath": true,
-            "settingFollowRedirects": "global",
-            "_type": "request"
-        },
+{% macro uuid() -%}
+{%- set ns = namespace(uuid = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx') %}
+{%- set ns.new_uuid = '' %}
+{%- for x in ns.uuid %}
+{%- set ns.new_uuid = [ns.new_uuid,(x | replace('x', [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'] | random ))] | join %}
+{%- endfor %}
+{{ns.new_uuid}}
+{%- endmacro %}
+{%set userFolderId = uuid()%}
+{%set userGetAllId = uuid()%}
+{%set userGetByIdId = uuid()%}
+{%set userCreateId = uuid()%}
+{%set userUpdateId = uuid()%}
+{%set userDeleteId = uuid()%}
 {%if has_authentication == "True"%}
         {
             "_id": "env_57dc204c78874c87ace512277352f33e",
@@ -55,12 +35,11 @@
             "_type": "environment"
         },
         {
-            "_id": "req_56581cd6a6044b528f735cbb05224353",
-            "id": "req_56581cd6a6044b528f735cbb05224353",
-            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+            "_id": "req_{{login_id}}",
+            "parentId": "fld_{{api_id}}",
             "modified": 1700237847727,
             "created": 1700237667018,
-            "url": "{{ '{{ _.URL }}' }}/v1/login",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/login",
             "name": "Login",
             "description": "",
             "method": "POST",
@@ -91,8 +70,8 @@
             "_type": "request"
         },
         {
-            "_id": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
-            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+            "_id": "fld_{{userFolderId}}",
+            "parentId": "fld_{{api_id}}",
             "modified": 1701026527613,
             "created": 1701026493285,
             "name": "User",
@@ -103,11 +82,11 @@
             "_type": "request_group"
         },
         {
-            "_id": "req_e200660a-70a1-3b56-cce3-a4243d0354b8",
-            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "_id": "req_{{userGetAllId}}",
+            "parentId": "fld_{{userFolderId}}",
             "modified": 1701026694330,
             "created": 1701026506881,
-            "url": "{{ '{{ _.URL }}' }}/v1/User",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/User",
             "name": "GetAll",
             "description": "",
             "method": "GET",
@@ -121,7 +100,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517473,
             "isPrivate": false,
@@ -134,11 +113,11 @@
             "_type": "request"
         },
         {
-            "_id": "req_69a2f6f9-91e3-f8c0-db04-b4cfbc24e067",
-            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "_id": "req_{{userGetByIdId}}",
+            "parentId": "fld_{{userFolderId}}",
             "modified": 1701026718299,
             "created": 1701026548119,
-            "url": "{{ '{{ _.URL }}' }}/v1/User/<GUID>",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/User/<GUID>",
             "name": "GetById",
             "description": "",
             "method": "GET",
@@ -152,7 +131,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517373,
             "isPrivate": false,
@@ -165,11 +144,11 @@
             "_type": "request"
         },
         {
-            "_id": "req_0250e0a7-468a-6b10-be81-0bf41361ea51",
-            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "_id": "req_{{userCreateId}}",
+            "parentId": "fld_{{userFolderId}}",
             "modified": 1701026737070,
             "created": 1701026591559,
-            "url": "{{ '{{ _.URL }}' }}/v1/User",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/User",
             "name": "Create",
             "description": "",
             "method": "POST",
@@ -190,7 +169,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517273,
             "isPrivate": false,
@@ -203,11 +182,11 @@
             "_type": "request"
         },
         {
-            "_id": "req_93a21184-8e98-757c-f3d2-dd8f71fbc169",
-            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "_id": "req_{{userUpdateId}}",
+            "parentId": "fld_{{userFolderId}}",
             "modified": 1701026750930,
             "created": 1701026626112,
-            "url": "{{ '{{ _.URL }}' }}/v1/User/<GUID>",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/User/<GUID>",
             "name": "Update",
             "description": "",
             "method": "PUT",
@@ -228,7 +207,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517173,
             "isPrivate": false,
@@ -241,11 +220,11 @@
             "_type": "request"
         },
         {
-            "_id": "req_c9e46289-6fb1-63ba-2027-7b0581177211",
-            "parentId": "fld_1f9f4e13-146f-be73-df85-86de280f80d0",
+            "_id": "req_{{userDeleteId}}",
+            "parentId": "fld_{{userFolderId}}",
             "modified": 1701026731055,
             "created": 1701026641747,
-            "url": "{{ '{{ _.URL }}' }}/v1/User/<GUID>",
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/v1/User/<GUID>",
             "name": "Delete",
             "description": "",
             "method": "DELETE",
@@ -259,7 +238,7 @@
             ],
             "authentication": {
                 "type": "bearer",
-                "token": "{{'{%'}} response 'body', 'req_56581cd6a6044b528f735cbb05224353', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
+                "token": "{{'{%'}} response 'body', 'req_{{login_id}}', 'b64::JC50b2tlbg==::46b', 'when-expired', 900 {{'%}'}}"
             },
             "metaSortKey": -1701026517073,
             "isPrivate": false,
@@ -271,44 +250,4 @@
             "settingFollowRedirects": "global",
             "_type": "request"
         },
-{%endif%}    
-        {
-            "_id": "wrk_45d95fd76c17483c82861f0ded7a247c",
-            "parentId": null,
-            "modified": 1700237192847,
-            "created": 1700237192847,
-            "name": "{{solution_name}}",
-            "description": "",
-            "scope": "collection",
-            "_type": "workspace"
-        },
-        {
-            "_id": "env_1f9096bf3d38bc8c2c8cfe4bfbf3f03570cf4aa2",
-            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
-            "modified": 1700237251155,
-            "created": 1700237192848,
-            "name": "Base Environment",
-            "data": {
-                "URL": "http://localhost:{{host_port}}"
-            },
-            "dataPropertyOrder": {
-                "&": [
-                    "URL"
-                ]
-            },
-            "color": null,
-            "isPrivate": false,
-            "metaSortKey": 1700237192848,
-            "_type": "environment"
-        },
-        {
-            "_id": "jar_1f9096bf3d38bc8c2c8cfe4bfbf3f03570cf4aa2",
-            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
-            "modified": 1700237192849,
-            "created": 1700237192849,
-            "name": "Default Jar",
-            "cookies": [],
-            "_type": "cookie_jar"
-        }
-    ]
-}
+{%endif%}

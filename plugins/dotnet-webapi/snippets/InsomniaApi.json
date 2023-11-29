@@ -1,0 +1,49 @@
+{% macro uuid() -%}
+{%- set ns = namespace(uuid = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx') %}
+{%- set ns.new_uuid = '' %}
+{%- for x in ns.uuid %}
+{%- set ns.new_uuid = [ns.new_uuid,(x | replace('x', [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'] | random ))] | join %}
+{%- endfor %}
+{{ns.new_uuid}}
+{%- endmacro %}
+{%set swaggerId = uuid()%}
+        {
+            "_id": "fld_{{api_id}}",
+            "parentId": "wrk_45d95fd76c17483c82861f0ded7a247c",
+            "modified": 1701026527613,
+            "created": 1701026493285,
+            "name": "{{api_name}}",
+            "description": "",
+            "environment": {},
+            "environmentPropertyOrder": null,
+            "metaSortKey": -1700237666918,
+            "_type": "request_group"
+        },
+        {
+            "_id": "req_{{swaggerId}}",
+            "parentId": "fld_{{api_id}}",
+            "modified": 1700237311787,
+            "created": 1700237217495,
+            "url": "{{'{{'}}_.{{api_name|upper}}_URL {{'}}'}}/swagger",
+            "name": "Swagger",
+            "description": "",
+            "method": "GET",
+            "body": {},
+            "parameters": [],
+            "headers": [
+                {
+                    "name": "User-Agent",
+                    "value": "insomnia/8.4.2"
+                }
+            ],
+            "authentication": {},
+            "metaSortKey": -1700237667118,
+            "isPrivate": false,
+            "settingStoreCookies": true,
+            "settingSendCookies": true,
+            "settingDisableRenderRequestBody": false,
+            "settingEncodeUrl": true,
+            "settingRebuildPath": true,
+            "settingFollowRedirects": "global",
+            "_type": "request"
+        },
