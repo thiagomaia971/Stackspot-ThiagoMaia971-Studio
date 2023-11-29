@@ -49,6 +49,10 @@ spec:
         - false
 
   hooks:
+    - type: run-script
+      trigger: before-input
+      script: scripts/QuestionaryApi.py
+      
     - type: render-templates
       trigger: after-render
       path: templates-getall
