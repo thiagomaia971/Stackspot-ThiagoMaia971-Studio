@@ -43,146 +43,241 @@ spec:
     has_api: "true"
 
   hooks:
-  - type: run-script
-    trigger: before-render
-    script: scripts/projects.py
+  ### Default
+    - type: run-script
+      trigger: before-render
+      script: scripts/projects.py
 
-  - type: edit
-    trigger: after-render
-    path: src/{{solution_name}}.sln
-    changes:
-      - insert:
-          line: 1
-          snippet: snippets/SolutionApi.sln
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.sln
+      changes:
+        - insert:
+            line: 1
+            snippet: snippets/SolutionApi.sln
 
-  - type: edit
-    trigger: after-render
-    path: src/{{solution_name}}.sln
-    changes:
-      - search:
-          pattern: postSolution
-          insert-after:
-            snippet: snippets/SolutionBuild.sln
-
-  - type: edit
-    trigger: after-render
-    path: src/{{solution_name}}.AppHost/{{solution_name}}.AppHost.csproj
-    changes:
-      - search:
-          pattern: </Project>
-          insert-before:
-            snippet: snippets/AppHost.csproj
-
-  - type: run
-    trigger: before-render
-    commands:
-      - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
-    condition:
-      variable: has_authentication
-      operator: "=="
-      value: "True"
-
-  - type: edit
-    trigger: after-render
-    path: src/{{solution_name}}.{{api_name}}/Configurations.cs
-    changes:
-      - search:
-          pattern: return services;
-          insert-before:
-            snippet: snippets/auth/AddServices.cs
-          when:
-            not-exists: AddIdentity
-      - search:
-          pattern: return services;
-          insert-before:
-            snippet: snippets/auth/AddAuthentication.cs
-          when:
-            not-exists: AddAuthentication
-      - search:
-          pattern: return services;
-          insert-before:
-            snippet: snippets/auth/AddAuthorization.cs
-          when:
-            not-exists: AddAuthorization
-    condition:
-      variable: has_authentication
-      operator: "=="
-      value: "True"
-
-  - type: render-templates
-    trigger: after-render
-    path: templates-authentication
-    condition:
-      variable: has_authentication
-      operator: "=="
-      value: "True"
-
-  - type: render-templates
-    trigger: after-render
-    path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
-
-  - type: edit
-    trigger: after-render
-    path: src/{{solution_name}}.{{api_name}}/appsettings.Development.json
-    indent: "  "
-    encoding: utf-8
-    condition:
-      variable: has_authentication
-      operator: "=="
-      value: "True"
-    changes:
-      - insert:
-          line: 1
-          snippet: snippets/auth/JwtSecrets.txt
-          when:
-            not-exists: "JWT"
-
-
-  - type: render-templates
-    trigger: before-render
-    path: templates-insomnia-default
-    condition:
-      variable: apis_len
-      operator: "=="
-      value: 1
-
-  - type: edit
-    trigger: after-render
-    path: docs/Insomnia.json
-    changes:
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.sln
+      changes:
         - search:
-            pattern: resources
+            pattern: postSolution
             insert-after:
-              snippet: snippets/InsomniaApi.json
+              snippet: snippets/SolutionBuild.sln
 
-  - type: edit
-    trigger: after-render
-    path: docs/Insomnia.json
-    condition:
-      variable: has_authentication
-      operator: "=="
-      value: "True"
-    changes:
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.AppHost/{{solution_name}}.AppHost.csproj
+      changes:
         - search:
-            pattern: resources
-            insert-after:
-              snippet: snippets/InsomniaAuthentication.json
+            pattern: </Project>
+            insert-before:
+              snippet: snippets/AppHost.csproj
 
-  - type: edit-json
-    trigger: after-render
-    path: docs/Insomnia.json
-    changes:
-      - jsonpath: "$.resources[?name = 'Base Environment'].data"
-        update:
-          value: |
-            {
-              "{{api_name|upper}}_URL": "http://localhost:{{host_port}}"
-            }
-      - jsonpath: "$.resources[?name = 'Base Environment'].dataPropertyOrder['&']"
-        update:
-          value: |
-              "{{api_name|upper}}_URL"
-          
+    - type: render-templates
+      trigger: after-render
+      path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
+  ### Default
+  
+  ### MySql
+    - type: run
+      trigger: after-render
+      commands:
+        - dotnet add src/{{solution_name}}.{{api_name}} package Microsoft.EntityFrameworkCore.Design -v 7.0.10
+      condition:
+        variable: has_authentication
+        operator: "=="
+        value: "True"
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.{{api_name}}/Configurations.cs
+      changes:
+        - insert:
+            line: 1
+            value: |
+              using {{solution_name}}.Infrastructure.Repositories.Base;
+              using Microsoft.EntityFrameworkCore;
+      condition:
+        variable: is_mysql
+        operator: "=="
+        value: "true"
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.{{api_name}}/Configurations.cs
+      changes:
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/mysql/Configurations.cs
+            when:
+              not-exists: ".AddDbContext<{{solution_name}}Context>"
+      condition:
+        variable: is_mysql
+        operator: "=="
+        value: "true"
+  ### MySql
+
+  ### Authentication
+    - type: run
+      trigger: before-render
+      commands:
+        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity -v 2.2.0
+      condition:
+        variable: has_authentication
+        operator: "=="
+        value: "True"
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.{{api_name}}/Configurations.cs
+      changes:
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/auth/AddServices.cs
+            when:
+              not-exists: AddIdentity
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/auth/AddAuthentication.cs
+            when:
+              not-exists: AddAuthentication
+        - search:
+            pattern: return services;
+            insert-before:
+              snippet: snippets/auth/AddAuthorization.cs
+            when:
+              not-exists: AddAuthorization
+      condition:
+        variable: has_authentication
+        operator: "=="
+        value: "True"
+
+    - type: render-templates
+      trigger: after-render
+      path: templates-authentication
+      condition:
+        variable: has_authentication
+        operator: "=="
+        value: "True"
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.{{api_name}}/appsettings.Development.json
+      indent: "  "
+      encoding: utf-8
+      condition:
+        variable: has_authentication
+        operator: "=="
+        value: "True"
+      changes:
+        - insert:
+            line: 1
+            snippet: snippets/auth/JwtSecrets.txt
+            when:
+              not-exists: "JWT"
+
+    # - type: edit
+    #   trigger: after-render
+    #   path: src/{{solution_name}}.Infrastructure/Repositories/Base/{{solution_name}}DbContext.cs
+    #   indent: "  "
+    #   encoding: utf-8
+    #   condition:
+    #     variable: has_authentication
+    #     operator: "=="
+    #     value: "True"
+    #   condition:
+    #     variable: is_mysql
+    #     operator: "=="
+    #     value: "true"
+    #   changes:
+    #     - insert:
+    #         line: 1
+    #         value: using Test.Domain.Models.Identity;
+    #         when:
+    #           not-exists: "using Test.Domain.Models.Identity;"
+
+    # - type: edit
+    #   trigger: after-render
+    #   path: src/{{solution_name}}.Infrastructure/Repositories/Base/{{solution_name}}DbContext.cs
+    #   indent: "  "
+    #   encoding: utf-8
+    #   condition:
+    #     variable: has_authentication
+    #     operator: "=="
+    #     value: "True"
+    #   condition:
+    #     variable: is_mysql
+    #     operator: "=="
+    #     value: "true"
+    #   changes:
+    #     - search:
+    #         pattern: OnModelCreating
+    #         insert-before:
+    #           snippet: snippets/auth/AddDbSet.cs
+    #         when:
+    #           not-exists: "DbSet<User>"
+
+    - type: render-templates
+      trigger: after-render
+      path: templates-authentication-{{database_type | lower | replace(" ", "") | camelcase}}
+      condition:
+        variable: has_authentication
+        operator: "=="
+        value: "True"
+  ### Authentication
+
+  ### Insomnia
+    - type: render-templates
+      trigger: before-render
+      path: templates-insomnia-default
+      condition:
+        variable: apis_len
+        operator: "=="
+        value: 1
+
+    - type: edit
+      trigger: after-render
+      path: docs/Insomnia.json
+      changes:
+          - search:
+              pattern: resources
+              insert-after:
+                snippet: snippets/InsomniaApi.json
+
+    - type: edit
+      trigger: after-render
+      path: docs/Insomnia.json
+      condition:
+        variable: has_authentication
+        operator: "=="
+        value: "True"
+      changes:
+          - search:
+              pattern: resources
+              insert-after:
+                snippet: snippets/InsomniaAuthentication.json
+
+    - type: edit-json
+      trigger: after-render
+      path: docs/Insomnia.json
+      changes:
+        - jsonpath: "$.resources[?name = 'Base Environment'].data"
+          update:
+            value: |
+              {
+                "{{api_name|upper}}_URL": "http://localhost:{{host_port}}"
+              }
+        - jsonpath: "$.resources[?name = 'Base Environment'].dataPropertyOrder['&']"
+          update:
+            value: |
+                "{{api_name|upper}}_URL"
+  ### Insomnia
+
+
   #format
   # - type: run
   #   trigger: after-render

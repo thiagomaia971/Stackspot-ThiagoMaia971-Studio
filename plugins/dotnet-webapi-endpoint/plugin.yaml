@@ -52,6 +52,22 @@ spec:
     - type: run-script
       trigger: before-input
       script: scripts/QuestionaryApi.py
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Infrastructure/Repositories/Base/{{solution_name}}DbContext.cs
+      changes:
+        - insert:
+            line: 1
+            value: "using {{solution_name}}.Domain.Models;\n"
+            when:
+              not-exists: using {{solution_name}}.Domain.Models;
+        - search:
+            pattern: OnModelCreating
+            insert-before:
+              snippet: snippets/DbSet.cs
+            when:
+              not-exists: DbSet<{{entity_name}}>
       
     - type: render-templates
       trigger: after-render
@@ -97,7 +113,7 @@ spec:
             pattern: resources
             insert-after:
               snippet: snippets/InsomniaFolder.json
-
+              
     - type: render-templates
       trigger: after-render
       path: templates-{{database_type | lower | replace(" ", "") | camelcase}}

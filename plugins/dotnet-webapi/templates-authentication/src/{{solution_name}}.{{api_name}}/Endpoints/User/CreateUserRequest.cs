@@ -1,5 +1,5 @@
 using CruderSimple.Core.Requests;
-using CruderSimple.DynamoDb.Requests;
+using CruderSimple.Core.Requests.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using {{solution_name}}.Domain.Interfaces.Repositories;

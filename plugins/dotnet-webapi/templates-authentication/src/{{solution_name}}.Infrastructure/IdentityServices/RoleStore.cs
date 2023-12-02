@@ -1,4 +1,4 @@
-using CruderSimple.DynamoDb.Interfaces;
+using CruderSimple.{{database_name}}.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using {{solution_name}}.Domain.Models.Identity;
 
@@ -20,7 +20,7 @@ public class RoleStore : IRoleStore<Role>
 
     public async Task<IdentityResult> CreateAsync(Role role, CancellationToken cancellationToken)
     {
-        await _roleRepository.Save(role);
+        await _roleRepository.Add(role).Save();
         return IdentityResult.Success;
     }
 
@@ -56,7 +56,7 @@ public class RoleStore : IRoleStore<Role>
     }
 
     public async Task<Role> FindByIdAsync(string roleId, CancellationToken cancellationToken) 
-        => await _roleRepository.CreateQuery().ById(roleId).FindAsync();
+        => await _roleRepository.FindById(roleId);
 
     public Task<Role> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
     {
