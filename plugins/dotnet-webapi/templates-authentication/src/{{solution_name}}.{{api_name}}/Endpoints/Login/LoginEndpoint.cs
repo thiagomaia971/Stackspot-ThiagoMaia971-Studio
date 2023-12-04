@@ -6,8 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using {{solution_name}}.Domain.Models.Identity;
-using {{solution_name}}.Domain.ViewModels;
+using {{solution_name}}.Domain.ViewModels.Base;
 
 namespace {{solution_name}}.{{api_name}}.Endpoints.Login;
 
@@ -39,6 +38,7 @@ public static class LoginEndpoint
                 var authClaims = new List<Claim>
                 {
                     new Claim("UserId", user.Id),
+                    new Claim("TenantId", user.{{multitenant_name}}Id),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };

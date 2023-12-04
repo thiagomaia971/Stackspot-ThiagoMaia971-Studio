@@ -1,11 +1,11 @@
 using System.ComponentModel.DataAnnotations;
-using CruderSimple.Core.ViewModels;
-using {{solution_name}}.Domain.Models.Identity;
+using {{solution_name}}.Domain.ViewModels.Base;
 
-namespace {{solution_name}}.Domain.ViewModels.UserViewModels;
+namespace {{solution_name}}.Domain.ViewModels.User;
 
 public record UserInput(
     string Id,
+    string {{multitenant_name}}Id,
     [Required] [EmailAddress] string Email,
     [Required] [DataType(DataType.Password)] string Password,
     [Required] string Name,
@@ -13,4 +13,4 @@ public record UserInput(
     string PhoneNumber,
     bool PhoneNumberConfirmed,
     bool TwoFactorEnabled,
-    List<UserRoleInput> Roles) : InputDto(Id);
+    List<UserRoleInput> Roles) : {{multitenant_name}}EntityInput(Id, {{multitenant_name}}Id);

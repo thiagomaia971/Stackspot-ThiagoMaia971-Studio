@@ -53,9 +53,18 @@ spec:
       trigger: before-input
       script: scripts/QuestionaryApi.py
 
+    - type: render-templates
+      trigger: after-render
+      path: templates-{{database_type | lower | replace(" ", "") | camelcase}}
+      
+  ### MySql
     - type: edit
       trigger: after-render
       path: src/{{solution_name}}.Infrastructure/Repositories/Base/{{solution_name}}DbContext.cs
+      condition:
+        variable: is_mysql
+        operator: "=="
+        value: "true"
       changes:
         - insert:
             line: 1
@@ -68,7 +77,17 @@ spec:
               snippet: snippets/DbSet.cs
             when:
               not-exists: DbSet<{{entity_name}}>
-      
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Infrastructure"
+      commands:
+        - "dotnet ef migrations add {{entity_name}} --startup-project ./../{{solution_name}}.{{api_name}} -- --environment Development"
+      condition:
+        variable: is_mysql
+        operator: "=="
+        value: "true"
+  ### MySql
+  
     - type: render-templates
       trigger: after-render
       path: templates-getall
@@ -114,6 +133,3 @@ spec:
             insert-after:
               snippet: snippets/InsomniaFolder.json
               
-    - type: render-templates
-      trigger: after-render
-      path: templates-{{database_type | lower | replace(" ", "") | camelcase}}

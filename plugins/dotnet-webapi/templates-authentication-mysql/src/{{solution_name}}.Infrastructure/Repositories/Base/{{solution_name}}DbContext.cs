@@ -1,7 +1,8 @@
-using Test.Domain.Models.Identity;
+using {{solution_name}}.Domain.Models.Identity;
 
 
 
-    public DbSet<User> Users { get; set; }
-    public DbSet<UserRole> UserRoles { get; set; }
-    public DbSet<Role> Roles { get; set; }
+    public DbSet<User> User { get; set; }
+    public DbSet<UserRole> UserRole { get; set; }
+    public DbSet<Role> Role { get; set; }
+    public DbSet<{{multitenant_name}}> {{multitenant_name}} { get; set; }

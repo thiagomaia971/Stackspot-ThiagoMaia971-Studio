@@ -8,7 +8,7 @@ using {{solution_name}}.Infrastructure.Repositories.Base;
 
 namespace {{solution_name}}.Infrastructure.Repositories;
 
-public class UserRepository : Repository<User>, IUserRepository
+public class UserRepository : MultiTenantRepository<User>, IUserRepository
 {
     private readonly IRepository<UserRole> _UserRoleRepository;
 

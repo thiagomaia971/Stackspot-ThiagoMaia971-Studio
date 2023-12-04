@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using CruderSimple.Core.ViewModels;
 using CruderSimple.MySql.Entities;
-using {{solution_name}}.Domain.ViewModels.UserViewModels;
+using {{solution_name}}.Domain.ViewModels.User;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 

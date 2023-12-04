@@ -2,11 +2,13 @@ using Newtonsoft.Json;
 using CruderSimple.Core.ViewModels;
 using CruderSimple.Core.Extensions;
 using CruderSimple.MySql.Entities;
-using {{solution_name}}.Domain.ViewModels.UserViewModels;
+using CruderSimple.MySql.Attributes;
+using {{solution_name}}.Domain.ViewModels.User;
+using {{solution_name}}.Domain.ViewModels.{{multitenant_name}};
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
-public class User : Entity
+public class User : {{multitenant_name}}Entity
 {
     [JsonProperty("Name")]
     public string Name { get; set; }
@@ -29,6 +31,7 @@ public class User : Entity
     [JsonProperty("TwoFactorEnabled")]
     public bool TwoFactorEnabled { get; set; }
 
+    [IncludeAttribute]
     public ICollection<UserRole> Roles { get; set; } = new List<UserRole>();
 
     public override Entity FromInput(InputDto input)
@@ -49,6 +52,8 @@ public class User : Entity
             Id,
             CreatedAt.ToString("O"),
             UpdatedAt?.ToString("O"),
+            {{multitenant_name}}Id,
+            {{multitenant_name}}.ToOutput<{{multitenant_name}}Output>(),
             Email,
             Name,
             EmailConfirmed,

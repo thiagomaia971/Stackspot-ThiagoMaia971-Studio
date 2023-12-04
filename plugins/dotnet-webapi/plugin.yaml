@@ -261,6 +261,15 @@ spec:
               insert-after:
                 snippet: snippets/InsomniaAuthentication.json
 
+    - type: edit
+      trigger: after-render
+      path: docs/Insomnia.json
+      changes:
+          - search:
+              pattern: resources
+              insert-after:
+                snippet: snippets/InsomniaMultiTenant.json
+
     - type: edit-json
       trigger: after-render
       path: docs/Insomnia.json
@@ -276,25 +285,3 @@ spec:
             value: |
                 "{{api_name|upper}}_URL"
   ### Insomnia
-
-
-  #format
-  # - type: run
-  #   trigger: after-render
-  #   working-dir: "src/{{solution_name}}.{{api_name}}"
-  #   commands:
-  #     -  dotnet format --include-generated
-  #   condition:
-  #     variable: has_api
-  #     operator: "=="
-  #     value: "true"
-  # - type: run
-  #   trigger: after-render
-  #   working-dir: "src/{{solution_name}}.Domain"
-  #   commands:
-  #     -  dotnet format --include-generated
-  # - type: run
-  #   trigger: after-render
-  #   working-dir: "src/{{solution_name}}.Infrastructure"
-  #   commands:
-  #     -  dotnet format --include-generated

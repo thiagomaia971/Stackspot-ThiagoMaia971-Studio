@@ -1,7 +1,7 @@
 using CruderSimple.Core.Requests;
 using CruderSimple.Core.Requests.Base;
 using {{solution_name}}.Domain.Interfaces.Repositories;
-using {{solution_name}}.Domain.ViewModels.{{entity_name}}ViewModels;
+using {{solution_name}}.Domain.ViewModels.{{entity_name}};
 
 namespace {{solution_name}}.{{api_name}}.Endpoints.{{entity_name}};
 

@@ -30,6 +30,12 @@ spec:
         - "MySql"
         - "PostgreSql"
         - "Sql Server"
+    - label: Multi Tenant Entity Name?
+      type: text
+      name: multitenant_name
+      default: Tenant
+      required: true
+      global: true
   global-computed-inputs:
     database_name: "{{database_type | replace(\" \", \"\")}}"
     is_dynamodb: "{% if database_type == \"DynamoDb\" %}true{% else %}false{% endif %}"
@@ -42,7 +48,7 @@ spec:
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.8
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.13
       condition:
         variable: is_dynamodb
         operator: "=="
@@ -53,7 +59,7 @@ spec:
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.8
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.13
       condition:
         variable: is_sqlserver
         operator: "=="
@@ -64,7 +70,7 @@ spec:
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.MySql -v 0.0.8
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.MySql -v 0.0.13
       condition:
         variable: is_mysql
         operator: "=="
