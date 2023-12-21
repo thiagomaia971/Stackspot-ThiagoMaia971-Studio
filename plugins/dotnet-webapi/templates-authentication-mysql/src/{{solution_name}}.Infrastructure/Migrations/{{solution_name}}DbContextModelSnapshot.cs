@@ -40,6 +40,33 @@ namespace {{solution_name}}.Infrastructure.Migrations
                     b.ToTable("{{multitenant_name}}");
                 });
 
+            modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.Permission", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsWrite")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Route")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permission");
+                });
+
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.Role", b =>
                 {
                     b.Property<string>("Id")
@@ -59,6 +86,35 @@ namespace {{solution_name}}.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Role");
+                });
+
+            modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.RolePermission", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("PermissionId")
+                        .IsRequired()
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("varchar(36)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("RolePermission");
                 });
 
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.User", b =>
@@ -136,6 +192,25 @@ namespace {{solution_name}}.Infrastructure.Migrations
                     b.ToTable("UserRole");
                 });
 
+            modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.RolePermission", b =>
+                {
+                    b.HasOne("{{solution_name}}.Domain.Models.Identity.Permission", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("{{solution_name}}.Domain.Models.Identity.Role", "Role")
+                        .WithMany("Permissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.User", b =>
                 {
                     b.HasOne("{{solution_name}}.Domain.Models.{{multitenant_name}}", "{{multitenant_name}}")
@@ -152,6 +227,11 @@ namespace {{solution_name}}.Infrastructure.Migrations
                     b.HasOne("{{solution_name}}.Domain.Models.Identity.User", null)
                         .WithMany("Roles")
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.Role", b =>
+                {
+                    b.Navigation("Permissions");
                 });
 
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.User", b =>
