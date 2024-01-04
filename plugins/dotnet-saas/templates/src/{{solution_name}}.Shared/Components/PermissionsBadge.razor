@@ -1,0 +1,10 @@
+﻿@using {{solution_name}}.Domain.ViewModels
+@foreach (var permission in Role.GetPermissionsBadge() ?? new List<string>())
+{
+    <Badge Color="Color.Success" Margin="Margin.Is1.OnX">@permission</Badge>
+}
+
+@code {
+    [Parameter]
+    public RoleDto Role { get; set; }
+}

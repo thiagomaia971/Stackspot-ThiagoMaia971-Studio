@@ -1,5 +1,5 @@
 using CruderSimple.Core.ViewModels;
-using {{solution_name}}.Domain.ViewModels.Base;
+using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.ViewModels.{{entity_name}};
 

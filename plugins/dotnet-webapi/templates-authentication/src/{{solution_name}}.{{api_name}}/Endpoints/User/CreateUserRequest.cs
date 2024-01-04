@@ -3,13 +3,13 @@ using CruderSimple.Core.Requests.Base;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using {{solution_name}}.Domain.Interfaces.Repositories;
-using {{solution_name}}.Domain.ViewModels.User;
+using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.{{api_name}}.Endpoints.User;
 
 public static class CreateUserRequest
 {
-    public record Query([FromBody] UserInput payload) : CreateRequest.Query<UserInput>(payload);
+    public record Query([FromBody] UserDto payload) : CreateRequest.Query<UserDto>(payload);
 
     [EndpointRequest(
         method: EndpointMethod.POST, 
@@ -23,7 +23,7 @@ public static class CreateUserRequest
             UserManager<Domain.Models.Identity.User> userManager,
             SignInManager<Domain.Models.Identity.User> _signInManager
         )
-        : CreateRequest.Handler<Query, Domain.Models.Identity.User, UserInput, UserOutput, IUserRepository>(repository)
+        : CreateRequest.Handler<Query, Domain.Models.Identity.User, UserDto, UserOutput, IUserRepository>(repository)
     {
         public override async Task<IResult> Handle(Query request, CancellationToken cancellationToken)
         {

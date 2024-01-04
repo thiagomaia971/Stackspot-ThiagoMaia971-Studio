@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using Amazon.DynamoDBv2.DataModel;
 using CruderSimple.Core.ViewModels;
 using CruderSimple.DynamoDb.Entities;
-using {{solution_name}}.Domain.ViewModels.UserViewModels;
+using {{solution_name}}.Domain.ViewModelsViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
@@ -15,9 +15,9 @@ public class UserRole : Entity
 
     public override Entity FromInput(InputDto input)
     {
-        var userRoleInput = (UserRoleInput)input;
-        Id = userRoleInput.Id;
-        RoleId = userRoleInput.RoleId;
+        var userRoleDto = (UserRoleDto)input;
+        Id = userRoleDto.Id;
+        RoleId = userRoleDto.RoleId;
         return this;
     }
 

@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using CruderSimple.Core.ViewModels;
 using CruderSimple.MySql.Entities;
-using {{solution_name}}.Domain.ViewModels.User;
+using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
@@ -13,8 +13,8 @@ public class UserRole : Entity
     public override Entity FromInput(InputDto input)
     {
         base.FromInput(input);
-        var userRoleInput = (UserRoleInput)input;
-        RoleId = userRoleInput.RoleId;
+        var userRoleDto = (UserRoleDto)input;
+        RoleId = userRoleDto.RoleId;
         return this;
     }
 

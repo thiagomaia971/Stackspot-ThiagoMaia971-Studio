@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace {{solution_name}}.Domain.ViewModels.Base;
+namespace {{solution_name}}.Domain.ViewModels;
 public class LoginViewModel
 {
     [Required]

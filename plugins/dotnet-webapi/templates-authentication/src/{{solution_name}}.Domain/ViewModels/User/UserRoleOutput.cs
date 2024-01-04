@@ -1,6 +1,6 @@
 using CruderSimple.Core.ViewModels;
 
-namespace {{solution_name}}.Domain.ViewModels.User;
+namespace {{solution_name}}.Domain.ViewModels;
 public record UserRoleOutput(
     string Id,
     string CreatedAt, 

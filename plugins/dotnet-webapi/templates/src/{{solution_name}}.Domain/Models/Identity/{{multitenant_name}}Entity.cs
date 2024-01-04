@@ -4,7 +4,7 @@ using CruderSimple.Core.ViewModels;
 using CruderSimple.Core.Extensions;
 using CruderSimple.MySql.Attributes;
 using CruderSimple.MySql.Entities;
-using {{solution_name}}.Domain.ViewModels.Base;
+using {{solution_name}}.Domain.ViewModels;
 using {{solution_name}}.Domain.ViewModels.{{multitenant_name}};
 
 namespace {{solution_name}}.Domain.Models.Identity;

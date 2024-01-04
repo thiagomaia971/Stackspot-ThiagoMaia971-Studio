@@ -4,7 +4,7 @@ using CruderSimple.Core.ViewModels;
 using CruderSimple.Core.Extensions;
 using CruderSimple.DynamoDb.Attributes;
 using CruderSimple.DynamoDb.Entities;
-using {{solution_name}}.Domain.ViewModels.UserViewModels;
+using {{solution_name}}.Domain.ViewModelsViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
@@ -41,12 +41,12 @@ public class User : Entity
 
     public override Entity FromInput(InputDto input)
     {
-        var userInput = (UserInput)input;
-        Id = userInput.Id;
-        PrimaryKey = userInput.Email;
-        Name = userInput.Name;
-        PhoneNumber = userInput.PhoneNumber;
-        Roles = Roles?.FromInput(userInput.Roles);
+        var UserDto = (UserDto)input;
+        Id = UserDto.Id;
+        PrimaryKey = UserDto.Email;
+        Name = UserDto.Name;
+        PhoneNumber = UserDto.PhoneNumber;
+        Roles = Roles?.FromInput(UserDto.Roles);
         
         return this;
     }

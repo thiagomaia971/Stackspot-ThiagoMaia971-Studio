@@ -1,0 +1,104 @@
+﻿
+<CascadingAuthenticationState>
+    <ThemeProvider Theme="@Theme">
+        <Router AppAssembly="@typeof(App).Assembly" AdditionalAssemblies="@AdditionalAssemblies" PreferExactMatches="@true">
+            <Found Context="routeData">
+                <CascadingValue Name="AppRouteData" Value="@routeData">
+                    <AuthorizeRouteView Resource="@routeData" RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                        <NotAuthorized>
+                            nao autorizado
+                            @if (context.User.Identity?.IsAuthenticated != true)
+                            {
+                                <RedirectToLogin />
+                            }
+                            else
+                            {
+                                <_401Page />
+                            }
+                        </NotAuthorized>
+                    </AuthorizeRouteView>
+
+                    <MessageProvider />
+                    <NotificationProvider />
+                    <ApplicationLoadingIndicator />
+                    <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+                </CascadingValue>
+            </Found>
+            <NotFound>
+                <CascadingValue Name="NotFound" Value="@true">
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <_404Page />
+                    </LayoutView>
+                </CascadingValue>
+            </NotFound>
+        </Router>
+    </ThemeProvider>
+</CascadingAuthenticationState>
+@code
+{
+    public List<System.Reflection.Assembly> AdditionalAssemblies = new List<System.Reflection.Assembly>
+    {
+        typeof({{solution_name}}.Shared.Pages.Registrations.UserPages.User).Assembly,
+        typeof(CruderSimple.Blazor.Components.AppSearch).Assembly,
+        typeof({{solution_name}}.Domain.Models.Identity.User).Assembly
+    };
+
+    protected Theme Theme = new Theme
+        {
+            ColorOptions = new ThemeColorOptions
+            {
+                Primary = "#7178c7",
+                Secondary = "#6c757d",
+                Success = "#19bf90",
+                Danger = "#e86d86",
+                Warning = "#ffbc00",
+                Info = "#39afd1",
+                Light = "#eef2f7",
+                Dark = "#313a46"
+            },
+            BackgroundOptions = new ThemeBackgroundOptions
+            {
+                Primary = "#7178c7",
+                Secondary = "#6c757d",
+                Success = "#19bf90",
+                Danger = "#e86d86",
+                Warning = "#ffbc00",
+                Info = "#39afd1",
+                Light = "#eef2f7",
+                Dark = "#313a46"
+            },
+            TextColorOptions = new ThemeTextColorOptions
+            {
+                Primary = "#7178c7",
+                Secondary = "#6c757d",
+                Success = "#19bf90",
+                Danger = "#e86d86",
+                Warning = "#ffbc00",
+                Info = "#39afd1",
+                Light = "#eef2f7",
+                Dark = "#313a46",
+                Body = "#6c757d",
+            },
+            BarOptions = new ThemeBarOptions
+            {
+                HorizontalHeight = "72px",
+                VerticalWidth = "260px",
+                DarkColors = new()
+                {
+                    BackgroundColor = "#313a46",
+                    DropdownColorOptions = new()
+                    {
+                        BackgroundColor = "#313a46",
+                    },
+                    ItemColorOptions = new()
+                    {
+                        ActiveBackgroundColor = "#313a46",
+                        ActiveColor = "#ffffff",
+                        HoverBackgroundColor = "#222830",
+                        HoverColor = "#bccee4",
+                    },
+                    Color = "#8391a2",
+                }
+            },
+        };
+}

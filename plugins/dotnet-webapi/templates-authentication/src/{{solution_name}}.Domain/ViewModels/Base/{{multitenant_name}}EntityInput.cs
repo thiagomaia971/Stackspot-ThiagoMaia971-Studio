@@ -1,6 +1,6 @@
 using CruderSimple.Core.ViewModels;
 
-namespace {{solution_name}}.Domain.ViewModels.Base;
+namespace {{solution_name}}.Domain.ViewModels;
 
 public record {{multitenant_name}}EntityInput(
     string Id,

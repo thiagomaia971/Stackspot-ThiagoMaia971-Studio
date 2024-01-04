@@ -1,7 +1,7 @@
 using CruderSimple.Core.ViewModels;
 using {{solution_name}}.Domain.ViewModels.{{multitenant_name}};
 
-namespace {{solution_name}}.Domain.ViewModels.Base;
+namespace {{solution_name}}.Domain.ViewModels;
 
 public record {{multitenant_name}}EntityOutput(
     string Id, 

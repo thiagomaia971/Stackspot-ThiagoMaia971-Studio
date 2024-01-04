@@ -1,8 +1,8 @@
 schema-version: v2
 kind: plugin
 metadata:
-  name: dotnet-base-saas
-  display-name: dotnet-base-saas
+  name: dotnet-saas
+  display-name: dotnet-saas
   description: Descreva seu plugin explicando o propósito
   version: 0.0.1
   picture: plugin.png
@@ -20,22 +20,20 @@ spec:
     - Api
   stk-projects-only: false
   inputs:
-    - label: Type name of your resource
-      name: resource
+    - label: Solution Name?
       type: text
+      name: solution_name
       required: true
-      default: Client
-      pattern: '([A-Z][a-z]+)+'
-      help: 'Inform your resource name (e.g.: Client)'
-    - label: Choose http method of new endpoint
-      name: method
+      global: true
+    - label: Which API port?
       type: text
-      items:
-        - GET
-        - POST
-        - PUT
-        - DELETE
-        - PATCH
-      default: GET
+      name: api_host_port
       required: true
-      help: 'Inform the method of the endpoint (e.g.: post or delete)'
+      default: "5228"
+      global: false
+    - label: Which Web port?
+      type: text
+      name: web_host_port
+      required: true
+      default: "7229"
+      global: false

@@ -1,4 +1,4 @@
-using {{solution_name}}.Domain.ViewModels.Base;
+using {{solution_name}}.Domain.ViewModels;
 using {{solution_name}}.Domain.ViewModels.{{multitenant_name}};
 
 namespace {{solution_name}}.Domain.ViewModels.{{entity_name}};

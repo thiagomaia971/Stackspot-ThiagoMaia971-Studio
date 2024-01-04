@@ -1,9 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using {{solution_name}}.Domain.ViewModels.Base;
+using {{solution_name}}.Domain.ViewModels;
 
-namespace {{solution_name}}.Domain.ViewModels.User;
+namespace {{solution_name}}.Domain.ViewModels;
 
-public record UserInput(
+public record UserDto(
     string Id,
     string {{multitenant_name}}Id,
     [Required] [EmailAddress] string Email,
@@ -13,4 +13,4 @@ public record UserInput(
     string PhoneNumber,
     bool PhoneNumberConfirmed,
     bool TwoFactorEnabled,
-    List<UserRoleInput> Roles) : {{multitenant_name}}EntityInput(Id, {{multitenant_name}}Id);
+    List<UserRoleDto> Roles) : {{multitenant_name}}EntityInput(Id, {{multitenant_name}}Id);

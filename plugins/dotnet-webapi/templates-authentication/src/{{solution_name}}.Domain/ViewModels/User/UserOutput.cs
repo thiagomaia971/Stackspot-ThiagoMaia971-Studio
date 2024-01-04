@@ -1,7 +1,7 @@
-using {{solution_name}}.Domain.ViewModels.Base;
+using {{solution_name}}.Domain.ViewModels;
 using {{solution_name}}.Domain.ViewModels.{{multitenant_name}};
 
-namespace {{solution_name}}.Domain.ViewModels.User;
+namespace {{solution_name}}.Domain.ViewModels;
 
 public record UserOutput(
     string Id, 

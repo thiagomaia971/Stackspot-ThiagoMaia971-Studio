@@ -1,0 +1,14 @@
+﻿@page "/"
+@using CruderSimple.Core.Entities
+@using Newtonsoft.Json
+@using {{solution_name}}.Domain.ViewModels
+@using {{solution_name}}.Shared.Extensions
+@attribute [Authorize]
+@inject IHttpClientFactory httpClientFactory
+
+<CruderSimple.Blazor.Components.PageTitle Title="" BreadcrumbItems="@(new Breadcrum[] { new Breadcrum("/", "{{solution_name}}") })" />
+
+@code {
+
+
+}

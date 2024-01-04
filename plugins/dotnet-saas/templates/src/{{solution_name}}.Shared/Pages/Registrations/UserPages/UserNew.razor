@@ -1,0 +1,96 @@
+﻿@page "/user/new"
+@page "/user/{Id}"
+@page "/user/{Id}/edit"
+@using {{solution_name}}.Domain.Models.Identity
+@using {{solution_name}}.Domain.ViewModels
+@inherits CreationComponent
+
+<CardHeader>
+    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("Usuário")"
+                                              BreadcrumbItems="@(new Breadcrum[] {
+                                            new Breadcrum("/", "{{solution_name}}"),
+                                            new Breadcrum("/user", "Usuários") })" />
+</CardHeader>
+
+<CreateEditPage @ref="CreateEditPage" TEntity="{{solution_name}}.Domain.Models.Identity.User" TDto="UserDto" Model="@Model" Id="@Id">
+    <Validation Validator="ValidationRule.IsEmail">
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Email</FieldLabel>
+            <FieldBody>
+                <TextEdit Role="TextRole.Email" Placeholder="Email" @bind-Text="@Model.Email" Disabled="@CreateEditPage.DisabledToEdit">
+                    <Feedback>
+                        <ValidationError>Invalid email</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </FieldBody>
+        </Field>
+    </Validation>
+    <Validation Validator="ValidationRule.IsNotEmpty">
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Nome</FieldLabel>
+            <FieldBody>
+                <TextEdit Role="TextRole.Text" Placeholder="Nome" @bind-Text="@Model.Name" Disabled="@CreateEditPage.DisabledToEdit">
+                    <Feedback>
+                        <ValidationError>Invalid name</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </FieldBody>
+        </Field>
+    </Validation>
+    <Validation Validator="ValidationRule.IsNotEmpty">
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Telefone</FieldLabel>
+            <FieldBody>
+                <TextEdit Role="TextRole.Text" Placeholder="Telefone" @bind-Text="@Model.PhoneNumber" Disabled="@CreateEditPage.DisabledToEdit">
+                    <Feedback>
+                        <ValidationError>Invalid phone number</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </FieldBody>
+        </Field>
+    </Validation>
+    <Validation Validator="ValidationRule.IsNotEmpty">
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Senha</FieldLabel>
+            <FieldBody>
+                <TextEdit Role="TextRole.Password" Placeholder="Senha" @bind-Text="@Model.Password" Disabled="@CreateEditPage.DisabledToEdit">
+                    <Feedback>
+                        <ValidationError>Invalid password</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </FieldBody>
+        </Field>
+    </Validation>
+    <Field Margin="Margin.Is3.FromBottom">
+        <FieldLabel>Cargo</FieldLabel>
+        <FieldBody>
+            <MultipleEntityAutocomplete TEntity="Role"
+                                        TEntityResult="RoleDto"
+                                        SearchKey="Name"
+                                        CustomSelect="Permissions.IsRead,Permissions.IsWrite,Permissions.Route.Name"
+                                        Data="@Model.Roles"
+                                        @bind-SelectedValues="@Model.Roles"
+                                        Disabled="@CreateEditPage.DisabledToEdit">
+                <ItemContent>
+                    <Div Flex="Flex.InlineFlex.JustifyContent.Between" Width="Width.Is100">
+                        <Heading Margin="Margin.Is2.FromBottom">@context.Item.GetValue</Heading>
+                    </Div>
+                    <Paragraph Margin="Margin.Is2.FromBottom">
+                        <PermissionsBadge Role="context.Item" />
+                    </Paragraph>
+                </ItemContent>
+            </MultipleEntityAutocomplete>
+        </FieldBody>
+    </Field>
+</CreateEditPage>
+
+@code {
+    public UserDto Model { get; set; }
+    public CreateEditPage<{{solution_name}}.Domain.Models.Identity.User, UserDto> CreateEditPage { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Model = new UserDto();
+        return base.OnInitializedAsync();
+    }
+}   

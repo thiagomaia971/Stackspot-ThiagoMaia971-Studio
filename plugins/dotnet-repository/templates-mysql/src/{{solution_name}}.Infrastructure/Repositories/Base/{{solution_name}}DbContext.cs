@@ -22,6 +22,7 @@ public class {{solution_name}}DbContext(DbContextOptions<{{solution_name}}DbCont
         optionsBuilder.UseMySQL(connectionString);
     }
 }
+
 public class {{solution_name}}DbContextFactory() : IDesignTimeDbContextFactory<{{solution_name}}DbContext>
 {
     public {{solution_name}}DbContext CreateDbContext(string[] args)

@@ -3,7 +3,7 @@ using CruderSimple.Core.ViewModels;
 using CruderSimple.Core.Extensions;
 using CruderSimple.MySql.Entities;
 using CruderSimple.MySql.Attributes;
-using {{solution_name}}.Domain.ViewModels.User;
+using {{solution_name}}.Domain.ViewModels;
 using {{solution_name}}.Domain.ViewModels.{{multitenant_name}};
 
 namespace {{solution_name}}.Domain.Models.Identity;
@@ -37,11 +37,11 @@ public class User : {{multitenant_name}}Entity
     public override Entity FromInput(InputDto input)
     {
         base.FromInput(input);
-        var userInput = (UserInput)input;
-        Email = userInput.Email;
-        Name = userInput.Name;
-        PhoneNumber = userInput.PhoneNumber;
-        Roles = Roles?.FromInput(userInput.Roles);
+        var UserDto = (UserDto)input;
+        Email = UserDto.Email;
+        Name = UserDto.Name;
+        PhoneNumber = UserDto.PhoneNumber;
+        Roles = Roles?.FromInput(UserDto.Roles);
         
         return this;
     }
