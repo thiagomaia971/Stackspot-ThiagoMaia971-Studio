@@ -4,6 +4,7 @@ using CruderSimple.Core.ViewModels;
 using CruderSimple.MySql.Attributes;
 using CruderSimple.MySql.Entities;
 using CruderSimple.Core.Extensions;
+using CruderSimple.Core.Attributes;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
@@ -15,7 +16,6 @@ public abstract class CompanyEntity : Entity, ITenantEntity
     public string CompanyId { get; set; }
     
     [Include]
-    [AutoDetach]
     public Company Company { get; set; }
 
     public override IEntity FromInput(BaseDto input)

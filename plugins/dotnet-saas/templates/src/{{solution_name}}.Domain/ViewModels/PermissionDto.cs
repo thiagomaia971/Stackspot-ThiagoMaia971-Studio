@@ -1,10 +1,15 @@
+using System.Text.Json.Serialization;
 using CruderSimple.Core.ViewModels;
 
 namespace {{solution_name}}.Domain.ViewModels;
 
 public class PermissionDto : BaseDto
 {
+    #region Properties
+
+    [JsonIgnore]
     public override string GetKey => Id;
+    [JsonIgnore]
     public override string GetValue => Role is null || Route is null ? null : $"{Role.Name}-{Route.Name}";
 
     public string RoleId { get; set; }
@@ -14,8 +19,9 @@ public class PermissionDto : BaseDto
     public bool IsRead { get; set; }
     public bool IsWrite { get; set; }
 
+    #endregion
 
-    public PermissionDto() : base(null, DateTime.MinValue, null)
+    public PermissionDto() : base()
     {
         
     }

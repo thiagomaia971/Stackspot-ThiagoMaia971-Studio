@@ -5,12 +5,16 @@ namespace {{solution_name}}.Domain.ViewModels;
 
 public class CompanyDto : BaseDto
 {
+    #region Properties
+    [JsonIgnore]
     public override string GetKey => Id;
+    [JsonIgnore]
     public override string GetValue => Name;
     
     public string Name { get; set; }
+    #endregion
 
-    public CompanyDto() : base (null, DateTime.MinValue, null)
+    public CompanyDto() : base ()
     {
     }
 

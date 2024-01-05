@@ -1,0 +1,22 @@
+@page "/{{entity_name|lower}}"
+
+<CardHeader>
+    <CruderSimple.Blazor.Components.PageTitle Title="{{entity_name}}s"
+                                              BreadcrumbItems="@(
+                                                new Breadcrum[] {
+                                                new Breadcrum("/", "{{solution_name}}")})" />
+</CardHeader>
+<CardBody>
+    <ListPage 
+            TEntity="{{solution_name}}.Domain.Models.{{entity_name}}" 
+            TDto="{{entity_name}}Dto">
+        <Columns>
+            @*
+            <DataGridColumn TItem="{{entity_name}}Dto" Field="@nameof({{entity_name}}Dto.Name)" Caption="Nome" Editable Filterable />
+            *@
+        </Columns>
+    </ListPage>
+</CardBody>
+    
+@code {
+}

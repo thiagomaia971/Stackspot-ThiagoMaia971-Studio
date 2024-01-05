@@ -3,18 +3,21 @@ using CruderSimple.Core.ViewModels;
 
 namespace {{solution_name}}.Domain.ViewModels;
 
-public class RoleDto : BaseDto
+public class RoleDto : CompanyEntityDto
 {
+    #region Properties
+
     [JsonIgnore]
     public override string GetKey => Id;
     [JsonIgnore]
     public override string GetValue => Name;
 
     public string Name { get; set; }
-
     public IEnumerable<PermissionDto> Permissions { get; set; } = new List<PermissionDto>();
 
-    public RoleDto() : base(null, DateTime.MinValue, null)
+    #endregion
+
+    public RoleDto() : base()
     {
     }
 
@@ -24,7 +27,7 @@ public class RoleDto : BaseDto
         DateTime? updatedAt,
         string companyId,
         string name,
-        IEnumerable<PermissionDto> permissions) : base(id, createdAt, updatedAt)
+        IEnumerable<PermissionDto> permissions) : base(id, createdAt, updatedAt, companyId)
     {
         Name = name;
         Permissions = permissions;

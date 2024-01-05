@@ -5,6 +5,8 @@ namespace {{solution_name}}.Domain.ViewModels;
 
 public class UserDto : CompanyEntityDto
 {
+    #region Properties
+
     [JsonIgnore]
     public override string GetKey => Id;
     [JsonIgnore]
@@ -23,8 +25,10 @@ public class UserDto : CompanyEntityDto
     public List<RoleDto> Roles { get; set; }
     public IEnumerable<PermissionDto> Permissions { get; set; }
     public IEnumerable<string> PermissionsString { get; set; }
+    
+    #endregion
 
-    public UserDto() : base(null, DateTime.MinValue, null, null, null)
+    public UserDto() : base()
     {
     }
 

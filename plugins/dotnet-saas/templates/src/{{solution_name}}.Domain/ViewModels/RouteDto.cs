@@ -1,9 +1,14 @@
+using System.Text.Json.Serialization;
 using CruderSimple.Core.ViewModels;
 
 namespace {{solution_name}}.Domain.ViewModels;
 public class RouteDto : BaseDto
 {
+    #region Properties
+
+    [JsonIgnore]
     public override string GetKey => Id;
+    [JsonIgnore]
     public override string GetValue => Name;
 
     public string Name { get; set; }
@@ -14,7 +19,9 @@ public class RouteDto : BaseDto
     public bool Visible { get; set; }    
     public string DependsOn { get; set; }
 
-    public RouteDto() : base (null, DateTime.MinValue, null)
+    #endregion
+
+    public RouteDto() : base ()
     {
     }
 
