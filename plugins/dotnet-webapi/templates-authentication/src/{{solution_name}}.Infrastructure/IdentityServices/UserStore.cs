@@ -26,23 +26,23 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     }
 
     public Task<string> GetUserIdAsync(User User, CancellationToken cancellationToken) 
-        => Task.FromResult(User.InheritedKey);
+        => Task.FromResult(User.Id);
 
     public Task<string> GetUserNameAsync(User User, CancellationToken cancellationToken)
-        => Task.FromResult(User.PrimaryKey.ToLower());
+        => Task.FromResult(User.GetPrimaryKey().ToLower());
 
     public Task SetUserNameAsync(User User, string userName, CancellationToken cancellationToken)
     {
-        User.PrimaryKey = userName.ToLower();
+        // User.GetPrimaryKey() = userName.ToLower();
         return Task.CompletedTask;
     }
 
     public Task<string> GetNormalizedUserNameAsync(User User, CancellationToken cancellationToken)
-        => Task.FromResult(User.PrimaryKey.ToLower());
+        => Task.FromResult(User.GetPrimaryKey().ToLower());
 
     public Task SetNormalizedUserNameAsync(User User, string normalizedName, CancellationToken cancellationToken)
     {
-        User.PrimaryKey = normalizedName.ToLower();
+        // User.GetPrimaryKey() = normalizedName.ToLower();
         return Task.CompletedTask;
     }
 
@@ -50,7 +50,7 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     {
         var defaultRoleId = "0439ac1d-c8aa-4d9b-b7b7-68d5c562eac7";
         //User.Roles.Add(defaultRoleId);
-        await _userRepository.Save(User);
+        await _userRepository.Add(User).Save();
         
         return IdentityResult.Success;
     }
@@ -58,7 +58,7 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     public async Task<IdentityResult> UpdateAsync(User User, CancellationToken cancellationToken)
     {
         //var userDynamo = await _userRepository.Find(user.Id);
-        await _userRepository.Save(User);
+        await _userRepository.Update(User).Save();
         return IdentityResult.Success;
     }
 
@@ -68,18 +68,15 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
     }
 
     public async Task<User> FindByIdAsync(string userId, CancellationToken cancellationToken) 
-        => await _userRepository
-            .CreateQuery()
-            .ById(userId)
-            .FindAsync();
+        => await _userRepository.FindById(userId);
 
     public async Task<User> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
     {
-        var single = await _userRepository
-            .CreateQuery()
-            .ByGsi(x => x.PrimaryKey, normalizedUserName.ToLower())
-            .ByInheritedType()
-            .FindAsync();
+{%if is_dynamodb == "true"%}
+        var single = await _userRepository.FindBy("PrimaryKey", normalizedUserName.ToLower());
+{%else%}
+        var single = (await _userRepository.GetAll()).Data.FirstOrDefault(x => x.Email == normalizedUserName.ToLower());
+{%endif%}
         return single;
     }
 
@@ -97,12 +94,12 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
 
     public Task SetEmailAsync(User User, string email, CancellationToken cancellationToken)
     {
-        User.PrimaryKey = email;
+        // User.GetPrimaryKey() = email;
         return Task.CompletedTask;
     }
 
     public Task<string> GetEmailAsync(User User, CancellationToken cancellationToken) 
-        => Task.FromResult(User.PrimaryKey);
+        => Task.FromResult(User.GetPrimaryKey());
 
     public Task<bool> GetEmailConfirmedAsync(User User, CancellationToken cancellationToken)
         => Task.FromResult(User.EmailConfirmed);
@@ -116,20 +113,21 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
 
     public async Task<User> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken)
     {
-        var findByHash = await _userRepository
-            .CreateQuery()
-            .ByGsi(x => x.PrimaryKey, normalizedEmail.ToLower())
-            .ByInheritedType()
-            .FindAsync();
+{%if is_dynamodb == "true"%}
+        var findByHash = await _userRepository.FindBy("PrimaryKey", normalizedEmail.ToLower());
+{%else%}
+        var findByHash = (await _userRepository.GetAll()).Data.FirstOrDefault(x => x.Email == normalizedEmail.ToLower());
+{%endif%}
+
         return findByHash;
     }
 
     public Task<string> GetNormalizedEmailAsync(User User, CancellationToken cancellationToken) 
-        => Task.FromResult(User.InheritedKey.ToLower());
+        => Task.FromResult(User.Id.ToLower());
 
     public Task SetNormalizedEmailAsync(User User, string normalizedEmail, CancellationToken cancellationToken)
     {
-        User.PrimaryKey = normalizedEmail.ToLower();
+        // User.GetPrimaryKey() = normalizedEmail.ToLower();
         return Task.CompletedTask;
     }
 

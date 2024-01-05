@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    {{solution_name | lower | replace(" ", "") | camelcase}}_mysql:
+        container_name: "{{solution_name | lower | replace(" ", "") | camelcase}}_mysql"
+        image: mysql:latest
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+            default:
+    {{solution_name | lower | replace(" ", "") | camelcase}}_adminer:
+        container_name: "{{solution_name | lower | replace(" ", "") | camelcase}}"
+        image: adminer
+        restart: always
+        ports:
+            - 8080:8080

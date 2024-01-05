@@ -1,0 +1,43 @@
+@page "/{{entity_name|lower}}/new"
+@page "/{{entity_name|lower}}/{Id}"
+@page "/{{entity_name|lower}}/{Id}/edit"
+@inherits CreationComponent
+
+<CardHeader>
+    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("{{entity_name}}")"
+                                              BreadcrumbItems="@(new Breadcrum[] {
+                                            new Breadcrum("/", "{{solution_name}}"),
+                                            new Breadcrum("/{{entity_name}}", "{{entity_name}}s") })" />
+</CardHeader>
+
+<CreateEditPage 
+                @ref="CreateEditPage" 
+                TEntity="{{solution_name}}.Domain.Models.{{entity_name}}" 
+                TDto="{{entity_name}}Dto" 
+                Model="@Model" 
+                Id="@Id" >
+    @*
+    <Validation Validator="ValidationRule.IsNotEmpty">
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Nome</FieldLabel>
+            <FieldBody>
+                <TextEdit {{entity_name}}="Text{{entity_name}}.Text" Placeholder="Nome" @bind-Text="@Model.Name" Disabled="@CreateEditPage.DisabledToEdit">
+                    <Feedback>
+                        <ValidationError>Invalid name</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </FieldBody>
+        </Field>
+    </Validation>
+    *@
+</CreateEditPage>
+
+@code {
+    public {{entity_name}}Dto Model { get; set; }
+    public CreateEditPage<{{solution_name}}.Domain.Models.{{entity_name}}, {{entity_name}}Dto> CreateEditPage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = new {{entity_name}}Dto();
+    }
+}   

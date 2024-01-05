@@ -1,0 +1,21 @@
+﻿@page "/company"
+@using Blazorise.DataGrid
+@using CruderSimple.Blazor.Interfaces.Services
+@using Blazorise.LoadingIndicator
+
+<CardHeader>
+    <CruderSimple.Blazor.Components.PageTitle Title="Empresas"
+                                              BreadcrumbItems="@(new Breadcrum[] {
+                                            new Breadcrum("/", "{{solution_name}}")})" />
+</CardHeader>
+<CardBody>
+    <ListPage TEntity="{{solution_name}}.Domain.Models.Company" TDto="CompanyDto">
+        <Columns>
+            <DataGridDateColumn TItem="CompanyDto" Field="@nameof(CompanyDto.CreatedAt)" Caption="Data de Criação" DisplayFormat="{0:dd/MM/yyyy HH:mm:ss}" Editable Filterable />
+            <DataGridColumn TItem="CompanyDto" Field="@nameof(CompanyDto.Name)" Caption="Nome" Editable Filterable />
+        </Columns>
+    </ListPage>
+</CardBody>
+    
+@code {
+}

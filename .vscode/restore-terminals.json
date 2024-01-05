@@ -14,6 +14,30 @@
     {
       "splitTerminals": [
         {
+          "name": "run-dotnet-saas",
+          "commands": [
+            "cd testes", 
+            "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-saas"
+          ],
+          "shouldRunCommands": false
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
+          "name": "run-dotnet-saas-entity",
+          "commands": [
+            "cd testes", 
+            "stk apply plugin /d/Workstation/Stackspot-ThiagoMaia971-Studio/plugins/dotnet-saas-entity"
+          ],
+          "shouldRunCommands": false
+        }
+      ]
+    },
+    {
+      "splitTerminals": [
+        {
           "name": "run-all",
           "commands": [
             "cd testes", 

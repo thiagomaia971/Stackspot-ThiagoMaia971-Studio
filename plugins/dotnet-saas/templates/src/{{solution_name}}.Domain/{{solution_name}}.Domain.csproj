@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>{{solution_name}}.Domain</AssemblyName>
+        <RootNamespace>{{solution_name}}.Domain</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CruderSimple.Core" Version="0.0.24" />
+        <PackageReference Include="CruderSimple.MySql" Version="0.0.24" />
+        <PackageReference Include="System.Net.Http" Version="4.3.4" />
+        <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+        <PackageReference Include="MediatR" Version="11.0.0" />
+    </ItemGroup>
+
+</Project>

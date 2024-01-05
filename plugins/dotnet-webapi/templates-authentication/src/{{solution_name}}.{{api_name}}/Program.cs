@@ -1,1 +1,1 @@
-using CruderSimple.DynamoDb.Configurations;
+using CruderSimple.{{database_name}}.Configurations;

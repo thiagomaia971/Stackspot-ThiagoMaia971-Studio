@@ -1,0 +1,21 @@
+﻿@using {{solution_name}}.Shared.Services
+@inherits LayoutComponentBase
+
+@{
+    if (NotFound)
+    {
+        <MainPage>
+            @Body
+        </MainPage>
+    }
+    else {
+        <CanRead>
+            @Body
+        </CanRead>
+    }
+}
+
+@code {
+    [CascadingParameter(Name = "NotFound")]
+    bool NotFound { get; set; }
+}

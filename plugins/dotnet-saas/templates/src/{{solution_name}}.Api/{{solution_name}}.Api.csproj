@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CruderSimple.Api" Version="0.0.24" />
+        <PackageReference Include="Mediator" Version="1.0.2123" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.10">
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+          <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    </ItemGroup>
+        
+    <ItemGroup>
+      <ProjectReference Include="..\{{solution_name}}.Domain\{{solution_name}}.Domain.csproj" />
+      <ProjectReference Include="..\{{solution_name}}.Infrastructure\{{solution_name}}.Infrastructure.csproj" />
+      <ProjectReference Include="..\{{solution_name}}.ServiceDefaults\{{solution_name}}.ServiceDefaults.csproj" />
+    </ItemGroup>
+
+</Project>

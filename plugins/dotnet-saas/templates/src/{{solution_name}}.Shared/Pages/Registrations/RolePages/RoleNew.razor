@@ -1,0 +1,123 @@
+﻿@page "/role/new"
+@page "/role/{Id}"
+@page "/role/{Id}/edit"
+@inherits CreationComponent
+
+
+<CardHeader>
+    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("Cargo")"
+                                              BreadcrumbItems="@(new Breadcrum[] {
+                                            new Breadcrum("/", "{{solution_name}}"),
+                                            new Breadcrum("/role", "Cargos") })" />
+</CardHeader>
+
+<CreateEditPage @ref="CreateEditPage" TEntity="{{solution_name}}.Domain.Models.Identity.Role" TDto="RoleDto" Model="@Model" Id="@Id" OnInitialized="@InitializeModel" >
+    <Validation Validator="ValidationRule.IsNotEmpty">
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Nome</FieldLabel>
+            <FieldBody>
+                <TextEdit Role="TextRole.Text" Placeholder="Nome" @bind-Text="@Model.Name" Disabled="@CreateEditPage.DisabledToEdit">
+                    <Feedback>
+                        <ValidationError>Invalid name</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </FieldBody>
+        </Field>
+    </Validation>
+    <Field Margin="Margin.Is3.FromBottom">
+        <FieldLabel>Permissões</FieldLabel>
+        <FieldBody>
+            @if (Model.Permissions != null)
+            {
+                <DataGrid TItem="PermissionDto"
+                          Data="@Model.Permissions"
+                          Hoverable
+                          ShowPager
+                          ShowPageSizes
+                          Responsive
+                          Filterable
+                          Groupable
+                          Striped
+                          Narrow
+                          Sortable
+                          Navigable
+                          FixedHeader
+                          Resizable
+                          Bordered
+                          FixedHeaderDataGridHeight="455px"
+                          FixedHeaderDataGridMaxHeight="455px"
+                          FilterMode="DataGridFilterMode.Default"
+                          FilterMethod="DataGridFilterMethod.Contains">
+                    <DataGridColumns>
+                        <DataGridColumn TItem="PermissionDto" Field="Route.Name" Caption="Página" Filterable SortDirection="SortDirection.Ascending" />
+                        <DataGridCheckColumn TItem="PermissionDto" Field="@nameof(PermissionDto.IsRead)" Caption="Visualização" Filterable="false">
+                            <DisplayTemplate>
+                                <Check TValue="bool" @bind-Checked="context.IsRead" Disabled="@CreateEditPage.DisabledToEdit" />
+                            </DisplayTemplate>
+                        </DataGridCheckColumn>
+                        <DataGridCheckColumn TItem="PermissionDto" Field="@nameof(PermissionDto.IsWrite)" Caption="Criação/Edição" Filterable="false">
+                            <DisplayTemplate>
+                                <Check TValue="bool" @bind-Checked="context.IsWrite" Disabled="@CreateEditPage.DisabledToEdit" />
+                            </DisplayTemplate>
+                        </DataGridCheckColumn>
+                    </DataGridColumns>
+                </DataGrid>
+            }
+        </FieldBody>
+    </Field>
+</CreateEditPage>
+
+@code {
+    [Inject]
+    public ICrudService<Route, RouteDto> RouteService { get; set; }
+
+    [Inject]
+    public IdentityAuthenticationStateProvider UserState { get; set; }
+
+    public RoleDto Model { get; set; }
+    public CreateEditPage<{{solution_name}}.Domain.Models.Identity.Role, RoleDto> CreateEditPage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = new RoleDto();
+    }
+
+    private async Task<RoleDto> InitializeModel(RoleDto role)
+    {
+        var defaultRoutes = (await RouteService.GetAll(new GetAllEndpointQuery())).Data;
+
+        var defaultPermissions = defaultRoutes.Select(x => new PermissionDto(
+            id: null,
+            createdAt: DateTime.Now,
+            updatedAt: null,
+            roleId: role.Id,
+            role: null,
+            routeId: x.Id,
+            route: x,
+            isRead: false,
+            isWrite: false
+        ));
+
+        if (!role.Permissions?.Any() ?? true)
+        {
+            
+            role.Permissions = defaultPermissions.ToList();
+        }
+        else
+        {
+            var leftJoin = (from routePermission in defaultPermissions
+                      join add in role.Permissions
+                      on routePermission.RouteId equals add.RouteId
+                      into _group
+                      from rolePermission in _group.DefaultIfEmpty()
+                      select new { routePermission, rolePermission }).ToList();
+            role.Permissions = leftJoin.Select(x => x.rolePermission is null ? x.routePermission : x.rolePermission);
+        }
+
+        // var user = await UserState.GetUserInfo();
+        // var permissions = user.User.Permissions.Select(x => x.Split(":")[0].ToLower()).Distinct().ToList();
+        // role.Permissions = role.Permissions.Where(x => permissions.Contains(x.Route.Url.ToLower())).ToList();
+        return role;
+    }
+
+}   

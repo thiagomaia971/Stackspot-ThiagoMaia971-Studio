@@ -1,0 +1,132 @@
+schema-version: v2
+kind: plugin
+metadata:
+  name: dotnet-saas-entity
+  display-name: dotnet-saas-entity
+  description: Descreva seu plugin explicando o propósito
+  version: 0.0.1
+  picture: plugin.png
+spec:
+  type: app
+  compatibility:
+    - python
+  about: docs/about.md
+  implementation: docs/implementation.md
+  release-notes: docs/release-notes-0.0.1.md
+  requirements: docs/requirements.md
+  single-use: False
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
+    - Api
+  stk-projects-only: false
+  inputs:
+    - label: What's the name of the entity?
+      type: text
+      name: entity_name
+      required: true
+    - label: Witch Http Method?
+      type: multiselect
+      name: http_methods
+      required: true
+      default: ["GET_ALL", "GET_BY_ID", "CREATE", "UPDATE", "DELETE"]
+      items:
+        - GET_ALL
+        - GET_BY_ID
+        - CREATE
+        - UPDATE
+        - DELETE
+    - label: Has Authentication?
+      type: select
+      name: has_authentication
+      items:
+        - true
+        - false
+    - label: Is MultiTenant?
+      type: select
+      name: is_multitenant
+      items:
+        - true
+        - false
+  
+  hooks:
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Infrastructure/Repositories/Base/{{solution_name}}DbContext.cs
+      changes:
+        - insert:
+            line: 1
+            value: "using {{solution_name}}.Domain.Models;\n"
+            when:
+              not-exists: using {{solution_name}}.Domain.Models;
+        - search:
+            pattern: OnModelCreating
+            insert-before:
+              snippet: snippets/DbSet.cs
+            when:
+              not-exists: DbSet<{{entity_name}}>
+  
+    - type: render-templates
+      trigger: after-render
+      path: templates-getall
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "GET_ALL"
+    - type: render-templates
+      trigger: after-render
+      path: templates-getsingle
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "GET_BY_ID"
+    - type: render-templates
+      trigger: after-render
+      path: templates-post
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "CREATE"
+    - type: render-templates
+      trigger: after-render
+      path: templates-put
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "UPDATE"
+    - type: render-templates
+      trigger: after-render
+      path: templates-delete
+      condition:
+        variable: http_methods
+        operator: "containsAny"
+        value: "DELETE"
+
+    - type: edit
+      trigger: after-render
+      path: docs/Insomnia.json
+      changes:
+        - search:
+            pattern: resources
+            insert-after:
+              snippet: snippets/InsomniaFolder.json
+
+    - type: run
+      trigger: after-render
+      working-dir: "src/{{solution_name}}.Infrastructure"
+      commands:
+        - "dotnet ef migrations add {{entity_name}} --startup-project ./../{{solution_name}}.Api -- --environment Development"
+
+    - type: run-script
+      trigger: after-render
+      script: scripts/InsertEntityToRoute.py
+
+    - type: edit
+      trigger: after-render
+      path: src/{{solution_name}}.Infrastructure/Migrations/{{migration_name}}
+      changes:
+        - search:
+            pattern: migrationBuilder.CreateTable
+            insert-before:
+              snippet: snippets/InsertRoute.cs
+            when:
+              not-exists: migrationBuilder.InsertData

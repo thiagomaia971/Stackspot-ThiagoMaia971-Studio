@@ -1,0 +1,39 @@
+schema-version: v2
+kind: plugin
+metadata:
+  name: dotnet-saas
+  display-name: dotnet-saas
+  description: Descreva seu plugin explicando o propósito
+  version: 0.0.1
+  picture: plugin.png
+spec:
+  type: app
+  compatibility:
+    - python
+  about: docs/about.md
+  implementation: docs/implementation.md
+  release-notes: docs/release-notes-0.0.1.md
+  requirements: docs/requirements.md
+  single-use: False
+  repository: https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio.git
+  technologies: # Ref: https://docs.stackspot.com/create-use/create-content/yaml-files/plugin-yaml/#technologies-1
+    - Api
+  stk-projects-only: false
+  inputs:
+    - label: Solution Name?
+      type: text
+      name: solution_name
+      required: true
+      global: true
+    - label: Which API port?
+      type: text
+      name: api_host_port
+      required: true
+      default: "5228"
+      global: false
+    - label: Which Web port?
+      type: text
+      name: web_host_port
+      required: true
+      default: "7229"
+      global: false

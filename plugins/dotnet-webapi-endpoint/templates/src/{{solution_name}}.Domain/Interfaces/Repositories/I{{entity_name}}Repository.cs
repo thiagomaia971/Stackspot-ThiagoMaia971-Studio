@@ -1,4 +1,4 @@
-using CruderSimple.DynamoDb.Interfaces;
+using CruderSimple.{{database_name}}.Interfaces;
 using {{solution_name}}.Domain.Models;
 
 namespace {{solution_name}}.Domain.Interfaces.Repositories;

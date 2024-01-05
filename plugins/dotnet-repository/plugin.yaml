@@ -21,53 +21,61 @@ spec:
   stk-projects-only: false
   inputs:
     - label: Which Database do you want to use?
-      type: text
+      type: select
       name: database_type
       required: true
-      default: "DynamoDb"
       global: true
       items:
         - "DynamoDb"
-        - "Sql Server"
         - "MySql"
+        - "PostgreSql"
+        - "Sql Server"
+    - label: Multi Tenant Entity Name?
+      type: text
+      name: multitenant_name
+      default: Tenant
+      required: true
+      global: true
   global-computed-inputs:
-    dynamodb: "DynamoDb"
-    sqlserver: "Sql Server"
-    mysql: "MySql"
-    is_dynamodb: "{% if database_type == dynamodb %}true{% else %}false{% endif %}"
-    is_slqserver: "{% if database_type == sqlserver %}true{% else %}false{% endif %}"
-    is_mysql: "{% if database_type == mysql %}true{% else %}false{% endif %}"
+    database_name: "{{database_type | replace(\" \", \"\")}}"
+    is_dynamodb: "{% if database_type == \"DynamoDb\" %}true{% else %}false{% endif %}"
+    is_mysql: "{% if database_type == \"MySql\" %}true{% else %}false{% endif %}"
+    is_postgreSql: "{% if database_type == \"PostgreSql\" %}true{% else %}false{% endif %}"
+    is_slqserver: "{% if database_type == \"Sql Server\" %}true{% else %}false{% endif %}"
+
   hooks:
+  ### Dynamodb
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.5
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.13
       condition:
         variable: is_dynamodb
         operator: "=="
         value: "true"
+  ### Dynamodb
 
+  ### SqlServer
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.5
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.DynamoDb -v 0.0.13
       condition:
         variable: is_sqlserver
         operator: "=="
         value: "true"
+  ### SqlServer
 
+  ### MySql
     - type: run
       trigger: before-render
       commands:
-        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.AspNetCore.Identity.EntityFrameworkCore -v 8.0.0
-        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.EntityFrameworkCore -v 8.0.0
-        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.EntityFrameworkCore.Relational -v 8.0.0
-        - dotnet add src/{{solution_name}}.Infrastructure package Microsoft.EntityFrameworkCore.Tools -v 8.0.0
-        - dotnet add src/{{solution_name}}.Infrastructure package Pomelo.EntityFrameworkCore.MySql -v 8.0.0-beta.2
+        - dotnet add src/{{solution_name}}.Domain package CruderSimple.MySql -v 0.0.13
       condition:
         variable: is_mysql
         operator: "=="
         value: "true"
+  ### SqlServer
         
     - type: render-templates
       trigger: after-render

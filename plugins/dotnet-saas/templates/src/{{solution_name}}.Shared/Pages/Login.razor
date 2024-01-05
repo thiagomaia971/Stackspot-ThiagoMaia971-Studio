@@ -1,0 +1,126 @@
+﻿@page "/login"
+@layout LoginLayout
+@inject NavigationManager navigationManager
+@inject IdentityAuthenticationStateProvider authStateProvider
+
+
+<Row Flex="Flex.JustifyContent.Center" Margin="Margin.Is4.FromTop">
+    <Column ColumnSize="ColumnSize.Is5.OnWidescreen">
+        <Card Margin="@ThemeStyles.CardMargin" Shadow="@ThemeStyles.CardShadow">
+            <CardHeader Padding="Padding.Is4.OnY" Background="Background.Primary" TextAlignment="TextAlignment.Center">
+                <Blazorise.Link To="">
+                    <Span>
+                        <Image Source="brand-logo.png" Text="logo" Style="height: 28px;" />
+                    </Span>
+                </Blazorise.Link>
+            </CardHeader>
+            <CardBody Padding="Padding.Is4">
+                <Div TextAlignment="TextAlignment.Center" Width="Width.Is75" Margin="Margin.IsAuto">
+                    <Heading Size="HeadingSize.Is4" TextColor="TextColor.Dark" TextAlignment="TextAlignment.Center" TextWeight="TextWeight.Bold" Padding="Padding.Is0.FromBottom">
+                        Sign In
+                    </Heading>
+                    <Paragraph TextColor="TextColor.Muted" Margin="Margin.Is4.FromBottom">
+                        Enter your email address and password to access admin panel.
+                    </Paragraph>
+                </Div>
+                <EditForm class="form-signin" OnValidSubmit="OnSubmit" Model="loginParameters">
+                    <Validations @ref="@ValidationsRef" Model="loginParameters" Mode="ValidationMode.Auto" ValidateOnLoad="false" >
+                        <Validation Validator="ValidationRule.IsEmail">
+                            <Field Margin="Margin.Is3.FromBottom">
+                                <FieldLabel>Email address</FieldLabel>
+                                <FieldBody>
+                                    <TextEdit Role="TextRole.Email" Placeholder="Enter your email" @bind-Text="@loginParameters.Email" >
+                                        <Feedback>
+                                            <ValidationError>Invalid email</ValidationError>
+                                        </Feedback>
+                                    </TextEdit>
+                                </FieldBody>
+                            </Field>
+                        </Validation>
+                        <Validation Validator="ValidationRule.IsNotEmpty">
+                            <Field Margin="Margin.Is3.FromBottom">
+                                <Blazorise.Link To="saas/auth/recover-password" TextColor="TextColor.Muted" Float="Float.End">
+                                    <Small>Forgot your password?</Small>
+                                </Blazorise.Link>
+                                <FieldLabel>Password</FieldLabel>
+                                <FieldBody>
+                                    <Addons>
+                                        <Addon AddonType="AddonType.Body">
+                                            <TextEdit Role="TextRole.Password" @bind-Text="@loginParameters.Password" />
+                                        </Addon>
+                                        <Addon AddonType="AddonType.End">
+                                            <AddonLabel>
+                                                <Icon Name="IconName.Eye" />
+                                            </AddonLabel>
+                                        </Addon>
+                                        <ValidationError>Invalid password</ValidationError>
+                                    </Addons>
+                                </FieldBody>
+                            </Field>
+                        </Validation>
+                        <Field Margin="Margin.Is3.FromBottom">
+                            <Check TValue="bool">
+                                Remember me
+                            </Check>
+                        </Field>
+                        <Div Margin="Margin.Is3.FromBottom" TextAlignment="TextAlignment.Center">
+                            <label class="text-danger">@error</label>
+
+                            <Button Color="Color.Primary" Block Type="ButtonType.Submit" Loading="Loading" Disabled="Loading" PreventDefaultOnSubmit="Loading">
+                                Log In
+                            </Button>
+                        </Div>
+                    </Validations>
+                </EditForm>
+            </CardBody>
+        </Card>
+
+        <Row Margin="Margin.Is3.FromTop">
+            <Column TextAlignment="TextAlignment.Center">
+                <Paragraph TextColor="TextColor.Muted">
+                    Don't have an account?
+                    <Blazorise.Link To="saas/auth/register" TextColor="TextColor.Muted" Margin="Margin.Is1.FromStart">
+                        <Strong>Sign Up</Strong>
+                    </Blazorise.Link>
+                </Paragraph>
+            </Column>
+        </Row>
+    </Column>
+</Row>
+
+@code {
+    protected Validations ValidationsRef { get; set; }
+    LoginViewModel loginParameters { get; set; } = new LoginViewModel();
+    string error { get; set; }
+    public bool Loading { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var x = await authStateProvider.GetAuthenticationStateAsync();
+        if (x.User?.Identity?.IsAuthenticated ?? false)
+            navigationManager.NavigateTo("/");
+    }
+
+    async Task OnSubmit()
+    {
+        if (ValidationsRef is not null && await ValidationsRef.ValidateAll())
+        {
+            Loading = true;
+            error = null;
+            try
+            {
+                await authStateProvider.Login(loginParameters);
+                navigationManager.NavigateTo("");
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+            }
+            finally
+            {
+                Loading = false;
+            }
+        }
+    }
+}
