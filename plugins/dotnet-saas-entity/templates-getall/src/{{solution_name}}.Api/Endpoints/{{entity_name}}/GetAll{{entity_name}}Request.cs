@@ -2,6 +2,7 @@ using CruderSimple.Api.Requests;
 using CruderSimple.Api.Requests.Base;
 using CruderSimple.MySql.Interfaces;
 using CruderSimple.Core.EndpointQueries;
+using Microsoft.AspNetCore.Mvc;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Api.Endpoints.{{entity_name}};

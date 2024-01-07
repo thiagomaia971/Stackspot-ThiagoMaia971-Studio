@@ -6,6 +6,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+**/mysql_volume/**
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
