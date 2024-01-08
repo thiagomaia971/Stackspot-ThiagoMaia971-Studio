@@ -4,7 +4,7 @@ metadata:
   name: dotnet-saas
   display-name: dotnet-saas
   description: Descreva seu plugin explicando o propósito
-  version: 0.0.9
+  version: 0.0.10
   picture: plugin.png
 spec:
   type: app
