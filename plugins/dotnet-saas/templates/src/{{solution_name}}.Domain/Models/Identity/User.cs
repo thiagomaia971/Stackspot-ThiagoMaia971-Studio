@@ -9,7 +9,7 @@ using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
-public class User : CompanyEntity, IUser
+public class User : {{multitenant_name}}Entity, IUser
 {
     [JsonProperty("Name")]
     public string Name { get; set; }
@@ -58,8 +58,8 @@ public class User : CompanyEntity, IUser
             Id,
             CreatedAt,
             UpdatedAt,
-            CompanyId,
-            Company?.ToOutput<CompanyDto>(),
+            {{multitenant_name}}Id,
+            {{multitenant_name}}?.ToOutput<{{multitenant_name}}Dto>(),
             Email,
             Name,
             EmailConfirmed,

@@ -1,0 +1,36 @@
+﻿@page "/{{multitenant_name|lower}}/new"
+@page "/{{multitenant_name|lower}}/{Id}"
+@page "/{{multitenant_name|lower}}/{Id}/edit"
+@inherits CreationComponent
+
+<CardHeader>
+    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("Empresa")"
+                                              BreadcrumbItems="@(new Breadcrum[] {
+                                            new Breadcrum("/", "{{solution_name}}"),
+                                            new Breadcrum("/{{multitenant_name}}", "Empresas") })" />
+</CardHeader>
+
+<CreateEditPage @ref="CreateEditPage" TEntity="{{solution_name}}.Domain.Models.{{multitenant_name}}" TDto="{{multitenant_name}}Dto" Model="@Model" Id="@Id" >
+    <Validation Validator="ValidationRule.IsNotEmpty">
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Nome</FieldLabel>
+            <FieldBody>
+                <TextEdit {{multitenant_name}}="Text{{multitenant_name}}.Text" Placeholder="Nome" @bind-Text="@Model.Name" Disabled="@CreateEditPage.DisabledToEdit">
+                    <Feedback>
+                        <ValidationError>Invalid name</ValidationError>
+                    </Feedback>
+                </TextEdit>
+            </FieldBody>
+        </Field>
+    </Validation>
+</CreateEditPage>
+
+@code {
+    public {{multitenant_name}}Dto Model { get; set; }
+    public CreateEditPage<{{solution_name}}.Domain.Models.{{multitenant_name}}, {{multitenant_name}}Dto> CreateEditPage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = new {{multitenant_name}}Dto();
+    }
+}   

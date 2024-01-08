@@ -4,7 +4,7 @@ metadata:
   name: dotnet-webapi
   display-name: dotnet-webapi
   description: Web API base
-  version: 0.0.8
+  version: 0.0.9
   picture: plugin.png
 spec:
   type: app

@@ -4,7 +4,7 @@ metadata:
   name: dotnet-repository
   display-name: dotnet-repository
   description: Descreva seu plugin explicando o propósito
-  version: 0.0.8
+  version: 0.0.9
   picture: plugin.png
 spec:
   type: app

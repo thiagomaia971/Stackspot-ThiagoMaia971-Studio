@@ -112,7 +112,7 @@
           "parentId": "fld_6181086e442f4b898bfc1c1a2c2fead4",
           "modified": 1704397796114,
           "created": 1704397793126,
-          "name": "Company",
+          "name": "{{multitenant_name}}",
           "description": "",
           "environment": {},
           "environmentPropertyOrder": null,

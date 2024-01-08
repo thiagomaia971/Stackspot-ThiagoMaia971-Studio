@@ -15,7 +15,9 @@ public class Program
         builder.RootComponents.Add<HeadOutlet>("head::after");
 
         builder.Services.AddOptions();
-        builder.Services.AddCruderSimpleBlazor<AuthorizeApi>();
+        builder.Services
+            .AddCruderSimpleBlazor<AuthorizeApi>()
+            .AddScoped<ClientConfiguration>();
         // TODO: auto import
 
         builder.Services.Add{{solution_name}}Client();

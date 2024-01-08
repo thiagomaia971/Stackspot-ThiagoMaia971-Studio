@@ -8,7 +8,7 @@ using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models;
 
-public class {{entity_name}} : {%if is_multitenant == "True"%}CompanyEntity{%else%}Entity{%endif%}
+public class {{entity_name}} : {%if is_multitenant == "True"%}{{multitenant_name}}Entity{%else%}Entity{%endif%}
 {
     #region Properties
 
@@ -29,7 +29,7 @@ public class {{entity_name}} : {%if is_multitenant == "True"%}CompanyEntity{%els
             Id, 
             CreatedAt, 
             UpdatedAt{%if is_multitenant == "True"%},
-            CompanyId,
-            Company.ToOutput<CompanyDto>()
+            {{multitenant_name}}Id,
+            {{multitenant_name}}.ToOutput<{{multitenant_name}}Dto>()
 {%endif%}           /* ... */);
 }

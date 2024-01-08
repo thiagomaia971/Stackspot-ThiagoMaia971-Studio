@@ -9,7 +9,7 @@ using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
-public class Role : CompanyEntity
+public class Role : {{multitenant_name}}Entity
 {
     [JsonProperty("Name")]
     public string Name { get; set; }
@@ -38,7 +38,7 @@ public class Role : CompanyEntity
             Id,
             CreatedAt,
             UpdatedAt,
-            CompanyId,
+            {{multitenant_name}}Id,
             Name,
             Permissions?.ToOutput<Permission, PermissionDto>());
     }

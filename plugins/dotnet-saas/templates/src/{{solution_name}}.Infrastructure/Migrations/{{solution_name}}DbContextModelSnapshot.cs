@@ -19,7 +19,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("{{solution_name}}.Domain.Models.Company", b =>
+            modelBuilder.Entity("{{solution_name}}.Domain.Models.{{multitenant_name}}", b =>
                 {
                     b.Property<string>("Id")
                         .HasMaxLength(36)
@@ -37,7 +37,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Company");
+                    b.ToTable("{{multitenant_name}}");
                 });
 
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.Permission", b =>
@@ -81,7 +81,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("CompanyId")
+                    b.Property<string>("{{multitenant_name}}Id")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
@@ -98,7 +98,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("{{multitenant_name}}Id");
 
                     b.ToTable("Role");
                 });
@@ -113,7 +113,6 @@ namespace {{solution_name}}.Infrastructure.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("DependsOn")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<string>("Icon")
@@ -152,7 +151,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
 
-                    b.Property<string>("CompanyId")
+                    b.Property<string>("{{multitenant_name}}Id")
                         .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("varchar(36)");
@@ -190,7 +189,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId");
+                    b.HasIndex("{{multitenant_name}}Id");
 
                     b.ToTable("User");
                 });
@@ -245,24 +244,24 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.Role", b =>
                 {
-                    b.HasOne("{{solution_name}}.Domain.Models.Company", "Company")
+                    b.HasOne("{{solution_name}}.Domain.Models.{{multitenant_name}}", "{{multitenant_name}}")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
+                        .HasForeignKey("{{multitenant_name}}Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Company");
+                    b.Navigation("{{multitenant_name}}");
                 });
 
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.User", b =>
                 {
-                    b.HasOne("{{solution_name}}.Domain.Models.Company", "Company")
+                    b.HasOne("{{solution_name}}.Domain.Models.{{multitenant_name}}", "{{multitenant_name}}")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
+                        .HasForeignKey("{{multitenant_name}}Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Company");
+                    b.Navigation("{{multitenant_name}}");
                 });
 
             modelBuilder.Entity("{{solution_name}}.Domain.Models.Identity.UserRole", b =>

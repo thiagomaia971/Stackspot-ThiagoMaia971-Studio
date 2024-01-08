@@ -4,6 +4,7 @@ using CruderSimple.Core.Extensions;
 using CruderSimple.Core.Interfaces;
 using CruderSimple.MySql.Extensions;
 using CruderSimple.MySql.Interfaces;
+using CruderSimple.MySql.Repositories;
 using Microsoft.EntityFrameworkCore;
 using {{solution_name}}.Domain.EndpointQueries.User;
 using {{solution_name}}.Domain.Interfaces.Repositories;
@@ -12,7 +13,7 @@ using {{solution_name}}.Infrastructure.Repositories.Base;
 
 namespace {{solution_name}}.Infrastructure.Repositories;
 
-public class UserRepository : MultiTenantRepository<User>, IUserRepository
+public class UserRepository : Repository<User>, IUserRepository
 {
     private readonly IRepository<UserRole> _UserRoleRepository;
 
