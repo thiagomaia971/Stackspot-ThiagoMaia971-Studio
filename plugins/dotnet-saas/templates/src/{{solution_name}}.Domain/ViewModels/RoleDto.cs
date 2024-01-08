@@ -3,7 +3,7 @@ using CruderSimple.Core.ViewModels;
 
 namespace {{solution_name}}.Domain.ViewModels;
 
-public class RoleDto : CompanyEntityDto
+public class RoleDto : {{multitenant_name}}EntityDto
 {
     #region Properties
 
@@ -25,9 +25,9 @@ public class RoleDto : CompanyEntityDto
         string id,
         DateTime createdAt, 
         DateTime? updatedAt,
-        string companyId,
+        string {{multitenant_name}}Id,
         string name,
-        IEnumerable<PermissionDto> permissions) : base(id, createdAt, updatedAt, companyId)
+        IEnumerable<PermissionDto> permissions) : base(id, createdAt, updatedAt, {{multitenant_name}}Id)
     {
         Name = name;
         Permissions = permissions;

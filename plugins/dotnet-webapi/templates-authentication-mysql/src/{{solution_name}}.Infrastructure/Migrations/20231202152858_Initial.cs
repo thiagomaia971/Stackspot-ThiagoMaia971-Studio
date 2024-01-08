@@ -158,7 +158,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
         
 
             migrationBuilder.InsertData(
-                "Company",
+                "{{multitenant_name}}",
                 new string[] { "Id", "CreatedAt", "UpdatedAt", "Name" },
                 new object [,]{
                     { "82058314-b3a4-4052-b9fc-ae5d0ac5790b", DateTimeOffset.Now.ToString("O"), null, "ADMIN" },
@@ -167,7 +167,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 "Role",
-                new string[] { "Id", "CreatedAt", "UpdatedAt", "CompanyId", "Name" },
+                new string[] { "Id", "CreatedAt", "UpdatedAt", "{{multitenant_name}}Id", "Name" },
                 new object [,]{
                     { "ac337365-e690-4c75-9f05-e5ea75caa1e5", DateTimeOffset.Now.ToString("O"), null, "82058314-b3a4-4052-b9fc-ae5d0ac5790b", "ADMIN" },
                     { "03eff09f-897e-48a2-bafa-f051882447fa", DateTimeOffset.Now.ToString("O"), null, "b18ac808-33ed-4c4f-81f9-bbc863f6f5d3", "Administrador" },
@@ -175,7 +175,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 "User",
-                new string[] { "Id", "CreatedAt", "UpdatedAt", "CompanyId", "Name", "Email", "EmailConfirmed", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled"  },
+                new string[] { "Id", "CreatedAt", "UpdatedAt", "{{multitenant_name}}Id", "Name", "Email", "EmailConfirmed", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled"  },
                 new object [,]{
                     { "02a01310-d8a0-48c0-a655-9755a91b4aff", DateTimeOffset.Now.ToString("O"), null, "82058314-b3a4-4052-b9fc-ae5d0ac5790b", "Admin", "admin@admin.com", true, "AQAAAAEAACcQAAAAEEHP6dksHxraYptLNNadEse/60t177wcgZs6ST66LR9xBzx883uvUVu1DeDyaOExkA==", "8888", true, false },
                     { "e4377840-4f9c-4abd-93ad-3da3491a287c", DateTimeOffset.Now.ToString("O"), null, "b18ac808-33ed-4c4f-81f9-bbc863f6f5d3", "CEO Tidy", "tidy-admin@admin.com", true, "AQAAAAEAACcQAAAAEEHP6dksHxraYptLNNadEse/60t177wcgZs6ST66LR9xBzx883uvUVu1DeDyaOExkA==", "8888", true, false },

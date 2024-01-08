@@ -9,31 +9,31 @@ using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
 
-public abstract class CompanyEntity : Entity, ITenantEntity
+public abstract class {{multitenant_name}}Entity : Entity, ITenantEntity
 {
     [MultiTenant]
     [StringLength(36)]
-    public string CompanyId { get; set; }
+    public string {{multitenant_name}}Id { get; set; }
     
     [Include]
-    public Company Company { get; set; }
+    public {{multitenant_name}} {{multitenant_name}} { get; set; }
 
     public override IEntity FromInput(BaseDto input)
     {
         base.FromInput(input);
-        var CompanyDto = (CompanyEntityDto)input;
-        CompanyId = CompanyDto.CompanyId;
+        var {{multitenant_name}}Dto = ({{multitenant_name}}EntityDto)input;
+        {{multitenant_name}}Id = {{multitenant_name}}Dto.{{multitenant_name}}Id;
         
         return this;
     }
 
     public override BaseDto ConvertToOutput()
     {
-        return new CompanyEntityDto(
+        return new {{multitenant_name}}EntityDto(
             Id,
             CreatedAt,
             UpdatedAt,
-            CompanyId,
-            Company?.ToOutput<CompanyDto>());
+            {{multitenant_name}}Id,
+            {{multitenant_name}}?.ToOutput<{{multitenant_name}}Dto>());
     }
 }

@@ -1,0 +1,64 @@
+@using {{solution_name}}.Domain.Models
+@using System.Security.Claims
+@using Blazored.LocalStorage
+
+@if (IsAdmin)
+{
+    <EntityAutocomplete TEntity="{{multitenant_name}}"
+                             TEntityResult="{{multitenant_name}}Dto"
+                             SearchKey="Name"
+                             Width="Width.Is100"
+                             Padding="Padding.Is5.FromEnd.Is4.FromStart"
+                             Data="@ClientConfiguration.{{multitenant_name}}Selected"
+                             SelectedValue="@ClientConfiguration.{{multitenant_name}}Selected"
+                             SelectedValueChanged="@ChangeClaims">
+        
+    </EntityAutocomplete>
+}
+else
+{
+    <Heading
+        Size="HeadingSize.Is4"
+        Class="page-title"
+        Margin="Margin.Is3.FromEnd.Is0.FromBottom"
+        Style="color: var(--b-bar-item-dark-hover-color, #fff); line-height: 38px; height: 38x">
+        @ClientConfiguration?.{{multitenant_name}}Selected?.Name
+    </Heading>   
+}
+
+@code {
+    public bool IsAdmin 
+        => ClientConfiguration?.User?.Id == "02a01310-d8a0-48c0-a655-9755a91b4aff";
+    [Parameter]
+    public ClientConfiguration ClientConfiguration { get; set; }
+    [Inject]
+    public IdentityAuthenticationStateProvider authStateProvider { get; set; }
+    [Inject]
+    public ILocalStorageService LocalStorage { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var tenantSaved = await LocalStorage.GetItemAsync<{{multitenant_name}}Dto>("tenant");
+        ClientConfiguration.{{multitenant_name}}Selected = tenantSaved ?? ClientConfiguration.{{multitenant_name}}Selected;
+    }
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     await base.InvokeAsync(async () =>
+    //     {
+    //         var tenantSaved = await LocalStorage.GetItemAsync<{{multitenant_name}}Dto>("tenant");
+    //         ClientConfiguration.{{multitenant_name}}Selected = tenantSaved ?? ClientConfiguration.{{multitenant_name}}Selected;
+    //     });
+    // }
+
+    private async Task ChangeClaims({{multitenant_name}}Dto {{multitenant_name|camelcase}}Selected)
+    {
+        ClientConfiguration.{{multitenant_name}}Selected = {{multitenant_name|camelcase}}Selected;
+        await LocalStorage.SetItemAsync("tenant", {{multitenant_name|camelcase}}Selected);
+        await authStateProvider.ChangeClaims(
+            ("TenantId", {{multitenant_name|camelcase}}Selected.Id),
+            (ClaimTypes.Role, string.Join(",", ClientConfiguration.User.Roles.Select(c => c.Id))),
+            ("Permissions", string.Join(",", ClientConfiguration.User.PermissionsString)));
+    }
+
+}

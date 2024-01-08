@@ -15,7 +15,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Company",
+                name: "{{multitenant_name}}",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false),
@@ -25,7 +25,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Company", x => x.Id);
+                    table.PrimaryKey("PK_{{multitenant_name}}", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -58,15 +58,15 @@ namespace {{solution_name}}.Infrastructure.Migrations
                     Name = table.Column<string>(type: "longtext", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CompanyId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
+                    {{multitenant_name}}Id = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Role", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Role_Company_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Company",
+                        name: "FK_Role_{{multitenant_name}}_{{multitenant_name}}Id",
+                        column: x => x.{{multitenant_name}}Id,
+                        principalTable: "{{multitenant_name}}",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -86,15 +86,15 @@ namespace {{solution_name}}.Infrastructure.Migrations
                     TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    CompanyId = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
+                    {{multitenant_name}}Id = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Company_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Company",
+                        name: "FK_User_{{multitenant_name}}_{{multitenant_name}}Id",
+                        column: x => x.{{multitenant_name}}Id,
+                        principalTable: "{{multitenant_name}}",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
@@ -169,14 +169,14 @@ namespace {{solution_name}}.Infrastructure.Migrations
                 column: "RouteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Role_CompanyId",
+                name: "IX_Role_{{multitenant_name}}Id",
                 table: "Role",
-                column: "CompanyId");
+                column: "{{multitenant_name}}Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_CompanyId",
+                name: "IX_User_{{multitenant_name}}Id",
                 table: "User",
-                column: "CompanyId");
+                column: "{{multitenant_name}}Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRole_RoleId",
@@ -189,7 +189,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                 column: "UserId");
 
             migrationBuilder.InsertData(
-                "Company",
+                "{{multitenant_name}}",
                 new string[] { "Id", "CreatedAt", "UpdatedAt", "Name" },
                 new object [,]{
                     { "82058314-b3a4-4052-b9fc-ae5d0ac5790b", DateTimeOffset.Now.ToString("O"), null, "ADMIN" },
@@ -198,7 +198,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 "Role",
-                new string[] { "Id", "CreatedAt", "UpdatedAt", "CompanyId", "Name" },
+                new string[] { "Id", "CreatedAt", "UpdatedAt", "{{multitenant_name}}Id", "Name" },
                 new object [,]{
                     { "ac337365-e690-4c75-9f05-e5ea75caa1e5", DateTimeOffset.Now.ToString("O"), null, "82058314-b3a4-4052-b9fc-ae5d0ac5790b", "ADMIN" },
                     { "03eff09f-897e-48a2-bafa-f051882447fa", DateTimeOffset.Now.ToString("O"), null, "b18ac808-33ed-4c4f-81f9-bbc863f6f5d3", "Administrador" },
@@ -206,7 +206,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 "User",
-                new string[] { "Id", "CreatedAt", "UpdatedAt", "CompanyId", "Name", "Email", "EmailConfirmed", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled"  },
+                new string[] { "Id", "CreatedAt", "UpdatedAt", "{{multitenant_name}}Id", "Name", "Email", "EmailConfirmed", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "TwoFactorEnabled"  },
                 new object [,]{
                     { "02a01310-d8a0-48c0-a655-9755a91b4aff", DateTimeOffset.Now.ToString("O"), null, "82058314-b3a4-4052-b9fc-ae5d0ac5790b", "Admin", "admin@admin.com", true, "AQAAAAEAACcQAAAAEEHP6dksHxraYptLNNadEse/60t177wcgZs6ST66LR9xBzx883uvUVu1DeDyaOExkA==", "8888", true, false },
                     { "e4377840-4f9c-4abd-93ad-3da3491a287c", DateTimeOffset.Now.ToString("O"), null, "b18ac808-33ed-4c4f-81f9-bbc863f6f5d3", "CEO Tidy", "tidy-admin@admin.com", true, "AQAAAAEAACcQAAAAEEHP6dksHxraYptLNNadEse/60t177wcgZs6ST66LR9xBzx883uvUVu1DeDyaOExkA==", "8888", true, false },
@@ -227,7 +227,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                     { "bf8a5e78-d655-4d83-866a-3d334b1544db", DateTimeOffset.Now.ToString("O"), null, "Home", "", "", "home", 1, true, null },
                     { "8c31e2eb-b258-4082-9540-952061f735bb", DateTimeOffset.Now.ToString("O"), null, "Counter", "Test", "Home", "counter", 1, true, null },
                     { "24c42494-9d83-4897-81b8-7fde8ee059f4", DateTimeOffset.Now.ToString("O"), null, "Weather", "Test", "Home", "weather", 2, true, null },
-                    { "2ba19dde-b4aa-417a-a590-8542ecd0786c", DateTimeOffset.Now.ToString("O"), null, "Empresas", "Cadastros", "FolderPlus", "company", 1, true, null },
+                    { "2ba19dde-b4aa-417a-a590-8542ecd0786c", DateTimeOffset.Now.ToString("O"), null, "{{multitenant_name}}as", "Cadastros", "FolderPlus", "{{multitenant_name}}", 1, true, null },
                     { "e325f597-374f-4f66-ac98-8adadd16fd67", DateTimeOffset.Now.ToString("O"), null, "Cargos", "Cadastros", "FolderPlus", "role", 2, true, "route" },
                     { "546c3bc1-08ba-45ba-baf1-b2dc80b30d04", DateTimeOffset.Now.ToString("O"), null, "Usuários", "Cadastros", "FolderPlus", "user", 3, true, null },
                     { "5f72ebf4-9864-4560-a3cd-e0bad76b3633", DateTimeOffset.Now.ToString("O"), null, "Permissões", "Cadastros", "FolderPlus", "permission", 4, false, null },
@@ -277,7 +277,7 @@ namespace {{solution_name}}.Infrastructure.Migrations
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "Company");
+                name: "{{multitenant_name}}");
         }
     }
 }

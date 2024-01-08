@@ -45,7 +45,7 @@ public static class LoginEndpoint
                     var authClaims = new List<Claim>
                 {
                     new Claim("UserId", user.Id),
-                    new Claim("TenantId", user.CompanyId),
+                    new Claim("TenantId", user.{{multitenant_name}}Id),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim("Permissions", string.Join(",", permissions)),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -56,10 +56,12 @@ public static class LoginEndpoint
                     {
                         Token = new JwtSecurityTokenHandler().WriteToken(token),
                         Expiration = token.ValidTo,
+                        UserId = user.Id,
+                        UserName = user.Name/*,
                         User = new LoginUserResult
                         {
                             Id = user.Id,
-                            CompanyId = user.CompanyId,
+                            ClinicId = user.ClinicId,
                             Email = user.Email,
                             Name = user.Name,
                             Roles = user.Roles.Select(x => x.Id),
@@ -73,7 +75,7 @@ public static class LoginEndpoint
                             Icon = x.Icon,
                             Position = x.Position,
                             Visible = x.Visible
-                        })
+                        })*/
                     };
                     return Result.CreateSuccess(loginResult);
                 }

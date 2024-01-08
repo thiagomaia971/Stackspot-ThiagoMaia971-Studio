@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace {{solution_name}}.Domain.ViewModels;
 
-public class UserDto : CompanyEntityDto
+public class UserDto : {{multitenant_name}}EntityDto
 {
     #region Properties
 
@@ -36,8 +36,8 @@ public class UserDto : CompanyEntityDto
         string id, 
         DateTime createdAt, 
         DateTime? updatedAt,
-        string companyId,
-        CompanyDto company,
+        string {{multitenant_name}}Id,
+        {{multitenant_name}}Dto {{multitenant_name}},
         string email,
         string name,
         bool emailConfirmed,
@@ -46,7 +46,7 @@ public class UserDto : CompanyEntityDto
         bool twoFactorEnabled,
         IEnumerable<RoleDto> roles,
         // IEnumerable<PermissionOutput> permissions,
-        IEnumerable<string> permissionsString) : base(id, createdAt, updatedAt, companyId, company)
+        IEnumerable<string> permissionsString) : base(id, createdAt, updatedAt, {{multitenant_name}}Id, {{multitenant_name}})
     {   
         Email = email;
         Name = name;

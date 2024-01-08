@@ -12,11 +12,11 @@ builder.AddServiceDefaults();
 builder.Services.AddControllers();
 //builder.Services.AddControllers().AddOdataEdmModel(builder.Services);
 builder.Services
-    .AddCruderSimpleServices<CompanyEntity>(
+    .AddCruderSimpleServices<{{multitenant_name}}Entity>(
         configuration: builder.Configuration, 
         environment: builder.Environment, 
-        multiTenantRepositoryInterface: typeof(IMultiTenantRepository<>), 
-        multiTenantRepositoryImplementation: typeof(MultiTenantRepository<>))
+        multiTenantRepositoryInterface: null, 
+        multiTenantRepositoryImplementation: null)
     .AddCruderRequestDefinitions()
     .AddServices(builder.Configuration, builder.Environment);
 

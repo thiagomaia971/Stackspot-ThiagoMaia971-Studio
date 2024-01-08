@@ -4,7 +4,7 @@ metadata:
   name: dotnet-saas
   display-name: dotnet-saas
   description: Descreva seu plugin explicando o propósito
-  version: 0.0.1
+  version: 0.0.9
   picture: plugin.png
 spec:
   type: app
@@ -25,6 +25,12 @@ spec:
       name: solution_name
       required: true
       global: true
+    - label: Tenant Name?
+      type: text
+      name: multitenant_name
+      required: true
+      global: true
+      default: Company
     - label: Which API port?
       type: text
       name: api_host_port

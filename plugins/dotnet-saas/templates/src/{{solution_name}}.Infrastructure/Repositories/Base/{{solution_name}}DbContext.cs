@@ -13,7 +13,7 @@ public class {{solution_name}}DbContext(DbContextOptions<{{solution_name}}DbCont
     public DbSet<User> User { get; set; }
     public DbSet<Role> Role { get; set; }
     public DbSet<UserRole> UserRole { get; set; }
-    public DbSet<Company> Company { get; set; }
+    public DbSet<{{multitenant_name}}> {{multitenant_name}} { get; set; }
     public DbSet<Route> Route { get; set; }
     public DbSet<Permission> Permission { get; set; }
     protected override void OnModelCreating(ModelBuilder ModelBuilder)

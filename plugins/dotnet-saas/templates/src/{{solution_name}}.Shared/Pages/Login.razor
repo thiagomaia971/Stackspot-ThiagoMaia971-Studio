@@ -1,4 +1,5 @@
 ﻿@page "/login"
+@using System.Security.Claims
 @layout LoginLayout
 @inject NavigationManager navigationManager
 @inject IdentityAuthenticationStateProvider authStateProvider
@@ -89,6 +90,8 @@
 </Row>
 
 @code {
+    [Inject]
+    public ClientConfiguration ClientConfiguration { get; set; }
     protected Validations ValidationsRef { get; set; }
     LoginViewModel loginParameters { get; set; } = new LoginViewModel();
     string error { get; set; }
@@ -110,7 +113,16 @@
             error = null;
             try
             {
-                await authStateProvider.Login(loginParameters);
+                var loginResult = await authStateProvider.Login(loginParameters);
+                if (loginResult is null)
+                    return;
+                
+                await ClientConfiguration.LoadData();
+
+                await authStateProvider.ChangeClaims(
+                    ("TenantId", ClientConfiguration.User.ClinicId),
+                    (ClaimTypes.Role, string.Join(",", ClientConfiguration.User.Roles.Select(c => c.Id))),
+                    ("Permissions", string.Join(",", ClientConfiguration.User.PermissionsString)));
                 navigationManager.NavigateTo("");
             }
             catch (Exception ex)

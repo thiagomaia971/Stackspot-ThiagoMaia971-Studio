@@ -1,16 +1,27 @@
 ﻿@using {{solution_name}}.Shared.Services
+@using CruderSimple.Core.ViewModels.Login
 @inherits LayoutComponentBase
 
 @{
     if (NotFound)
     {
-        <MainPage>
-            @Body
+        <MainPage Routes="@Routes">
+            <TopBarStart>
+                <{{multitenant_name}}Select ClientConfiguration="@ClientConfiguration" />
+            </TopBarStart>
+            <ChildContent>
+                @Body
+            </ChildContent>
         </MainPage>
     }
     else {
-        <CanRead>
-            @Body
+        <CanRead Routes="@Routes">
+            <BarStart>
+                <{{multitenant_name}}Select ClientConfiguration="@ClientConfiguration"/>
+            </BarStart>
+            <ChildContent>
+                @Body
+            </ChildContent>
         </CanRead>
     }
 }
@@ -18,4 +29,46 @@
 @code {
     [CascadingParameter(Name = "NotFound")]
     bool NotFound { get; set; }
+    [Inject]
+    public ClientConfiguration ClientConfiguration { get; set; }
+    
+    public ICollection<SideMenu.PageSide>? Routes { get; set; } = new List<SideMenu.PageSide>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await InvokeAsync(async () =>
+        {
+            await ClientConfiguration.LoadData();
+            if (ClientConfiguration.User is null)
+                return;
+        
+            Routes = ClientConfiguration
+                .User
+                .Roles
+                .SelectMany(c => c.Permissions)
+                .Select(c => c.Route)
+                .Where(x => x.Visible)
+                .GroupBy(x => x.Parent)
+                .Select(x => new SideMenu.PageSide(x.Key, false, x.OrderBy(x => x.Position).Select(c => new LoginRouteResult
+                {
+                    Icon = c.Icon,
+                    Name = c.Name,
+                    Parent = c.Parent,
+                    Position = c.Position,
+                    Url = c.Url,
+                    Visible = c.Visible
+                }).ToList()))
+                .ToList() ?? new List<SideMenu.PageSide>();
+            Routes.Remove(Routes.First(x => x.Name == ""));
+    // foreach (var parent in Routes)
+    // {
+    //     var permissions = user.User.Permissions.Select(x => x.Split(":")[0].ToLower()).Distinct().ToList();
+    //     var toRemove = parent.Routes.Where(x => !permissions.Contains(x.Url.ToLower())).ToList();
+    //     foreach (var item in toRemove)
+    //     {
+    //         parent.Routes.Remove(item);
+    //     }
+    // }
+        });
+    }
 }
