@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using CruderSimple.Core.ViewModels;
 namespace {{solution_name}}.Domain.ViewModels;
 
 public class {{entity_name}}Dto : {%if is_multitenant == "True"%}{{multitenant_name}}EntityDto{%else%}BaseDto{%endif%}

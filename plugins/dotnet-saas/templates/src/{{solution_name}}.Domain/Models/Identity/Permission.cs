@@ -33,8 +33,14 @@ public class Permission : Entity
         return this;
     }
 
-    public override BaseDto ConvertToOutput()
+    public override BaseDto ConvertToOutput(IDictionary<string, bool> cached = null)
     {
+        if (cached is null)
+            cached = new Dictionary<string, bool>();
+        if (cached.ContainsKey(Id))
+            return null;
+        cached.Add(Id, true);
+        
         return new PermissionDto(
             Id,
             CreatedAt,
@@ -42,7 +48,7 @@ public class Permission : Entity
             RoleId,
             null, // Role?.ToOutput<RoleDto>(),
             RouteId,
-            Route?.ToOutput<RouteDto>(),
+            Route?.ToOutput<RouteDto>(cached),
             IsRead,
             IsWrite);
     }

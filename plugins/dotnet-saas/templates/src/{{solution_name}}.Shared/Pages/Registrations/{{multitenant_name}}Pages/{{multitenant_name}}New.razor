@@ -4,10 +4,10 @@
 @inherits CreationComponent
 
 <CardHeader>
-    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("Empresa")"
+    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("{{multitenant_name}}")"
                                               BreadcrumbItems="@(new Breadcrum[] {
                                             new Breadcrum("/", "{{solution_name}}"),
-                                            new Breadcrum("/{{multitenant_name}}", "Empresas") })" />
+                                            new Breadcrum("/{{multitenant_name}}", "{{multitenant_name}}s") })" />
 </CardHeader>
 
 <CreateEditPage @ref="CreateEditPage" TEntity="{{solution_name}}.Domain.Models.{{multitenant_name}}" TDto="{{multitenant_name}}Dto" Model="@Model" Id="@Id" >

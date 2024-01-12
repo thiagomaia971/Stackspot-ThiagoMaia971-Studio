@@ -7,7 +7,7 @@ using {{solution_name}}.Domain.Models.Identity;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models;
-
+{{is_}}
 public class {{entity_name}} : {%if is_multitenant == "True"%}{{multitenant_name}}Entity{%else%}Entity{%endif%}
 {
     #region Properties
@@ -24,12 +24,20 @@ public class {{entity_name}} : {%if is_multitenant == "True"%}{{multitenant_name
         return this;
     }
 
-    public override BaseDto ConvertToOutput() 
-        => new {{entity_name}}Dto(
+    public override BaseDto ConvertToOutput(IDictionary<string, bool> cached = null) 
+    {
+        if (cached is null)
+            cached = new Dictionary<string, bool>();
+        if (cached.ContainsKey(Id))
+            return null;
+        cached.Add(Id, true);
+
+        return new {{entity_name}}Dto(
             Id, 
             CreatedAt, 
             UpdatedAt{%if is_multitenant == "True"%},
             {{multitenant_name}}Id,
-            {{multitenant_name}}.ToOutput<{{multitenant_name}}Dto>()
+            {{multitenant_name}}.ToOutput<{{multitenant_name}}Dto>(cached)
 {%endif%}           /* ... */);
+    }
 }

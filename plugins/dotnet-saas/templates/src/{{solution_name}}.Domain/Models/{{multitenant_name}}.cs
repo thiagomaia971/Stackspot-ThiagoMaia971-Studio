@@ -19,11 +19,19 @@ public class {{multitenant_name}} : Entity
         return this;
     }
 
-    public override BaseDto ConvertToOutput() 
-        => new {{multitenant_name}}Dto(
+    public override BaseDto ConvertToOutput(IDictionary<string, bool> cached = null) 
+    {
+        if (cached is null)
+            cached = new Dictionary<string, bool>();
+        if (cached.ContainsKey(Id))
+            return null;
+        cached.Add(Id, true);
+
+        return new {{multitenant_name}}Dto(
             Id, 
             CreatedAt, 
             UpdatedAt,
             Name
             /* ... */);
+    }
 }

@@ -1,9 +1,8 @@
 using CruderSimple.MySql.Configurations;
 using {{solution_name}}.Api;
 using CruderSimple.Api.Extensions;
-using {{solution_name}}.Domain.Interfaces.Repositories;
 using {{solution_name}}.Domain.Models.Identity;
-using {{solution_name}}.Infrastructure.Repositories.Base;
+using {{solution_name}}.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
@@ -15,8 +14,8 @@ builder.Services
     .AddCruderSimpleServices<{{multitenant_name}}Entity>(
         configuration: builder.Configuration, 
         environment: builder.Environment, 
-        multiTenantRepositoryInterface: null, 
-        multiTenantRepositoryImplementation: null)
+        multiTenantRepositoryInterface: typeof(IRepository<>), 
+        multiTenantRepositoryImplementation: typeof(Repository<>))
     .AddCruderRequestDefinitions()
     .AddServices(builder.Configuration, builder.Environment);
 

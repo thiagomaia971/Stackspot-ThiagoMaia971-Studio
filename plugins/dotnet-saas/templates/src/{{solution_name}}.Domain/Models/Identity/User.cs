@@ -52,21 +52,27 @@ public class User : {{multitenant_name}}Entity, IUser
         return this;
     }
 
-    public override BaseDto ConvertToOutput()
+    public override BaseDto ConvertToOutput(IDictionary<string, bool> cached = null)
     {
+        if (cached is null)
+            cached = new Dictionary<string, bool>();
+        if (cached.ContainsKey(Id))
+            return null;
+        cached.Add(Id, true);
+
         return new UserDto(
             Id,
             CreatedAt,
             UpdatedAt,
             {{multitenant_name}}Id,
-            {{multitenant_name}}?.ToOutput<{{multitenant_name}}Dto>(),
+            {{multitenant_name}}?.ToOutput<{{multitenant_name}}Dto>(cached),
             Email,
             Name,
             EmailConfirmed,
             PhoneNumber,
             PhoneNumberConfirmed,
             TwoFactorEnabled,
-            Roles?.Select(x => x.Role)?.ToOutput<Role, RoleDto>()?.OrderBy(x => x?.CreatedAt),
+            Roles?.Select(x => x.Role)?.ToOutput<Role, RoleDto>(cached)?.OrderBy(x => x?.CreatedAt),
             // Roles
             //     .Select(x => x.Role)
             //     .SelectMany(x => x.Permissions).ToList()

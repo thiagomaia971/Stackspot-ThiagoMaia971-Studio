@@ -32,14 +32,20 @@ public class Role : {{multitenant_name}}Entity
         return this;
     }
 
-    public override BaseDto ConvertToOutput()
+    public override BaseDto ConvertToOutput(IDictionary<string, bool> cached = null)
     {
+        if (cached is null)
+            cached = new Dictionary<string, bool>();
+        if (cached.ContainsKey(Id))
+            return null;
+        cached.Add(Id, true);
+        
         return new RoleDto(
             Id,
             CreatedAt,
             UpdatedAt,
             {{multitenant_name}}Id,
             Name,
-            Permissions?.ToOutput<Permission, PermissionDto>());
+            Permissions?.ToOutput<Permission, PermissionDto>(cached));
     }
 }
