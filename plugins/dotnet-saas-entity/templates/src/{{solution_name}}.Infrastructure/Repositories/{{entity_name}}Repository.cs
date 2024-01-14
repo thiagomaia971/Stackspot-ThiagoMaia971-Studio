@@ -8,6 +8,7 @@ namespace {{solution_name}}.Infrastructure.Repositories;
 
 public class {{entity_name}}Repository(
     {{solution_name}}DbContext dbContext,
-    MultiTenantScoped multiTenant) : Repository<{{entity_name}}>, I{{entity_name}}Repository
+    MultiTenantScoped multiTenant) 
+    : Repository<{{entity_name}}>(dbContext, multiTenant), I{{entity_name}}Repository
 {
 }

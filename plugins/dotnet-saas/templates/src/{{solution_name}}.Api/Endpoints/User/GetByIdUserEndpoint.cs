@@ -9,7 +9,7 @@ namespace {{solution_name}}.Api.Endpoints.User;
 
 public static class GetByIdUserEndpoint
 {
-    public record Query([FromRoute] string id) : GetByIdRequest.Query(id);
+    public record Query([FromRoute] string id, [FromQuery] string select = "*") : GetByIdRequest.Query(id, select);
 
     [EndpointRequest(
         method: EndpointMethod.GET, 

@@ -9,7 +9,7 @@ namespace {{solution_name}}.Api.Endpoints.Role;
 
 public static class GetByIdRoleEndpoint
 {
-    public record Query([FromRoute] string id) : GetByIdRequest.Query(id);
+    public record Query([FromRoute] string id, [FromQuery] string select = "*") : GetByIdRequest.Query(id, select);
 
     [EndpointRequest(
         method: EndpointMethod.GET, 
