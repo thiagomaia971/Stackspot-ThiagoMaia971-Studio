@@ -1,4 +1,4 @@
-@inherits EntityCruderBase<{{entity_name}}, {{entity_name}}Dto>
+@inherits EntityCruderBase<{{solution_name}}.Domain.Models.{{entity_name}}, {{entity_name}}Dto>
 
 <CruderGrid @ref="CruderGrid"
             TGridEntity="{{solution_name}}.Domain.Models.{{entity_name}}"
@@ -9,7 +9,7 @@
             DataChanged="@DataHasChanged">
     <Columns>
 
-        <CruderDateColumn TColumnEntity="{{entity_name}}"
+        <CruderDateColumn TColumnEntity="{{solution_name}}.Domain.Models.{{entity_name}}"
                           TColumnDto="{{entity_name}}Dto"
                           ColumnField="CreatedAt"
                           ColumnCaption="Data de Criação"

@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CruderSimple.Blazor" Version="0.0.30" />
+    <PackageReference Include="CruderSimple.Blazor" Version="0.0.31" />
   </ItemGroup>
 
   <ItemGroup>

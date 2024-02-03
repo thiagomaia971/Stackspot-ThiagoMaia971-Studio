@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using CruderSimple.Core.Entities;
 using CruderSimple.Core.Extensions;
 using CruderSimple.MySql.Entities;
 using CruderSimple.MySql.Attributes;

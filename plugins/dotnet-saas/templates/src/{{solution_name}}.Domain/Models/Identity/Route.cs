@@ -1,4 +1,5 @@
 ﻿using CruderSimple.Core.Entities;
+using CruderSimple.Core.Extensions;
 using CruderSimple.Core.ViewModels;
 using CruderSimple.MySql.Entities;
 using Mapster;

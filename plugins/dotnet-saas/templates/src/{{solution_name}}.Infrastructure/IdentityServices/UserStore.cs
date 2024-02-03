@@ -118,6 +118,7 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
                 $"{nameof(User.Email)} {Op.Equals} {normalizedEmail.ToLower()}",
                 null,
                 0,
+                0,
                 0))).Data.FirstOrDefault();
 
         return findByHash;

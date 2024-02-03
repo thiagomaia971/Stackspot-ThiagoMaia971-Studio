@@ -1,10 +1,9 @@
 using CruderSimple.Core.ViewModels;
-using CruderSimple.MySql.Entities;
 {%if is_multitenant == "True"%}
 using CruderSimple.Core.Extensions;
 using {{solution_name}}.Domain.Models.Identity;
 {%endif%}
-using Mapster;
+using CruderSimple.Core.Entities;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models;

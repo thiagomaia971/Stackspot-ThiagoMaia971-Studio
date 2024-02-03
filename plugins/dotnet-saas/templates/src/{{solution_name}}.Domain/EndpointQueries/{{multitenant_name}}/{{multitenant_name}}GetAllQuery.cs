@@ -7,5 +7,6 @@ namespace {{solution_name}}.Domain.EndpointQueries.{{multitenant_name}}
         string filter = "",
         string orderBy = "",
         int size = 10, 
-        int page = 1) : GetAllEndpointQuery(select, filter, orderBy, size, page);
+        int page = 1,
+        int skip = 0) : GetAllEndpointQuery(select, filter, orderBy, size, page, skip);
 }
