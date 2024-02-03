@@ -1,6 +1,7 @@
 ﻿using CruderSimple.Core.Entities;
 using CruderSimple.Core.ViewModels;
 using CruderSimple.MySql.Entities;
+using Mapster;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
@@ -15,32 +16,9 @@ public class Route : Entity
     public bool Visible { get; set; }
     public string? DependsOn { get; set; }
 
-    public override IEntity FromInput(BaseDto input)
-    {
-        base.FromInput(input);
-        var RouteDto = (RouteDto)input;
-        Name = RouteDto.Name;
-        Parent = RouteDto.Parent;
-        Icon = RouteDto.Icon;
-        Url = RouteDto.Url;
-        Position = RouteDto.Position;
-        Visible = RouteDto.Visible;
-        DependsOn = RouteDto.DependsOn;
-        return this;
-    }
+    public override IEntity FromInput(BaseDto input) 
+        => this.ParseWithContext<Route, RouteDto>(input);
 
     public override BaseDto ConvertToOutput()
-    {
-        return new RouteDto(
-            Id,
-            CreatedAt,
-            UpdatedAt,
-            Name,
-            Parent,
-            Icon,
-            Url,
-            Position,
-            Visible,
-            DependsOn);
-    }
+        => FromOutputBase<Route, RouteDto>();
 }

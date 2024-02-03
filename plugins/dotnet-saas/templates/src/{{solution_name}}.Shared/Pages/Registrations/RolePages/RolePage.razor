@@ -4,12 +4,10 @@
 @inherits CreationComponent
 
 
-<CardHeader>
-    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("Cargo")"
-                                              BreadcrumbItems="@(new Breadcrum[] {
-                                            new Breadcrum("/", "{{solution_name}}"),
-                                            new Breadcrum("/role", "Cargos") })" />
-</CardHeader>
+<CruderSimple.Blazor.Components.PageTitle Title="@PageName("Cargo")"
+                                            BreadcrumbItems="@(new Breadcrum[] {
+                                        new Breadcrum("/", "{{solution_name}}"),
+                                        new Breadcrum("/role", "Cargos") })" />
 
 <CreateEditPage @ref="CreateEditPage" TEntity="{{solution_name}}.Domain.Models.Identity.Role" TDto="RoleDto" Model="@Model" Id="@Id" OnInitialized="@InitializeModel" >
     <Validation Validator="ValidationRule.IsNotEmpty">
@@ -87,7 +85,7 @@
         var defaultRoutes = (await RouteService.GetAll(new GetAllEndpointQuery())).Data;
 
         var defaultPermissions = defaultRoutes.Select(x => new PermissionDto(
-            id: null,
+            id: Guid.NewGuid().ToString(),
             createdAt: DateTime.Now,
             updatedAt: null,
             roleId: role.Id,

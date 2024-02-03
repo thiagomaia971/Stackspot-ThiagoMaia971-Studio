@@ -26,12 +26,15 @@ public class UserRepository : Repository<User>, IUserRepository
         _UserRoleRepository = UserRoleRepository;
     }
 
-    public override Task<Pagination<User>> GetAll(GetAllEndpointQuery query = null)
+    protected override IQueryable<User> Query(bool isAsNoTracking = false, bool ignoreUser = false)
     {
-        var userQuery = (UserGetAllQuery) query;
-        var queryable = base.Query();
-            // .Where(x => userQuery == null || userQuery.name == null || x.Name.ToLower().Contains(userQuery.name.ToLower()));
-        return Task.FromResult(queryable.ApplyQuery(userQuery));
+        return base.Query(isAsNoTracking, ignoreUser)
+            .Include(x => x.{{multitenant_name}})
+            .AsNoTracking(isAsNoTracking)
+            .Include(x => x.Roles)
+                .ThenInclude(x => x.Role)
+                    .ThenInclude(x => x.Permissions)
+                        .ThenInclude(x => x.Route);
     }
 
     public async Task<IEnumerable<string>> GetRoles(string UserId) 
@@ -39,4 +42,10 @@ public class UserRepository : Repository<User>, IUserRepository
             .Where(x => x.Id == UserId)
             .Select(x => x.Roles.Select(y => y.Id))
             .FirstOrDefaultAsync();
+
+    public override IRepositoryBase<User> Update(User entity, AutoDetachOptions autoDetach = AutoDetachOptions.BEFORE) 
+        => base.Update(entity, AutoDetachOptions.NONE);
+
+    public override Task Save(bool withoutTracking = true) 
+        => base.Save(false);
 }

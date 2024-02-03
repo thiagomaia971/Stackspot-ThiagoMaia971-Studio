@@ -8,7 +8,7 @@ namespace {{solution_name}}.Api.Endpoints.{{entity_name}};
 
 public static class GetById{{entity_name}}Endpoint
 {
-    public record Query([FromRoute] string id) : GetByIdRequest.Query(id);
+    public record Query([FromRoute] string id, [FromQuery] string select = "*") : GetByIdRequest.Query(id, select);
 
     [EndpointRequest(
         method: EndpointMethod.GET, 

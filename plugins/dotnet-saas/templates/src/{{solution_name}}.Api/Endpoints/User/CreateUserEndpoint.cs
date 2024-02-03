@@ -51,9 +51,8 @@ public static class CreateRoleEndpoint
                 return Result.CreateSuccess(resultData);
             }
             catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
+            {               
+                return Result.CreateError(e.StackTrace, 500, e.Message);
             }
         }
     }

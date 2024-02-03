@@ -8,22 +8,9 @@ public class {{multitenant_name}} : Entity
 {
     public string Name { get; set; }
 
-    public override Entity FromInput(BaseDto input)
-    {
-        base.FromInput(input);
-        var {{multitenant_name}}Dto = ({{multitenant_name}}Dto) input;
-        Name = {{multitenant_name}}Dto.Name;
-        /*
-        ...
-        */
-        return this;
-    }
+    public override IEntity FromInput(BaseDto input) 
+        => this.ParseWithContext<{{multitenant_name}}, {{multitenant_name}}Dto>(input);
 
-    public override BaseDto ConvertToOutput() 
-        => new {{multitenant_name}}Dto(
-            Id, 
-            CreatedAt, 
-            UpdatedAt,
-            Name
-            /* ... */);
+    public override BaseDto ConvertToOutput()
+        => FromOutputBase<{{multitenant_name}}, {{multitenant_name}}Dto>();
 }

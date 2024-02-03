@@ -21,8 +21,8 @@ public static class UpdateRoleEndpoint
         requireAuthorization: true, 
         roles: new string[] { })]
     public class Handler
-        (IRepository<Domain.Models.Identity.Role> repository)
-        : UpdateRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRepository<Domain.Models.Identity.Role>>(repository)
+        (IRoleRepository repository)
+        : UpdateRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRoleRepository>(repository)
     {
     }
 }

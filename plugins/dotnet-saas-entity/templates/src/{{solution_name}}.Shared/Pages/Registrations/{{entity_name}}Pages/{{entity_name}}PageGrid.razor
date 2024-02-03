@@ -1,0 +1,30 @@
+@inherits EntityCruderBase<{{entity_name}}, {{entity_name}}Dto>
+
+<CruderGrid @ref="CruderGrid"
+            TGridEntity="{{solution_name}}.Domain.Models.{{entity_name}}"
+            TGridDto="{{entity_name}}Dto"
+            FilterBy="@FilterBy"
+            ModalFormTitle="MODAL TITLE"
+            Data="@Data"
+            DataChanged="@DataHasChanged">
+    <Columns>
+
+        <CruderDateColumn TColumnEntity="{{entity_name}}"
+                          TColumnDto="{{entity_name}}Dto"
+                          ColumnField="CreatedAt"
+                          ColumnCaption="Data de Criação"
+                          GridSort="CreatedAt"/>
+
+    </Columns>
+    <ModalFormTemplate>
+        <Field Margin="Margin.Is3.FromBottom">
+            <FieldLabel>Label</FieldLabel>
+            <FieldBody>
+                Field
+            </FieldBody>
+        </Field>
+    </ModalFormTemplate>
+</CruderGrid>
+
+@code {
+}

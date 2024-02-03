@@ -11,7 +11,8 @@
                              Padding="Padding.Is5.FromEnd.Is4.FromStart"
                              Data="@ClientConfiguration.{{multitenant_name}}Selected"
                              SelectedValue="@ClientConfiguration.{{multitenant_name}}Selected"
-                             SelectedValueChanged="@ChangeClaims">
+                             SelectedValueChanged="@ChangeClaims"
+                             Required="false">
         
     </EntityAutocomplete>
 }
@@ -55,10 +56,14 @@ else
     {
         ClientConfiguration.{{multitenant_name}}Selected = {{multitenant_name|camelcase}}Selected;
         await LocalStorage.SetItemAsync("tenant", {{multitenant_name|camelcase}}Selected);
-        await authStateProvider.ChangeClaims(
-            ("TenantId", {{multitenant_name|camelcase}}Selected.Id),
-            (ClaimTypes.Role, string.Join(",", ClientConfiguration.User.Roles.Select(c => c.Id))),
-            ("Permissions", string.Join(",", ClientConfiguration.User.PermissionsString)));
+
+        var claims = new List<UserClaim>
+        {
+            new UserClaim("TenantId", {{multitenant_name|camelcase}}Selected.Id),
+            new UserClaim("Permissions", string.Join(",", ClientConfiguration.User.PermissionsString))
+        };
+        claims.AddRange(ClientConfiguration.User?.Roles?.Select(userRole => new UserClaim(ClaimTypes.Role, userRole.Id)));
+        await authStateProvider.ChangeClaims(claims.ToArray());
     }
 
 }

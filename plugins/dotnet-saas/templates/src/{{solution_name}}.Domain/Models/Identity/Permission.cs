@@ -3,6 +3,7 @@ using CruderSimple.Core.ViewModels;
 using CruderSimple.MySql.Attributes;
 using CruderSimple.MySql.Entities;
 using CruderSimple.Core.Extensions;
+using Mapster;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
@@ -23,27 +24,8 @@ public class Permission : Entity
     public Route Route { get; set; }
 
     public override IEntity FromInput(BaseDto input)
-    {
-        base.FromInput(input);
-        var permissionInput = (PermissionDto)input;
-        RoleId = permissionInput.RoleId;
-        RouteId = permissionInput.RouteId;
-        IsRead = permissionInput.IsRead;
-        IsWrite = permissionInput.IsWrite;
-        return this;
-    }
+        => this.ParseWithContext<Permission, PermissionDto>(input);
 
     public override BaseDto ConvertToOutput()
-    {
-        return new PermissionDto(
-            Id,
-            CreatedAt,
-            UpdatedAt,
-            RoleId,
-            null, // Role?.ToOutput<RoleDto>(),
-            RouteId,
-            Route?.ToOutput<RouteDto>(),
-            IsRead,
-            IsWrite);
-    }
+        => FromOutputBase<Permission, PermissionDto>();
 }

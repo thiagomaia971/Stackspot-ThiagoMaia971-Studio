@@ -118,11 +118,14 @@
                     return;
                 
                 await ClientConfiguration.LoadData();
+                var claims = new List<UserClaim>
+                {
+                    new UserClaim("TenantId", ClientConfiguration.User.{{multitenant_name}}Id),
+                    new UserClaim("Permissions", string.Join(",", ClientConfiguration.User.PermissionsString))
+                };
+                claims.AddRange(ClientConfiguration.User?.Roles?.Select(userRole => new UserClaim(ClaimTypes.Role, userRole.Id)));
 
-                await authStateProvider.ChangeClaims(
-                    ("TenantId", ClientConfiguration.User.ClinicId),
-                    (ClaimTypes.Role, string.Join(",", ClientConfiguration.User.Roles.Select(c => c.Id))),
-                    ("Permissions", string.Join(",", ClientConfiguration.User.PermissionsString)));
+                await authStateProvider.ChangeClaims(claims.ToArray());
                 navigationManager.NavigateTo("");
             }
             catch (Exception ex)

@@ -15,7 +15,8 @@ public static class GetAllUserEndpoint
         [FromQuery] string filter = "",
         [FromQuery] string orderBy = "", 
         [FromQuery] int size = 10, 
-        [FromQuery] int page = 1) : UserGetAllQuery(select, filter, orderBy, size, page);
+        [FromQuery] int page = 1,
+        [FromQuery] int skip = 0) : UserGetAllQuery(select, filter, orderBy, size, page, skip);
 
     [EndpointRequest(
         method: EndpointMethod.GET, 

@@ -5,6 +5,7 @@ using CruderSimple.MySql.Entities;
 using CruderSimple.Core.Extensions;
 using CruderSimple.MySql.Attributes;
 using CruderSimple.Core.Entities;
+using Mapster;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
@@ -25,24 +26,9 @@ public class UserRole : Entity
     [AutoDetach]
     public User User { get; set; }
 
-    public override Entity FromInput(BaseDto input)
-    {
-        base.FromInput(input);
-        var userRoleDto = (UserRoleDto)input;
-        RoleId = userRoleDto.RoleId;
-        UserId = userRoleDto.UserId;
-        return this;
-    }
+    public override IEntity FromInput(BaseDto input) 
+        => this.ParseWithContext<UserRole, UserRoleDto>(input);
 
     public override BaseDto ConvertToOutput()
-    {
-        return new UserRoleDto(
-            Id,
-            CreatedAt,
-            UpdatedAt,
-            RoleId,
-            Role?.ToOutput<RoleDto>(),
-            UserId,
-            User?.ToOutput<UserDto>());
-    }
+        => FromOutputBase<UserRole, UserRoleDto>();
 }

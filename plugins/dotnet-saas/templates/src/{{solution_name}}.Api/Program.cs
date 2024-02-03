@@ -1,22 +1,26 @@
 using CruderSimple.MySql.Configurations;
 using {{solution_name}}.Api;
 using CruderSimple.Api.Extensions;
-using {{solution_name}}.Domain.Interfaces.Repositories;
 using {{solution_name}}.Domain.Models.Identity;
-using {{solution_name}}.Infrastructure.Repositories.Base;
+using {{solution_name}}.Infrastructure.Repositories;
+using CruderSimple.MySql.Interfaces;
+using CruderSimple.MySql.Repositories;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 //builder.Services.AddControllers().AddOdataEdmModel(builder.Services);
 builder.Services
     .AddCruderSimpleServices<{{multitenant_name}}Entity>(
         configuration: builder.Configuration, 
         environment: builder.Environment, 
-        multiTenantRepositoryInterface: null, 
-        multiTenantRepositoryImplementation: null)
+        multiTenantRepositoryInterface: typeof(IRepository<>), 
+        multiTenantRepositoryImplementation: typeof(Repository<>))
     .AddCruderRequestDefinitions()
     .AddServices(builder.Configuration, builder.Environment);
 

@@ -36,9 +36,18 @@
 </CascadingAuthenticationState>
 @code
 {
+    [Inject] public IJSRuntime jSRuntime { get; set; }
+    [Inject] public BrowserService BrowserService { get; set; }
+
+    protected override void OnInitialized()
+    {
+        BrowserService.Init(jSRuntime);
+        base.OnInitialized();
+    }
+
     public List<System.Reflection.Assembly> AdditionalAssemblies = new List<System.Reflection.Assembly>
     {
-        typeof({{solution_name}}.Shared.Pages.Registrations.UserPages.User).Assembly,
+        typeof({{solution_name}}.Shared.Pages.Registrations.UserPages.UsersPage).Assembly,
         typeof(CruderSimple.Blazor.Components.AppSearch).Assembly,
         typeof({{solution_name}}.Domain.Models.Identity.User).Assembly
     };

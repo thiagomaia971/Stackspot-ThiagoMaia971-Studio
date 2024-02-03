@@ -1,0 +1,22 @@
+﻿@page "/role"
+
+<CruderSimple.Blazor.Components.PageTitle Title="Cargos"
+                                            BreadcrumbItems="@(new Breadcrum[] {
+                                        new Breadcrum("/", "{{solution_name}}")})" />
+                                        
+<ListPage 
+            TEntity="{{solution_name}}.Domain.Models.Identity.Role" 
+            TDto="RoleDto" 
+            CustomSelect="Permissions.IsRead,Permissions.IsWrite,Permissions.Route.Name">
+    <Columns>
+        <DataGridColumn TItem="RoleDto" Field="@nameof(RoleDto.Name)" Caption="Nome" Editable Filterable Width="300px"/>
+        <DataGridColumn TItem="RoleDto" Caption="Permissões" Filterable="false" Sortable="false">
+            <DisplayTemplate>
+                <PermissionsBadge Role="context" />
+            </DisplayTemplate>
+        </DataGridColumn>
+    </Columns>
+</ListPage>
+    
+@code {
+}

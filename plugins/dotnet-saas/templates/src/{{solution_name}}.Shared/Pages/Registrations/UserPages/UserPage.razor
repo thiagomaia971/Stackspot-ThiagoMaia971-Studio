@@ -3,12 +3,10 @@
 @page "/user/{Id}/edit"
 @inherits CreationComponent
 
-<CardHeader>
-    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("Usuário")"
-                                              BreadcrumbItems="@(new Breadcrum[] {
-                                            new Breadcrum("/", "{{solution_name}}"),
-                                            new Breadcrum("/user", "Usuários") })" />
-</CardHeader>
+<CruderSimple.Blazor.Components.PageTitle Title="@PageName("Usuário")"
+                                            BreadcrumbItems="@(new Breadcrum[] {
+                                        new Breadcrum("/", "{{solution_name}}"),
+                                        new Breadcrum("/user", "Usuários") })" />
 
 <CreateEditPage @ref="CreateEditPage" TEntity="{{solution_name}}.Domain.Models.Identity.User" TDto="UserDto" Model="@Model" Id="@Id">
     <Validation Validator="ValidationRule.IsEmail">

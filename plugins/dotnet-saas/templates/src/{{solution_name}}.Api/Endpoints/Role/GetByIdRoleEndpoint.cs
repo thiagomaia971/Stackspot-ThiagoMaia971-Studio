@@ -9,7 +9,7 @@ namespace {{solution_name}}.Api.Endpoints.Role;
 
 public static class GetByIdRoleEndpoint
 {
-    public record Query([FromRoute] string id) : GetByIdRequest.Query(id);
+    public record Query([FromRoute] string id, [FromQuery] string select = "*") : GetByIdRequest.Query(id, select);
 
     [EndpointRequest(
         method: EndpointMethod.GET, 
@@ -18,8 +18,8 @@ public static class GetByIdRoleEndpoint
         requireAuthorization: true, 
         new string[] { /* YOUR ROLES HERE */ })]
     public class Handler
-        (IRepository<Domain.Models.Identity.Role> repository)
-        : GetByIdRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRepository<Domain.Models.Identity.Role>>(repository)
+        (IRoleRepository repository)
+        : GetByIdRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRoleRepository>(repository)
     {
     }
 }

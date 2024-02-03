@@ -19,9 +19,9 @@ public static class CreateRoleEndpoint
         new string[] {  })]
     public class Handler
         (
-            IRepository<Domain.Models.Identity.Role> repository
+            IRoleRepository repository
         )
-        : CreateRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRepository<Domain.Models.Identity.Role>>(repository)
+        : CreateRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRoleRepository>(repository)
     {
     }
 }

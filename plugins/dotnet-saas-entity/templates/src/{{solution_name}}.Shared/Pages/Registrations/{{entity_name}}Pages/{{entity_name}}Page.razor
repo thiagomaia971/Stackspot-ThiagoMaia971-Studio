@@ -3,12 +3,10 @@
 @page "/{{entity_name|lower}}/{Id}/edit"
 @inherits CreationComponent
 
-<CardHeader>
-    <CruderSimple.Blazor.Components.PageTitle Title="@PageName("{{entity_name}}")"
-                                              BreadcrumbItems="@(new Breadcrum[] {
-                                            new Breadcrum("/", "{{solution_name}}"),
-                                            new Breadcrum("/{{entity_name}}", "{{entity_name}}s") })" />
-</CardHeader>
+<CruderSimple.Blazor.Components.PageTitle Title="@PageName("{{entity_name}}")"
+                                            BreadcrumbItems="@(new Breadcrum[] {
+                                        new Breadcrum("/", "{{solution_name}}"),
+                                        new Breadcrum("/{{entity_name}}", "{{entity_name}}s") })" />
 
 <CreateEditPage 
                 @ref="CreateEditPage" 

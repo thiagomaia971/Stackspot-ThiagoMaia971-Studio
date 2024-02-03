@@ -16,7 +16,8 @@ public static class GetAllRoleEndpoint
         [FromQuery] string filter = "",
         [FromQuery] string orderBy = "", 
         [FromQuery] int size = 10, 
-        [FromQuery] int page = 1) : GetAllEndpointQuery(select, filter, orderBy, size, page);
+        [FromQuery] int page = 1,
+        [FromQuery] int skip = 0) : GetAllEndpointQuery(select, filter, orderBy, size, page, skip);
 
     [EndpointRequest(
         method: EndpointMethod.GET, 
@@ -25,8 +26,8 @@ public static class GetAllRoleEndpoint
         requireAuthorization: true, 
         new string[] { /* YOUR ROLES HERE */ })]
     public class Handler
-        (IRepository<Domain.Models.Identity.Role> repository)
-        : GetAllRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRepository<Domain.Models.Identity.Role>>(repository)
+        (IRoleRepository repository)
+        : GetAllRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRoleRepository>(repository)
     {
     }
 }

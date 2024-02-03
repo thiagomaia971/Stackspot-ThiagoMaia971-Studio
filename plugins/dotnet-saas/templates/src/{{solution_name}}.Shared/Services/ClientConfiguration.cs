@@ -43,7 +43,6 @@ public class ClientConfiguration
             Console.WriteLine("Login n encontrado");
             return;
         }
-        Console.WriteLine("Login encontrado");
         User = (await UserCrudService.GetById(loginResult.UserId)).Data;
         {{multitenant_name}}Selected = User.{{multitenant_name}};
         // Routes = (await RouteCrudService.GetAll(

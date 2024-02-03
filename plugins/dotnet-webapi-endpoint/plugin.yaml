@@ -4,7 +4,7 @@ metadata:
   name: dotnet-webapi-endpoint
   display-name: dotnet-webapi-endpoint
   description: Descreva seu plugin explicando o propósito
-  version: 0.0.9
+  version: 0.0.25
   picture: plugin.png
 spec:
   type: app

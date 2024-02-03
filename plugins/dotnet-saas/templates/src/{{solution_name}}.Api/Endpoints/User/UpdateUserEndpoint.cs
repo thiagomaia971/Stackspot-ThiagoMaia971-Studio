@@ -2,6 +2,8 @@ using CruderSimple.Api.Requests;
 using CruderSimple.Api.Requests.Base;
 using CruderSimple.Core.Extensions;
 using CruderSimple.Core.ViewModels;
+using Force.DeepCloner;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using {{solution_name}}.Domain.Interfaces.Repositories;
@@ -38,10 +40,10 @@ public static class UpdateRoleEndpoint
                 var result = await userManager.AddPasswordAsync(entityToSave, request.payload.Password);
                 if (result.Succeeded)
                 {
-                    await repository.Update(entityToSave)
-                        .Save();
+                    // await repository.Update(entityToSave)
+                    //     .Save();
 
-                    return Result.CreateSuccess(entityToSave.ToOutput<UserDto>());
+                    return Result.CreateSuccess((await repository.FindById(entityToSave.Id)).ToOutput<UserDto>());
                 }
                 else
                     return Result.CreateError("Erro", 400, result.Errors.Select(x => $"{x.Code}: {x.Description}").ToArray());
