@@ -39,17 +39,17 @@ public static class LoginEndpoint
                 if (await userManager.CheckPasswordAsync(user, request.payload.Password))
                 {
                     var userRoles = await userManager.GetRolesAsync(user);
-                    var routes = await routeRepository.GetAll();
+                    // var routes = await routeRepository.GetAll();
                     var permissions = user.GetPermissions();
 
                     var authClaims = new List<Claim>
-                {
-                    new Claim("UserId", user.Id),
-                    new Claim("TenantId", user.{{multitenant_name}}Id),
-                    new Claim(ClaimTypes.Name, user.Name),
-                    new Claim("Permissions", string.Join(",", permissions)),
-                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                };
+                    {
+                        new Claim("UserId", user.Id),
+                        new Claim("TenantId", user.{{multitenant_name}}Id),
+                        new Claim(ClaimTypes.Name, user.Name),
+                        new Claim("Permissions", string.Join(",", permissions)),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    };
                     authClaims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
                     var token = GetToken(configuration, authClaims);
                     var loginResult = new LoginResult

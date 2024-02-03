@@ -1,11 +1,10 @@
 @page "/{{entity_name|lower}}"
 
-<CardHeader>
-    <CruderSimple.Blazor.Components.PageTitle Title="{{entity_name}}s"
-                                              BreadcrumbItems="@(
-                                                new Breadcrum[] {
-                                                new Breadcrum("/", "{{solution_name}}")})" />
-</CardHeader>
+<CruderSimple.Blazor.Components.PageTitle Title="{{entity_name}}s"
+                                            BreadcrumbItems="@(
+                                            new Breadcrum[] {
+                                            new Breadcrum("/", "{{solution_name}}")})" />
+                                            
 <CardBody>
     <ListPage 
             TEntity="{{solution_name}}.Domain.Models.{{entity_name}}" 

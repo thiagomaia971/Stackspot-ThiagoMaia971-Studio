@@ -18,7 +18,8 @@ public class {{solution_name}}DbContext(DbContextOptions<{{solution_name}}DbCont
     public DbSet<Permission> Permission { get; set; }
     protected override void OnModelCreating(ModelBuilder ModelBuilder)
     {
-        ModelBuilder.AutoInclude<{{solution_name}}DbContext>();
+        // ModelBuilder.AutoInclude<{{solution_name}}DbContext>();
+        ModelBuilder.FilterSoftDelete<{{solution_name}}DbContext>();
         // ModelBuilder.Entity<User>()
         //     .HasMany(x => x.Roles)
         //     .WithMany(x => x.Users)

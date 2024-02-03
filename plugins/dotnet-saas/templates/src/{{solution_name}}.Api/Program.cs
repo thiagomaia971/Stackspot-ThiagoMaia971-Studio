@@ -3,12 +3,17 @@ using {{solution_name}}.Api;
 using CruderSimple.Api.Extensions;
 using {{solution_name}}.Domain.Models.Identity;
 using {{solution_name}}.Infrastructure.Repositories;
+using CruderSimple.MySql.Interfaces;
+using CruderSimple.MySql.Repositories;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 //builder.Services.AddControllers().AddOdataEdmModel(builder.Services);
 builder.Services
     .AddCruderSimpleServices<{{multitenant_name}}Entity>(

@@ -5,6 +5,7 @@ using CruderSimple.MySql.Attributes;
 using CruderSimple.Core.Extensions;
 using CruderSimple.Core.Interfaces;
 using CruderSimple.Core.ViewModels;
+using Mapster;
 using {{solution_name}}.Domain.ViewModels;
 
 namespace {{solution_name}}.Domain.Models.Identity;
@@ -39,46 +40,37 @@ public class User : {{multitenant_name}}Entity, IUser
     // [AutoDetach]
     // public IEnumerable<Role> Roles { get; set; } = new List<Role>();
 
-    public override Entity FromInput(BaseDto input)
+    public override IEntity FromInput(BaseDto input) 
+        => this.ParseWithContext<User, UserDto>(input, TypeAdapterConfig<UserDto, User>.NewConfig()
+                .Map(
+                    dest => dest.Roles,
+                    src => src.Roles.Select(x => new UserRole
+                    {
+                        RoleId = x.Id,
+                        UserId = src.Id
+                    }).ToList())
+                .IgnoreNullValues(true)
+                .Config);
+
+    public override BaseDto ConvertToOutput()
     {
-        base.FromInput(input);
-        var UserDto = (UserDto)input;
-        Email = UserDto.Email;
-        Name = UserDto.Name;
-        PhoneNumber = UserDto.PhoneNumber;
-        Roles = Roles?.FromInput(UserDto.Roles?.Select(c => new UserRoleDto(null, DateTime.Now, null, c.Id, null, Id, null)).ToList());
-        // Roles = Roles?.FromInput(UserDto.Roles);
+        var userConfig = TypeAdapterConfig<User, UserDto>
+            .NewConfig()
+            .ShallowCopyForSameType(true)
+            .Map(
+                dest => dest.Roles,
+                src => src
+                    .Roles
+                    .Where(x => x.Role != null)
+                    .Select(x => x.Role)
+                    .OrderBy(x => x.CreatedAt))
+            .Map(
+                dest => dest.PermissionsString,
+                src => src.GetPermissions())
+            .Ignore(dest => dest.Permissions)
+            .Config;
         
-        return this;
-    }
-
-    public override BaseDto ConvertToOutput(IDictionary<string, bool> cached = null)
-    {
-        if (cached is null)
-            cached = new Dictionary<string, bool>();
-        if (cached.ContainsKey(Id))
-            return null;
-        cached.Add(Id, true);
-
-        return new UserDto(
-            Id,
-            CreatedAt,
-            UpdatedAt,
-            {{multitenant_name}}Id,
-            {{multitenant_name}}?.ToOutput<{{multitenant_name}}Dto>(cached),
-            Email,
-            Name,
-            EmailConfirmed,
-            PhoneNumber,
-            PhoneNumberConfirmed,
-            TwoFactorEnabled,
-            Roles?.Select(x => x.Role)?.ToOutput<Role, RoleDto>(cached)?.OrderBy(x => x?.CreatedAt),
-            // Roles
-            //     .Select(x => x.Role)
-            //     .SelectMany(x => x.Permissions).ToList()
-            //     .ToOutput<Permission, PermissionOutput>(),
-            GetPermissions()
-        );
+        return this.Adapt<UserDto>(userConfig);
     }
 
     public override string GetPrimaryKey() => Email;

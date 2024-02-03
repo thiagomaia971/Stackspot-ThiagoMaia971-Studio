@@ -144,7 +144,7 @@ public class UserStore : IUserStore<User>, IUserPasswordStore<User>, IUserEmailS
 
     public async Task<IList<string>> GetRolesAsync(User User, CancellationToken cancellationToken)
     {
-        var result = User.Roles.Select(x => x.Id).ToList();
+        var result = User.Roles.Select(x => x.Role.Id).ToList();
         return result;
         /*var rolesAsync = (await _userRepository.GetRoles(User.Id)).ToList();
         return rolesAsync;*/

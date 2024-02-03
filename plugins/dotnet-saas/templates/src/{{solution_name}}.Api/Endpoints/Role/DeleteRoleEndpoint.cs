@@ -18,8 +18,8 @@ public static class DeleteRoleEndpoint
         requireAuthorization: true, 
         new string[] {  })]
     public class Handler
-        (IRepository<Domain.Models.Identity.Role> repository)
-        : DeleteRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRepository<Domain.Models.Identity.Role>>(repository)
+        (IRoleRepository repository)
+        : DeleteRequest.Handler<Query, Domain.Models.Identity.Role, RoleDto, IRoleRepository>(repository)
     {
     }
 }
