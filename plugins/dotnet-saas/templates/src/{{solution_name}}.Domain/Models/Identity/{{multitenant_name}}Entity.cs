@@ -21,8 +21,8 @@ public abstract class {{multitenant_name}}Entity : Entity, ITenantEntity
     public {{multitenant_name}} {{multitenant_name}} { get; set; }
 
     public override IEntity FromInput(BaseDto input) 
-        => this.ParseWithContext<ClinicEntity, ClinicEntityDto>(input);
+        => this.ParseWithContext<{{multitenant_name}}Entity, {{multitenant_name}}EntityDto>(input);
 
     public override BaseDto ConvertToOutput()
-        => FromOutputBase<ClinicEntity, ClinicEntityDto>();
+        => FromOutputBase<{{multitenant_name}}Entity, {{multitenant_name}}EntityDto>();
 }

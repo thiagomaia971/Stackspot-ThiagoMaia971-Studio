@@ -3,7 +3,7 @@
 Application created by StackSpot ```dotnet-base``` plugin from [Stackspot-ThiagoMaia971-Studio](https://github.com/thiagomaia971/Stackspot-ThiagoMaia971-Studio)
 
 To add new Entity:
-> stk apply plugin thiagomaia971/thiagomaia971/dotnet-saas-entity@0.0.25
+> stk apply plugin thiagomaia971/thiagomaia971/dotnet-saas-entity@0.0.26
 
 # Api
 All of Api request is using by this NuGet [CruderSimple.Core](https://github.com/thiagomaia971/CruderSimple)
